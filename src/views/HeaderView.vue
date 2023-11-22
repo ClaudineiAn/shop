@@ -28,7 +28,7 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton v-if="!isLoggedIn.value"/>
+      <LoginRegisterButton v-if="!isLoggedIn"/>
       <Account v-else/>
     </nav>
   </header>
