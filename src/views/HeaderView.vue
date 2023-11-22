@@ -7,7 +7,6 @@ const isLoggedIn = ref(false)
 watch(isLoggedIn, (newValue) => {})
 
 export const checkIfLogged = async () => {
-    console.log(isLoggedIn.value+"0")
     try {
         if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
             isLoggedIn.value = true
@@ -17,7 +16,6 @@ export const checkIfLogged = async () => {
     } catch (error) {
         isLoggedIn.value = false
     }
-    console.log(isLoggedIn.value)
 }
 </script>
 
@@ -28,7 +26,7 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton v-if="!isLoggedIn"/>
+      <LoginRegisterButton v-if="isLoggedIn.value"/>
       <Account v-else/>
     </nav>
   </header>
