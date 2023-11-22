@@ -65,7 +65,7 @@ import {updateUser} from '../assets/main.js'
 
 onMounted( () => {
   updateUser()
-})
 checkIfLogged()
+})
 
 </script>
