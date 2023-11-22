@@ -1,5 +1,5 @@
 <script>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import Cookies from 'js-cookie'
 
 const isLoggedIn = ref(false)
