@@ -16,10 +16,6 @@ export const checkIfLogged = async () => {
     } catch (error) {
         isLoggedIn.value = false
     }
-    if(isLoggedIn.value)
-    console.log(isLoggedIn.value)
-  else
-    console.log(isLoggedIn.value)
 }
 </script>
 
@@ -30,7 +26,7 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton v-if="isLoggedIn.value"/>
+      <LoginRegisterButton v-if="!isLoggedIn"/>
       <Account v-else/>
     </nav>
   </header>
@@ -66,7 +62,7 @@ import {updateUser} from '../assets/main.js'
 
 onMounted( () => {
   updateUser()
+  checkIfLogged()
 })
-checkIfLogged()
 
 </script>
