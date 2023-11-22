@@ -6,6 +6,7 @@ const isLoggedIn = ref(false)
 const show = ref(false)
 
 watch(isLoggedIn, (newValue) => {
+  console.log(isLoggedIn+"   "+newValue)
   show=isLoggedIn
 })
 
