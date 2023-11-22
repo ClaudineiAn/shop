@@ -16,6 +16,10 @@ export const checkIfLogged = async () => {
     } catch (error) {
         isLoggedIn.value = false
     }
+    if(isLoggedIn.value)
+    console.log(isLoggedIn.value)
+  else
+    console.log(isLoggedIn.value)
 }
 </script>
 
