@@ -4,8 +4,6 @@ import Cookies from 'js-cookie'
 
 const isLoggedIn = ref(false)
 
-watch(isLoggedIn, (newValue) => {})
-
 export const checkIfLogged = async () => {
     console.log(isLoggedIn.value+"0")
     try {
@@ -19,6 +17,8 @@ export const checkIfLogged = async () => {
     }
     console.log(isLoggedIn.value)
 }
+
+const isUserLoggedIn = computed(() => isLoggedIn.value)
 </script>
 
 <template>
@@ -28,9 +28,12 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      {{ isLoggedIn.value }}
-      <LoginRegisterButton v-if="!isLoggedIn.value"/>
-      <Account v-else/>
+      <template v-if="!isUserLoggedIn">
+        <LoginRegisterButton />
+      </template>
+      <template v-else>
+        <Account />
+      </template>
     </nav>
   </header>
 
