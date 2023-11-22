@@ -1,8 +1,10 @@
 <script>
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 import Cookies from 'js-cookie'
 
 const isLoggedIn = ref(false)
+
+watch(isLoggedIn, (newValue) => {})
 
 export const checkIfLogged = async () => {
     console.log(isLoggedIn.value+"0")
@@ -17,8 +19,6 @@ export const checkIfLogged = async () => {
     }
     console.log(isLoggedIn.value)
 }
-
-const isUserLoggedIn = computed(() => isLoggedIn.value)
 </script>
 
 <template>
@@ -28,12 +28,8 @@ const isUserLoggedIn = computed(() => isLoggedIn.value)
       <Language />
       <SearchBar />
       <Utils />
-      <template v-if="!isUserLoggedIn">
-        <LoginRegisterButton />
-      </template>
-      <template v-else>
-        <Account />
-      </template>
+      <LoginRegisterButton v-if="!isLoggedIn"/>
+      <Account v-else/>
     </nav>
   </header>
 
