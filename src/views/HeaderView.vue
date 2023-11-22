@@ -2,26 +2,21 @@
 import { ref, watch } from 'vue'
 import Cookies from 'js-cookie'
 
-const isLoggedIn = ref(false)
-const show = ref(false)
-
-watch(isLoggedIn, (newValue) => {
-  show=newValue
-})
-
 export const checkIfLogged = async () => {
-    console.log(isLoggedIn.value+"0")
     try {
         if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
-            isLoggedIn.value = true
+          Account()
         } else {
-            isLoggedIn.value = false
+          LoginRegisterButton()
         }
     } catch (error) {
-        isLoggedIn.value = false
+      LoginRegisterButton()
     }
-    console.log(isLoggedIn.value)
 }
+export const LoginRegisterButton = () => {
+
+}
+export const Account = () => {}
 </script>
 
 <template>
@@ -31,8 +26,8 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton v-if="!show"/>
-      <Account v-else/>
+      <LoginRegisterButton style="display:none"/>
+      <Account style="display:none"/>
     </nav>
   </header>
 
