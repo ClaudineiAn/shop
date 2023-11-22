@@ -3,8 +3,11 @@ import { ref, watch } from 'vue'
 import Cookies from 'js-cookie'
 
 const isLoggedIn = ref(false)
+const show = ref(false)
 
-watch(isLoggedIn, (newValue) => {})
+watch(isLoggedIn, (newValue) => {
+  show=isLoggedIn
+})
 
 export const checkIfLogged = async () => {
     console.log(isLoggedIn.value+"0")
@@ -28,8 +31,8 @@ export const checkIfLogged = async () => {
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton v-if="!isLoggedIn"/>
-      <Account v-if="isLoggedIn"/>
+      <LoginRegisterButton v-if="!show"/>
+      <Account v-else/>
     </nav>
   </header>
 
@@ -64,7 +67,7 @@ import {updateUser} from '../assets/main.js'
 
 onMounted( () => {
   updateUser()
-checkIfLogged()
 })
+checkIfLogged()
 
 </script>
