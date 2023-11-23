@@ -2,24 +2,18 @@
 import { ref, watch } from 'vue'
 import Cookies from 'js-cookie'
 
+const isLoggedIn = ref(false)
+
 export const checkIfLogged = async () => {
     try {
         if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
-          AccountToggle()
+            isLoggedIn.value = true
         } else {
-          LoginRegisterButtonToggle()
+            isLoggedIn.value = false
         }
     } catch (error) {
-      LoginRegisterButtonToggle()
+        isLoggedIn.value = false
     }
-}
-const LoginRegisterButtonToggle = () => {
-  document.querySelector(".toggleAccont").setAttribute('style','display:none')
-  document.querySelector(".toggleButtons").setAttribute('style','display:block')
-}
-const AccountToggle = () => {
-  document.querySelector(".toggleAccont").setAttribute('style','display:block')
-  document.querySelector(".toggleButtons").setAttribute('style','display:none')
 }
 </script>
 
@@ -30,8 +24,8 @@ const AccountToggle = () => {
       <Language />
       <SearchBar />
       <Utils />
-      <Account />
-      <LoginRegisterButton />
+      <LoginRegisterButton v-if="!isLoggedIn"/>
+      <Account v-else/>
     </nav>
   </header>
 
@@ -55,7 +49,7 @@ button{
 }
 </style>
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted } from 'vue'
 import Logo from '../components/Logo.vue'
 import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
@@ -67,8 +61,6 @@ import {updateUser} from '../assets/main.js'
 onMounted( () => {
   updateUser()
 })
-onUnmounted( () => {
-  checkIfLogged()
-})
+checkIfLogged()
 
 </script>
