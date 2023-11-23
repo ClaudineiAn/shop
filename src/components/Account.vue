@@ -2,6 +2,7 @@
 </script>
 
 <template>
+  <div class="toggleAccont" style="display:none">
     <AccontIcon class="accont" />
     <div class="accountPopUp" style="display:none">
         <div class="accountData">
@@ -20,6 +21,7 @@
             <UserLogOut class="options"/>Log Out
         </RouterLink>
     </div>
+  </div>
 </template>
 <style>
 .accont{

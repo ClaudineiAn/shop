@@ -26,8 +26,8 @@ const AccountToggle = () => {}
       <Language />
       <SearchBar />
       <Utils />
-      <LoginRegisterButton style="display:none"/>
-      <Account style="display:none"/>
+      <LoginRegisterButton/>
+      <Account/>
     </nav>
   </header>
 
