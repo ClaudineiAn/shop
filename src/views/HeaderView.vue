@@ -57,7 +57,7 @@ import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
 import Utils from '../components/Utils.vue'
 import LoginRegisterButton from '../components/LoginRegisterButton.vue'
-import Account from '../components/Account2.vue'
+import Account from '../components/Account.vue'
 import {updateUser} from '../assets/main.js'
 
 onMounted( () => {
