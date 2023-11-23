@@ -20,7 +20,7 @@ export const makeLog = async (email, password) => {
 
     if(Cookies.get('id')==='undefined'||Cookies.get('email')==='undefined'||Cookies.get('name')==='undefined'||Cookies.get('typeProfile')==='undefined'){
         try {
-        const res = await axios.get('http://127.0.0.1:3000/checkLogin?email='+email.value+'&password='+password.value)
+        const res = await axios.get('https://cautious-puce-neckerchief.cyclic.app/checkLogin?email='+email.value+'&password='+password.value)
         if(res){
             updateCookie('id', res.data[0].idusuario)
             updateCookie('email', res.data[0].email)
