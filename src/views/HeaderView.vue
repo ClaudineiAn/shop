@@ -55,7 +55,7 @@ button{
 }
 </style>
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import Logo from '../components/Logo.vue'
 import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
@@ -67,6 +67,8 @@ import {updateUser} from '../assets/main.js'
 onMounted( () => {
   updateUser()
 })
-checkIfLogged()
+onUnmounted( () => {
+  checkIfLogged()
+})
 
 </script>
