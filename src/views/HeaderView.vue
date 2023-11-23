@@ -14,9 +14,13 @@ export const checkIfLogged = async () => {
     }
 }
 const LoginRegisterButtonToggle = () => {
-
+  document.querySelector(".toggleAccont").setAttribute('style','display:none')
+  document.querySelector(".toggleButtons").setAttribute('style','display:block')
 }
-const AccountToggle = () => {}
+const AccountToggle = () => {
+  document.querySelector(".toggleAccont").setAttribute('style','display:block')
+  document.querySelector(".toggleButtons").setAttribute('style','display:none')
+}
 </script>
 
 <template>
