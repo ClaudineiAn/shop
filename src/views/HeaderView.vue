@@ -5,18 +5,18 @@ import Cookies from 'js-cookie'
 export const checkIfLogged = async () => {
     try {
         if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
-          Account()
+          AccountToggle()
         } else {
-          LoginRegisterButton()
+          LoginRegisterButtonToggle()
         }
     } catch (error) {
-      LoginRegisterButton()
+      LoginRegisterButtonToggle()
     }
 }
-export const LoginRegisterButton = () => {
+const LoginRegisterButtonToggle = () => {
 
 }
-export const Account = () => {}
+const AccountToggle = () => {}
 </script>
 
 <template>
