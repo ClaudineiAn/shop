@@ -87,7 +87,11 @@ export const events = () => {
             const formData = new FormData()
             formData.append('image', selectedFile.value)
             try {
-                const response = await api.put("/upload", formData)
+                const response = await api.put("/upload", formData, {
+                    headers: {
+                      'Content-Type': 'multipart/form-data',
+                    }
+                })
                 nextTick(() => {
                     events()
                 })

@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     getProfileImg(){
-      return Cookies.get('image')==="null"||Cookies.get('image')===undefined?require("@/assets/profileImg/default.png"):'https://cautious-puce-neckerchief.cyclic.app/'+Cookies.get('image')
+      return Cookies.get('image')==="null"||Cookies.get('image')===undefined?require("@/assets/profileImg/default.png"):'https://cautious-puce-neckerchief.cyclic.app/image/'+Cookies.get('image')
     }
   },
   data() {
