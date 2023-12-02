@@ -80,14 +80,19 @@ export const events = () => {
             document.querySelector('.cameraIcon').nextSibling.click()
         })
         document.querySelector('#upload').addEventListener("change", async (event) => {
-            const selectedFile = ref(null)
-            selectedFile.value = event.target.files[0]
-            if(selectedFile.value===undefined)
-                return
-            const formData = new FormData()
-            formData.append('image', selectedFile.value)
+            const selectedFile = event.target.files[0];
+
+            if (!selectedFile) {
+                return;
+            }
+            
+            const dataToSend = {
+                imagem_perfil_data: selectedFile,
+                imagem_perfil_nome: selectedFile.name,
+                idusuario: Cookies.get('id')
+            };
             try {
-                const response = await api.put("/upload", formData, {
+                const response = await api.put("/upload", dataToSend, {
                     headers: {
                       'Content-Type': 'multipart/form-data',
                     }
