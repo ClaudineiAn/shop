@@ -85,14 +85,10 @@ export const events = () => {
             if (!selectedFile) {
                 return;
             }
-            
-            const dataToSend = {
-                imagem_perfil_data: selectedFile,
-                imagem_perfil_nome: selectedFile.name,
-                idusuario: Cookies.get('id')
-            };
+            const formData = new FormData()
+            formData.append('image', selectedFile)
             try {
-                const response = await api.put("/upload", dataToSend, {
+                const response = await api.put("/upload", formData, {
                     headers: {
                       'Content-Type': 'multipart/form-data',
                     }
