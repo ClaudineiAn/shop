@@ -30,7 +30,6 @@ export const makeLog = async (email, password) => {
             checkIfLogged()
             setEmail(Cookies.get('email'))
             setName(Cookies.get('name'))
-            updateUser()
             return 200
         }
         } catch (error) {
