@@ -105,8 +105,8 @@ import Cookies from 'js-cookie'
 console.log(Cookies)
 let email = Cookies.get('email')
 let name = Cookies.get('name')
-let imgType=Cookies.get('imagem_perfil_type')
-let imgData=Cookies.get('imagem_perfil_data')
+let imgType=Cookies.get('imagemType')
+let imgData=Cookies.get('imagemData')
 export const setEmail = (value) => {
   email=value
 }
