@@ -26,7 +26,9 @@ export const makeLog = async (email, password) => {
             updateCookie('email', res.data[0].email)
             updateCookie('name', res.data[0].nome)
             updateCookie('typeProfile', res.data[0].perfil_idperfil)
-            updateCookie('image', res.data[0].imagem_perfil)
+            updateCookie('imageName', res.data[0].imagem_perfil_name)
+            updateCookie('imageData', res.data[0].imagem_perfil_data)
+            updateCookie('imageType', res.data[0].imagem_perfil_tipo)
             checkIfLogged()
             setEmail(Cookies.get('email'))
             setName(Cookies.get('name'))
@@ -89,7 +91,7 @@ export const events = () => {
             formData.append('image', selectedFile)
             formData.append('email', Cookies.get('email'))
             try {
-                const response = await api.put("/upload", formData, {
+                const res = await api.put("/upload", formData, {
                     headers: {
                       'Content-Type': 'multipart/form-data',
                     }
@@ -97,7 +99,11 @@ export const events = () => {
                 nextTick(() => {
                     events()
                 })
-                showResponse(response.data)
+                console.log(res)
+                updateCookie('imageName', res.data[0].imagem_perfil_name)
+                updateCookie('imageData', res.data[0].imagem_perfil_data)
+                updateCookie('imageType', res.data[0].imagem_perfil_tipo)
+                showResponse('Profile Image Updated')
             } catch (error) {
                 showResponse(error)
                 nextTick(() => {
