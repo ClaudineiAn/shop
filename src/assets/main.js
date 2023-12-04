@@ -99,7 +99,6 @@ export const events = () => {
                 nextTick(() => {
                     events()
                 })
-                console.log(res)
                 updateCookie('imageName', res.data.imagem_perfil_name)
                 updateCookie('imageData', res.data.imagem_perfil_data.data)
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
