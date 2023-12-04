@@ -1,6 +1,4 @@
 <script setup>
-const imgType=undefined
-const imgData=undefined
 </script>
 
 <template>
@@ -107,7 +105,8 @@ import Cookies from 'js-cookie'
 
 let email = Cookies.get('email')
 let name = Cookies.get('name')
-
+let imgType=Cookies.get('imagem_perfil_type')
+let imgData=Cookies.get('imagem_perfil_data')
 export const setEmail = (value) => {
   email=value
 }
@@ -120,8 +119,6 @@ export default {
   setup() {
     onMounted( () => {
       //events()
-      imgType=Cookies.get('imagem_perfil_type')
-      imgData=Cookies.get('imagem_perfil_data')
     })
     return {
       CameraIcon,
