@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="`data:${imgType};base64,${imgData}`" alt="Image">
+        <img :src="`data:{{imgType}};base64,{{imgData}}`" alt="Image">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">

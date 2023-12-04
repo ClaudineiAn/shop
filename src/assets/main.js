@@ -34,8 +34,6 @@ export const makeLog = async (email, password) => {
             setName(Cookies.get('name'))
             setImgType(Cookies.get('imageType'))
             setImgData(Cookies.get('imageData'))
-            console.log(Cookies.get('imageType'))
-            console.log(res.data[0].imagem_perfil_tipo)
             return 200
         }
         } catch (error) {
