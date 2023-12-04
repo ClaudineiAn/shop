@@ -102,11 +102,11 @@ import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import axios from "axios"
 import Cookies from 'js-cookie'
-console.log(Cookies)
+
 let email = Cookies.get('email')
 let name = Cookies.get('name')
-let imgType=Cookies.get('imagemType')
-let imgData=Cookies.get('imagemData')
+let imgType=Cookies.get('imageType')
+let imgData=Cookies.get('imageData')
 export const setEmail = (value) => {
   email=value
 }
