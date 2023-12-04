@@ -27,7 +27,7 @@ export const makeLog = async (email, password) => {
             updateCookie('name', res.data[0].nome)
             updateCookie('typeProfile', res.data[0].perfil_idperfil)
             updateCookie('imageName', res.data[0].imagem_perfil_name)
-            updateCookie('imageData', res.data[0].imagem_perfil_data.data)
+            updateCookie('imageData', res.data[0].imagem_perfil_data)
             updateCookie('imageType', res.data[0].imagem_perfil_tipo)
             checkIfLogged()
             setEmail(Cookies.get('email'))
@@ -102,7 +102,7 @@ export const events = () => {
                     events()
                 })
                 updateCookie('imageName', res.data.imagem_perfil_name)
-                updateCookie('imageData', res.data.imagem_perfil_data.data)
+                updateCookie('imageData', res.data.imagem_perfil_data)
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {
