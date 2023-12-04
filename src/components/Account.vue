@@ -1,4 +1,5 @@
 <script setup>
+import Cookies from 'js-cookie'
 </script>
 
 <template>
@@ -101,7 +102,6 @@ import {showResponse,events} from "../assets/main.js"
 import { RouterLink } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import axios from "axios"
-import Cookies from 'js-cookie'
 
 let email = Cookies.get('email')
 let name = Cookies.get('name')
