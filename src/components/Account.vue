@@ -1,5 +1,6 @@
 <script setup>
-const imgType,imgData
+const imgType
+const imgData
 </script>
 
 <template>
