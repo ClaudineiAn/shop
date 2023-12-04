@@ -113,6 +113,12 @@ export const setEmail = (value) => {
 export const setName = (value) => {
   name=value
 }
+export const setImgType = (value) => {
+  imgType=value
+}
+export const setImgData = (value) => {
+  imgData=value
+}
 
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
