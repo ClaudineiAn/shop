@@ -107,7 +107,8 @@ let email = Cookies.get('email')
 let name = Cookies.get('name')
 let imgType=Cookies.get('imageType')
 let imgData=Cookies.get('imageData')
-let img="`<img :src="getProfileImg()" alt='Profile img'>`"
+let img=undefined
+getProfileImg()
 export const setEmail = (value) => {
   email=value
 }
@@ -136,7 +137,7 @@ export default {
   methods: {
     getProfileImg(){
       if(Cookies.get('image')==="null"||Cookies.get('image')===undefined)
-        return require("@/assets/profileImg/default.png")
+        img="`<img :src="require("@/assets/profileImg/default.png")" alt='Profile img'>`"
       else
         img="`<img :src="`data:${imgType};base64,${imgData}`" alt="Image">`"
     }
