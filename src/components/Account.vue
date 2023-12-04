@@ -117,7 +117,7 @@ export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
     onMounted( () => {
-      events()
+      //events()
     })
     return {
       CameraIcon,
