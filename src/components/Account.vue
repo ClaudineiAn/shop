@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img src="data:${Cookies.get('imagem_perfil_type')};base64,${Cookies.get('imagem_perfil_data')}" alt="Image">
+        <img :src="`data:${Cookies.get('imagem_perfil_type')};base64,${Cookies.get('imagem_perfil_data')}`" alt="Image">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
