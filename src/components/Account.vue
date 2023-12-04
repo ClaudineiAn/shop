@@ -1,6 +1,6 @@
 <script setup>
-const imgType
-const imgData
+const imgType=undefined
+const imgData=undefined
 </script>
 
 <template>
