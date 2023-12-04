@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="`data:{{imgType}};base64,{{imgData}}`" alt="Image">
+        {{ img }}
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
@@ -107,6 +107,7 @@ let email = Cookies.get('email')
 let name = Cookies.get('name')
 let imgType=Cookies.get('imageType')
 let imgData=Cookies.get('imageData')
+let img="`<img :src="getProfileImg()" alt='Profile img'>`"
 export const setEmail = (value) => {
   email=value
 }
@@ -134,7 +135,10 @@ export default {
   },
   methods: {
     getProfileImg(){
-      return Cookies.get('image')==="null"||Cookies.get('image')===undefined?require("@/assets/profileImg/default.png"):'https://cautious-puce-neckerchief.cyclic.app/image/'+Cookies.get('image')
+      if(Cookies.get('image')==="null"||Cookies.get('image')===undefined)
+        return require("@/assets/profileImg/default.png")
+      else
+        img="`<img :src="`data:${imgType};base64,${imgData}`" alt="Image">`"
     }
   },
   data() {
