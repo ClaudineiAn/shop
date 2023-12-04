@@ -107,6 +107,7 @@ let email = Cookies.get('email')
 let name = Cookies.get('name')
 let imgType=Cookies.get('imageType')
 let imgData=Cookies.get('imageData')
+console.log(imgData)
 export const setEmail = (value) => {
   email=value
 }
