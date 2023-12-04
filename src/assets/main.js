@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import {checkIfLogged} from '../views/HeaderView.vue'
 import {clearintervalId,setPlaying,getPlaying,getCounter,startIntervalBooks} from '../views/BooksView.vue'
-import {setEmail, setName} from '../components/Account.vue'
+import {setEmail, setName, setImgData, setImgType} from '../components/Account.vue'
 import api from '../services/api.ts'
 
 const checkIfLog = () => {
@@ -34,6 +34,8 @@ export const makeLog = async (email, password) => {
             setName(Cookies.get('name'))
             setImgType(Cookies.get('imageType'))
             setImgData(Cookies.get('imageData'))
+            console.log(Cookies.get('imageType'))
+            console.log(res.data[0].imagem_perfil_tipo)
             return 200
         }
         } catch (error) {
