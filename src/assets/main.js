@@ -100,9 +100,9 @@ export const events = () => {
                     events()
                 })
                 console.log(res)
-                updateCookie('imageName', res.data[0].imagem_perfil_name)
-                updateCookie('imageData', res.data[0].imagem_perfil_data)
-                updateCookie('imageType', res.data[0].imagem_perfil_tipo)
+                updateCookie('imageName', res.data.imagem_perfil_name)
+                updateCookie('imageData', res.data.imagem_perfil_data.data)
+                updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {
                 showResponse(error)
