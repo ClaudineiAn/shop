@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="updateProfileImg" alt="Profile img">
+        <img :src="updateProfileImg()" alt="Profile img">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
@@ -118,7 +118,6 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      console.log(`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`)
       return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
     } catch (error) {
       console.error(error);
