@@ -1,41 +1,4 @@
 <script setup>
-import AccontIcon from './icons/IconAccont.vue'
-import UserLogOut from './icons/IconLogOutUser.vue'
-import AdminAddProduct from './icons/IconAdminAddProduct.vue'
-import CameraIcon from './icons/IconCamera.vue'
-
-import api from "../services/api.ts"
-import Cookies from 'js-cookie'
-import { ref, onMounted } from 'vue'
-
-const email = Cookies.get('email')
-const name = Cookies.get('name')
-let img = ref(null)
-
-const setEmail = (value) => {
-  email.value = value
-}
-
-const setName = (value) => {
-  name.value = value
-}
-
-const updateProfileImg = async () => {
-  try {
-    if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
-      img.value = require("@/assets/profileImg/default.png")
-    } else {
-      const res = await api.get("/getimgfromemail?e=" + email.value)
-      img.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
-
-onMounted(() => {
-  updateProfileImg()
-})
 </script>
 
 <template>
@@ -168,7 +131,6 @@ export default {
   setup() {
     onMounted( () => {
       events()
-      getProfileImg()
     })
     return {
       CameraIcon,
