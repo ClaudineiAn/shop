@@ -130,7 +130,7 @@ export default {
     }
   },
   methods: {
-    getProfileImg(){
+    async getProfileImg(){
       if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
         return require("@/assets/profileImg/default.png");
       } else {
