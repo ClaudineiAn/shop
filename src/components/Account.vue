@@ -125,7 +125,7 @@ export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
     onMounted( () => {
-      //events()
+      events()
     })
     return {
       CameraIcon,
@@ -136,7 +136,7 @@ export default {
   },
   methods: {
     getProfileImg(){
-      if (Cookies.get('image') === "null" || Cookies.get('image') === undefined) {
+      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
         return require("@/assets/profileImg/default.png");
       } else {
         return `data:${imgType};base64,${imgData}`;
