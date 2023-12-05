@@ -104,7 +104,7 @@ export const events = () => {
                     events()
                 })
                 updateCookie('imageName', res.data.imagem_perfil_name)
-                updateCookie('imageData', res.data.imagem_perfil_data)
+                updateCookie('imageData', Buffer.from(res.data.imagem_perfil_data).toString('base64'))
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {

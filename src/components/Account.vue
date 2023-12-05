@@ -119,6 +119,8 @@ export const setImgType = (value) => {
 }
 export const setImgData = (value) => {
   imgData=value
+  console.log(imgData)
+  getProfileImg()
 }
 
 export default {
