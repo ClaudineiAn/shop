@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="updateProfileImg()" alt="Profile img">
+        <img :src="img" alt="Profile img">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
@@ -105,6 +105,7 @@ import Cookies from 'js-cookie'
 
 let email = Cookies.get('email')
 let name = Cookies.get('name')
+let img = undefined
 
 export const setEmail = (value) => {
   email=value
@@ -118,7 +119,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+      img = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
     } catch (error) {
       console.error(error);
       return Promise.reject(error);
@@ -136,6 +137,21 @@ export default {
       email,
       name,
       img,
+    }
+  },
+  methods: {
+    async getProfileImg(){
+      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+        return Promise.resolve(require("@/assets/profileImg/default.png"));
+      } else {
+        try {
+          const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+          img = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+        } catch (error) {
+          console.error(error);
+          return Promise.reject(error);
+        }
+      }
     }
   },
   data() {
