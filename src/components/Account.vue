@@ -147,9 +147,10 @@ export default {
         try {
           const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
           img = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+          console.log(img);
         } catch (error) {
           console.error(error);
-          return Promise.reject(error);
+          console.log(error);
         }
       }
     }
