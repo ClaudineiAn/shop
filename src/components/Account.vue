@@ -31,7 +31,7 @@ export const updateProfileImg = async () => {
       console.log(img.value)
     }
   } catch (error) {
-    console.error(error)
+    console.log(error)
   }
 }
 
