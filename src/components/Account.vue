@@ -112,23 +112,19 @@ export const setEmail = (value) => {
 export const setName = (value) => {
   name=value
 }
-export const profileImg = async () => {
+export const updateProfileImg = async () => {
   if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
     return Promise.resolve(require("@/assets/profileImg/default.png"));
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      const imageData = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
-      console.log(res.data[0])
-      console.log(`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`);
-      return Promise.resolve(imageData);
+      return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
     } catch (error) {
       console.error(error);
       return Promise.reject(error);
     }
   }
 }
-export const updateProfileImg = await profileImg()
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
