@@ -104,7 +104,7 @@ export const events = () => {
                     events()
                 })
                 updateCookie('imageName', res.data.imagem_perfil_name)
-                const imageDataArrayBuffer = res.data[0].imagem_perfil_data;
+                const imageDataArrayBuffer = res.data.imagem_perfil_data;
 
 if (imageDataArrayBuffer) {
   // Convert the ArrayBuffer to a Uint8Array
