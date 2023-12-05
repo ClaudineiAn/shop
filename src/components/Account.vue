@@ -21,7 +21,7 @@ const setName = (value) => {
   name.value = value
 }
 
-const updateProfileImg = async () => {
+export const updateProfileImg = async () => {
   try {
     if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
       img.value = require("@/assets/profileImg/default.png")
