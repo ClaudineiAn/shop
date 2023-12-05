@@ -5,7 +5,6 @@ import AdminAddProduct from './icons/IconAdminAddProduct.vue'
 import CameraIcon from './icons/IconCamera.vue'
 
 import api from "../services/api.ts"
-import {showResponse,events} from "../assets/main.js"
 import Cookies from 'js-cookie'
 import { ref, onMounted } from 'vue'
 
@@ -21,22 +20,20 @@ const setName = (value) => {
   name.value = value
 }
 
-export const updateProfileImg = async () => {
+const updateProfileImg = async () => {
   try {
     if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
       img.value = require("@/assets/profileImg/default.png")
     } else {
       const res = await api.get("/getimgfromemail?e=" + email.value)
       img.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`
-      console.log(img.value)
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
   }
 }
 
 onMounted(() => {
-  events()
   updateProfileImg()
 })
 </script>
@@ -130,4 +127,75 @@ onMounted(() => {
 }
 </style>
 <script>
+import AccontIcon from './icons/IconAccont.vue'
+import UserLogOut from './icons/IconLogOutUser.vue'
+import AdminAddProduct from './icons/IconAdminAddProduct.vue'
+import CameraIcon from './icons/IconCamera.vue'
+
+import api from "../services/api.ts"
+import {showResponse,events} from "../assets/main.js"
+
+import { RouterLink } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import axios from "axios"
+import Cookies from 'js-cookie'
+
+let email = Cookies.get('email')
+let name = Cookies.get('name')
+let img = undefined
+
+export const setEmail = (value) => {
+  email=value
+}
+export const setName = (value) => {
+  name=value
+}
+export const updateProfileImg = async () => {
+  if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+    return Promise.resolve(require("@/assets/profileImg/default.png"));
+  } else {
+    try {
+      const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+      img = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+    } catch (error) {
+      console.error(error);
+      return Promise.reject(error);
+    }
+  }
+}
+export default {
+  components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
+  setup() {
+    onMounted( () => {
+      events()
+      getProfileImg()
+    })
+    return {
+      CameraIcon,
+      email,
+      name,
+      img,
+    }
+  },
+  methods: {
+    async getProfileImg(){
+      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+        return Promise.resolve(require("@/assets/profileImg/default.png"));
+      } else {
+        try {
+          const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+          img = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+        } catch (error) {
+          console.error(error);
+          return Promise.reject(error);
+        }
+      }
+    }
+  },
+  data() {
+    return {
+      selectedFile: null
+    }
+  },
+}
 </script>
