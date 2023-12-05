@@ -30,6 +30,8 @@ export const makeLog = async (email, password) => {
             updateCookie('imageData', res.data[0].imagem_perfil_data)
             updateCookie('imageType', res.data[0].imagem_perfil_tipo)
             checkIfLogged()
+            console.log(res.data[0].imagem_perfil_data)
+            console.log(Cookies.get('imageData'))
             setEmail(Cookies.get('email'))
             setName(Cookies.get('name'))
             setImgType(Cookies.get('imageType'))
