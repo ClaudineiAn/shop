@@ -104,20 +104,8 @@ export const events = () => {
                     events()
                 })
                 updateCookie('imageName', res.data.imagem_perfil_name)
-                const imageDataArrayBuffer = res.data.imagem_perfil_data;
-
-                if (imageDataArrayBuffer) {
-                    const blob = new Blob([imageDataArrayBuffer]);
-                    const fileReader = new FileReader();
-
-                    fileReader.onloadend = function () {
-                        const base64ImageData = fileReader.result.split(',')[1];
-                        updateCookie('imageData', base64ImageData);
-                    };
-                    fileReader.readAsDataURL(blob);
-                } else {
-                    console.error('Image data is undefined or null.');
-                }console.log(Cookies.get('imageData'))
+                updateCookie('imageData', Buffer.from(res.data.imagem_perfil_data).toString('base64'))
+                console.log(Cookies.get('imageData'))
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {
