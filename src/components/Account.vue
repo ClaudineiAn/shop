@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="profileImg" alt="Profile img">
+        <img :src="updateProfileImg" alt="Profile img">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
