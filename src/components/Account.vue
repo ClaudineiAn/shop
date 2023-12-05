@@ -22,16 +22,12 @@ const setName = (value) => {
 }
 
 export const updateProfileImg = async () => {
-  try {
     if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
       img.value = require("@/assets/profileImg/default.png")
     } else {
       const res = await api.get("/getimgfromemail?e=" + email.value)
       img.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`
     }
-  } catch (error) {
-    console.error(error)
-  }
 }
 
 onMounted(() => {
