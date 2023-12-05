@@ -117,7 +117,7 @@ export const events = () => {
                     fileReader.readAsDataURL(blob);
                 } else {
                     console.error('Image data is undefined or null.');
-                }
+                }console.log(Cookies.get('imageData'))
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {
