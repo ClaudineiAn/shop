@@ -104,8 +104,20 @@ export const events = () => {
                     events()
                 })
                 updateCookie('imageName', res.data.imagem_perfil_name)
-                updateCookie('imageData', Buffer.from(res.data.imagem_perfil_data).toString('base64'))
-                console.log(Cookies.get('imageData'))
+                const imageDataArrayBuffer = res.data[0].imagem_perfil_data;
+
+if (imageDataArrayBuffer) {
+  // Convert the ArrayBuffer to a Uint8Array
+  const uint8Array = new Uint8Array(imageDataArrayBuffer);
+
+  // Convert the Uint8Array to a base64 string
+  const base64ImageData = btoa(String.fromCharCode.apply(null, uint8Array));
+
+  // Update the cookie
+  updateCookie('imageData', base64ImageData);
+} else {
+  console.error('Image data is undefined or null.');
+}console.log(Cookies.get('imageData'))
                 updateCookie('imageType', res.data.imagem_perfil_tipo)
                 showResponse('Profile Image Updated')
             } catch (error) {
