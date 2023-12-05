@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img :src="getProfileImg()" alt="Profile img">
+        <img :src="profileImg" alt="Profile img">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
@@ -112,20 +112,21 @@ export const setEmail = (value) => {
 export const setName = (value) => {
   name=value
 }
-export const updateProfileImg = async (value) => {
+export const profileImg = async (value) => {
   if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
-        return require("@/assets/profileImg/default.png");
-      } else {
-        try {
-          const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
-          const imageData = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
-          return imageData;
-        } catch (error) {
-          console.error(error)
-        }
-      }
+    return Promise.resolve(require("@/assets/profileImg/default.png"));
+  } else {
+    try {
+      const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+      const imageData = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
+      return Promise.resolve(imageData);
+    } catch (error) {
+      console.error(error);
+      return Promise.reject(error);
+    }
+  }
 }
-
+export const updateProfileImg = await profileImg(value)
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
@@ -137,21 +138,6 @@ export default {
       email,
       name,
       img,
-    }
-  },
-  methods: {
-    async getProfileImg(){
-      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
-        return require("@/assets/profileImg/default.png");
-      } else {
-        try {
-          const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
-          const imageData = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
-          return imageData;
-        } catch (error) {
-          console.error(error)
-        }
-      }
     }
   },
   data() {
