@@ -118,7 +118,7 @@ export const updateProfileImg = async (value) => {
       } else {
         try {
           const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
-          return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
+          return await `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
         } catch (error) {
           console.error(error)
         }
@@ -145,7 +145,7 @@ export default {
       } else {
         try {
           const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
-          return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
+          return await `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
         } catch (error) {
           console.error(error)
         }
