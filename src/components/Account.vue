@@ -112,7 +112,7 @@ export const setEmail = (value) => {
 export const setName = (value) => {
   name=value
 }
-export const profileImg = async (value) => {
+export const profileImg = async () => {
   if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
     return Promise.resolve(require("@/assets/profileImg/default.png"));
   } else {
@@ -126,7 +126,7 @@ export const profileImg = async (value) => {
     }
   }
 }
-export const updateProfileImg = await profileImg(value)
+export const updateProfileImg = await profileImg()
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
