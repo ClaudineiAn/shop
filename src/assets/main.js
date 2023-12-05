@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import {checkIfLogged} from '../views/HeaderView.vue'
 import {clearintervalId,setPlaying,getPlaying,getCounter,startIntervalBooks} from '../views/BooksView.vue'
-import {setEmail, setName, setImgData, setImgType} from '../components/Account.vue'
+import {setEmail, setName, updateProfileImg} from '../components/Account.vue'
 import api from '../services/api.ts'
 
 const checkIfLog = () => {
@@ -26,16 +26,10 @@ export const makeLog = async (email, password) => {
             updateCookie('email', res.data[0].email)
             updateCookie('name', res.data[0].nome)
             updateCookie('typeProfile', res.data[0].perfil_idperfil)
-            updateCookie('imageName', res.data[0].imagem_perfil_name)
-            updateCookie('imageData', Buffer.from(res.data[0].imagem_perfil_data).toString('base64'))
-            updateCookie('imageType', res.data[0].imagem_perfil_tipo)
             checkIfLogged()
-            console.log(res.data[0].imagem_perfil_data)
-            console.log(Cookies.get('imageData'))
             setEmail(Cookies.get('email'))
             setName(Cookies.get('name'))
-            setImgType(Cookies.get('imageType'))
-            setImgData(Cookies.get('imageData'))
+            updateProfileImg()
             return 200
         }
         } catch (error) {
@@ -103,22 +97,7 @@ export const events = () => {
                 nextTick(() => {
                     events()
                 })
-                updateCookie('imageName', res.data.imagem_perfil_name)
-                const imageDataArrayBuffer = res.data.imagem_perfil_data;
-
-if (imageDataArrayBuffer) {
-  // Convert the ArrayBuffer to a Uint8Array
-  const uint8Array = new Uint8Array(imageDataArrayBuffer);
-
-  // Convert the Uint8Array to a base64 string
-  const base64ImageData = btoa(String.fromCharCode.apply(null, uint8Array));
-
-  // Update the cookie
-  updateCookie('imageData', base64ImageData);
-} else {
-  console.error('Image data is undefined or null.');
-}console.log(Cookies.get('imageData'))
-                updateCookie('imageType', res.data.imagem_perfil_tipo)
+                updateProfileImg()
                 showResponse('Profile Image Updated')
             } catch (error) {
                 showResponse(error)

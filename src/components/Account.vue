@@ -105,21 +105,14 @@ import Cookies from 'js-cookie'
 
 let email = Cookies.get('email')
 let name = Cookies.get('name')
-let imgType=Cookies.get('imageType')
-let imgData=Cookies.get('imageData')
-console.log(imgData)
+
 export const setEmail = (value) => {
   email=value
 }
 export const setName = (value) => {
   name=value
 }
-export const setImgType = (value) => {
-  imgType=value
-}
-export const setImgData = (value) => {
-  imgData=value
-  console.log(imgData)
+export const updateProfileImg = (value) => {
   getProfileImg()
 }
 
@@ -141,7 +134,13 @@ export default {
       if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
         return require("@/assets/profileImg/default.png");
       } else {
-        return `data:${imgType};base64,${imgData}`;
+        try {
+          const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
+          console.log(res)
+          //return `data:${imgType};base64,${imgData}`;
+        } catch (error) {
+          console.error(error)
+        }
       }
     }
   },
