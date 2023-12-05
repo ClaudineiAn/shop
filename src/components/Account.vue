@@ -116,6 +116,19 @@ export const updateProfileImg = (value) => {
   getProfileImg()
 }
 
+const getProfileImg = async() => {
+  if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+    return require("@/assets/profileImg/default.png");
+  } else {
+    try {
+      const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
+      console.log(res)
+      //return `data:${imgType};base64,${imgData}`;
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
@@ -127,21 +140,6 @@ export default {
       email,
       name,
       img,
-    }
-  },
-  methods: {
-    async getProfileImg(){
-      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
-        return require("@/assets/profileImg/default.png");
-      } else {
-        try {
-          const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
-          console.log(res)
-          //return `data:${imgType};base64,${imgData}`;
-        } catch (error) {
-          console.error(error)
-        }
-      }
     }
   },
   data() {
