@@ -112,8 +112,18 @@ export const setEmail = (value) => {
 export const setName = (value) => {
   name=value
 }
-export const updateProfileImg = (value) => {
-  getProfileImg()
+export const updateProfileImg = async (value) => {
+  if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+        return require("@/assets/profileImg/default.png");
+      } else {
+        try {
+          const res = await api.get("/getimgfromemail?e="+Cookies.get('email'))
+          console.log(res)
+          //return `data:${imgType};base64,${imgData}`;
+        } catch (error) {
+          console.error(error)
+        }
+      }
 }
 
 export default {
