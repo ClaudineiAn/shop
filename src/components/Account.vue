@@ -120,7 +120,7 @@ export const profileImg = async () => {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
       const imageData = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`;
       console.log(imageData)
-      console.log(Promise.resolve(imageData))
+      console.log(Promise.resolve(`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data}`))
       return Promise.resolve(imageData);
     } catch (error) {
       console.error(error);
