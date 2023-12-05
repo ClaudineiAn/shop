@@ -118,7 +118,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      cosole.log(`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`)
+      console.log(`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`)
       return `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
     } catch (error) {
       console.error(error);
