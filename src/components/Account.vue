@@ -117,7 +117,7 @@ export const updateProfileImg = async () => {
     return Promise.resolve(require("@/assets/profileImg/default.png"));
   } else {
     try {
-      const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+      const res = await api.get("/image?e=" + Cookies.get('email'));
       imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`
     } catch (error) {
       console.error(error);
