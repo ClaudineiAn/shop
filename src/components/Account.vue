@@ -118,7 +118,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      document.querySelector('.accountPopUp > .accountData > img').setAttribute('src',`data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`)
+      document.querySelector('.accountPopUp > .accountData > img').setAttribute('src',`data:${res.data[0].imagem_perfil_tipo};charset=utf-8;base64,${res.data[0].imagem_perfil_data.data}`)
     } catch (error) {
       console.error(error);
       return Promise.reject(error);
