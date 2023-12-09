@@ -5,7 +5,7 @@
   <AccontIcon class="accont" />
   <div class="accountPopUp" style="display:none">
       <div class="accountData">
-        <img alt="Profile img">
+        <img :src="imgSrc" alt="Profile img">
           <CameraIcon class="cameraIcon" />
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
@@ -118,7 +118,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
-      document.querySelector('.accountPopUp > .accountData > img').setAttribute('src',`data:${res.data[0].imagem_perfil_tipo};charset=utf-8;base64,${res.data[0].imagem_perfil_data.data}`)
+      imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`
     } catch (error) {
       console.error(error);
       return Promise.reject(error);
@@ -128,15 +128,30 @@ export const updateProfileImg = async () => {
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
   setup() {
+    setup() {
+    const imgSrc = ref(null);
+
+    const setProfileImg = async () => {
+      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+        imgSrc.value = require("@/assets/profileImg/default.png");
+      } else {
+        try {
+          const res = await api.get("/getimgfromemail?e=" + Cookies.get('email'));
+          imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
     onMounted( () => {
       events()
-      updateProfileImg()
+      setProfileImg()
     })
     return {
       CameraIcon,
       email,
       name,
-      img,
+      imgSrc,
     }
   },
   data() {
