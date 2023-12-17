@@ -87,7 +87,7 @@ export const events = () => {
             }
             const formData = new FormData()
             formData.append('image', selectedFile)
-            formData.append('email', Cookies.get('email'))
+            formData.append('id', Cookies.get('id'))
             try {
                 const res = await api.put("/upload", formData, {
                     headers: {
