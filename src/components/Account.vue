@@ -127,22 +127,22 @@ export const updateProfileImg = async () => {
 }
 export default {
   components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
-  setup() {
     setup() {
-    const imgSrc = ref(null);
+		const imgSrc = ref(null);
 
-    const setProfileImg = async () => {
-      if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
-        imgSrc.value = require("@/assets/profileImg/default.png");
-      } else {
-        try {
-          const res = await api.get("/getimgfromemail?i=" + Cookies.get('id'));
-          imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
+		const setProfileImg = async () => {
+		  if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
+			imgSrc.value = require("@/assets/profileImg/default.png");
+		  } else {
+			try {
+			  const res = await api.get("/getimgfromemail?i=" + Cookies.get('id'));
+			  imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+			} catch (error) {
+			  console.error(error);
+			}
+		  }
+		};
+	}
     onMounted( () => {
       events()
       setProfileImg()
