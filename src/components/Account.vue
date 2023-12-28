@@ -119,8 +119,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/image?e=" + Cookies.get('email'));
-	  console.log(res)
-      imgSrc.value = res.data[0].image
+      imgSrc.value = res.data.image
     } catch (error) {
       console.error(error);
       return Promise.reject(error);
@@ -138,7 +137,7 @@ export default {
       } else {
         try {
 		  const res = await api.get("/image?e=" + Cookies.get('email'));
-          imgSrc.value = res.data[0].image;
+          imgSrc.value = res.data.image;
         } catch (error) {
           console.error(error);
         }
