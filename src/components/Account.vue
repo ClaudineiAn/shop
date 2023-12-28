@@ -113,6 +113,7 @@ export const setName = (value) => {
   name=value
 }
 export const updateProfileImg = async () => {
+    const imgSrc = ref(null);
   if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {
     return Promise.resolve(require("@/assets/profileImg/default.png"));
   } else {
