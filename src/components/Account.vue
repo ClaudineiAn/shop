@@ -119,6 +119,7 @@ export const updateProfileImg = async () => {
   } else {
     try {
       const res = await api.get("/image?i=" + Cookies.get('id'));
+	  console.log(res.data[0].image)
       imgSrc.value = res.data[0].image
     } catch (error) {
       console.error(error);
