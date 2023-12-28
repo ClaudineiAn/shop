@@ -118,8 +118,7 @@ export const updateProfileImg = async () => {
     return Promise.resolve(require("@/assets/profileImg/default.png"));
   } else {
     try {
-      const res = await api.get("/image?i=" + Cookies.get('id'));
-	  console.log(res.data[0].image)
+      const res = await api.get("/image?e=" + Cookies.get('email'));
       imgSrc.value = res.data[0].image
     } catch (error) {
       console.error(error);
@@ -137,7 +136,7 @@ export default {
         imgSrc.value = require("@/assets/profileImg/default.png");
       } else {
         try {
-          const res = await api.get("/image?i=" + Cookies.get('id'));
+		  const res = await api.get("/image?e=" + Cookies.get('email'));
           imgSrc.value = res.data[0].image;
         } catch (error) {
           console.error(error);
