@@ -136,7 +136,7 @@ export default {
       } else {
         try {
           const res = await api.get("/getimgfromemail?i=" + Cookies.get('id'));
-          imgSrc.value = `data:${res.data[0].imagem_perfil_tipo};base64,${res.data[0].imagem_perfil_data.data}`;
+          imgSrc.value = res.data[0].image;
         } catch (error) {
           console.error(error);
         }
