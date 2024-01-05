@@ -1,4 +1,5 @@
 <script>
+import { onMounted } from 'vue'
 import ArrowIcon from '../components/icons/IconArrow.vue'
 export default {
   components: {
