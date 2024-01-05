@@ -28,9 +28,9 @@ export default {
       </div>
       <div class="box">
         <div class="titles">
-          <h2>Home</h2>
-          <h2>Trolley</h2>
-          <h2>Favorite</h2>
+          <h2>Trolley<div></div></h2>
+          <h2>Home<div></div></h2>
+          <h2>Favorite<div></div></h2>
         </div>
         <div class="data">
         </div>
@@ -103,11 +103,63 @@ export default {
     background-position: 100% 0;
   }
 }
-.banner div.box{}
-.banner div.box > div.titles{}
-.banner div.box > div.titles > h2:first-child{}
-.banner div.box > div.titles > h2:nth-child(2){}
+.banner div.box{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f8eb6b;
+  background: #0000008c;
+}
+.banner div.box > div.titles{
+  top: 50px;
+  position: relative;
+  display: flex;
+}
+.banner div.box > div.titles > h2{
+  margin: 2vw 7vw;
+}
+.banner div.box > div.titles > h2:before{
+  overflow: hidden;
+  background: linear-gradient(transparent, #f8eb6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: none;
+}
+.banner div.box > div.titles > h2:after{
+  position: absolute;
+  box-shadow: 0px 15px 10px;
+  left: 0;
+  top: 0;
+  color: transparent;
+  background: #f8eb6bb8;
+  transform: rotateX(-85deg) translateY(240px);
+  filter: blur(20px);
+}
+.banner div.box > div.titles > h2:first-child:before{
+  content: "Trolley"
+}
+.banner div.box > div.titles > h2:first-child:after{
+  content: "Trolley"
+}
+.banner div.box > div.titles > h2:nth-child(2){
+  font-size: 4vw;
+}
+.banner div.box > div.titles > h2:nth-child(2):before{
+  content: "Home"
+}
+.banner div.box > div.titles > h2:nth-child(2):after{
+  content: "Home"
+}
 .banner div.box > div.titles > h2:last-child{}
+.banner div.box > div.titles > h2:last-child:before{
+  content: "Favorite"
+}
+.banner div.box > div.titles > h2:last-child:after{
+  content: "Favorite"
+}
 .banner div.box > div.data{}
 .banner > a{
   display: flex;
