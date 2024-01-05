@@ -124,6 +124,7 @@ export default {
   margin: 2vw 7vw;
   display: flex;
   color: transparent;
+  height: fit-content;
 }
 .banner div.box>div.titles>h2:nth-child(2) {
     font-size: 4vw;
