@@ -4,6 +4,18 @@ export default {
   components: {
     ArrowIcon
   },
+  setup() {
+    const setProperHeight = async () => {
+      const headerHeight = document.querySelector("header").offsetHeight;
+      document.querySelector(".banner > div.box > div.titles").style.height=`${headerHeight}px`};
+    onMounted(() => {
+      setProperHeight();
+    });
+
+    return {
+      ArrowIcon,
+    };
+  },
 }
 </script>
 <template>
@@ -12,6 +24,15 @@ export default {
       <div>
         <h1>Shop</h1>
       </div>
+	  <div class="box">
+      <div class="titles">
+        <h2>Home</h2>
+        <h2>Trolley</h2>
+        <h2>Favorite</h2>
+      </div>
+      <div class="data">
+      </div>
+	  </div>
       <RouterLink to="/books">
         <span>Scrow Down</span>
         <ArrowIcon id="arrowIcon" />
@@ -80,6 +101,12 @@ export default {
     background-position: 100% 0;
   }
 }
+.banner > div.box{}
+.banner > div.box > div.titles{}
+.banner > div.box > div.titles > h2:first-child{}
+.banner > div.box > div.titles > h2:nth-child(2){}
+.banner > div.box > div.titles > h2:last-child{}
+.banner > div.box > div.data{}
 .banner > a{
   display: flex;
   flex-direction: column;
