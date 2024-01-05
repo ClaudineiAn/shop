@@ -114,12 +114,16 @@ export default {
   background: #0000008c;
 }
 .banner div.box > div.titles{
-  top: 50px;
   position: relative;
   display: flex;
 }
 .banner div.box > div.titles > h2{
   margin: 2vw 7vw;
+  display: flex;
+  color: transparent;
+}
+.banner div.box>div.titles>h2:nth-child(2) {
+    font-size: 4vw;
 }
 .banner div.box > div.titles > h2:before{
   overflow: hidden;
@@ -128,11 +132,12 @@ export default {
   -webkit-text-fill-color: transparent;
   animation: none;
 }
+.banner div.box>div.titles>h2:not(:nth-child(2)):after {
+    transform: rotateX(-85deg) translateY(130px);
+}
 .banner div.box > div.titles > h2:after{
   position: absolute;
   box-shadow: 0px 15px 10px;
-  left: 0;
-  top: 0;
   color: transparent;
   background: #f8eb6bb8;
   transform: rotateX(-85deg) translateY(240px);
