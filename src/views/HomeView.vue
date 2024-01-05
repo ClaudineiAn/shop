@@ -7,7 +7,7 @@ export default {
   setup() {
     const setProperHeight = async () => {
       const headerHeight = document.querySelector("header").offsetHeight;
-      document.querySelector(".banner > div.box > div.titles").style.height=`${headerHeight}px`};
+      document.querySelector(".banner > div.box > div.titles").setAttriute('style',`top:${headerHeight}px`);
     onMounted(() => {
       setProperHeight();
     });
