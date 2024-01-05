@@ -6,12 +6,15 @@ export default {
     ArrowIcon
   },
   setup() {
-    const setProperHeight = async () => {
+    const setProperMetrics = async () => {
       const headerHeight = document.querySelector("header").offsetHeight;
       document.querySelector(".banner > div.box > div.titles").setAttribute('style', `top:${headerHeight}px`);
+      document.querySelectorAll('.banner div.box>div.titles>h2>div').forEach(element => {
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px`)
+      })
     };
     onMounted(() => {
-      setProperHeight();
+      setProperMetrics();
     });
 
     return {
