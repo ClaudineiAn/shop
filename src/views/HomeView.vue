@@ -10,7 +10,7 @@ export default {
       const headerHeight = document.querySelector("header").offsetHeight;
       document.querySelector(".banner > div.box > div.titles").setAttribute('style', `top:${headerHeight}px`);
       document.querySelectorAll('.banner div.box>div.titles>h2>div').forEach(element => {
-        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px`)
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;height:${element.parentNode.offsetHeight}px`)
       })
     };
     onMounted(() => {
