@@ -26,8 +26,14 @@ export default {
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
           translateYValue--
-          if(translateYValue<(element.parentNode.offsetHeight/2))
-            translateYValue = element.parentNode.offsetHeight-10
+          if(translateYValue<(element.parentNode.offsetHeight/2)){
+            element.classList.add("fadeout")
+            translateYValue = element.parentNode.offsetHeight-10;
+            clearInterval(titleAniVar)
+            setTimeout(function() {
+              titleAniVar = setInterval(titleAniDownUp, 80)
+            }, 10000);
+          }
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
