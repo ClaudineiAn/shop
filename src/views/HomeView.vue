@@ -20,17 +20,28 @@ export default {
     const setAnimations = async () => {
       const titleAniDownUp = async () => {
         document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
+          element.classList.remove("fadeout")
           var transform = element.getAttribute('style');
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
           translateYValue--
-          if(translateYValue<(element.parentNode.offsetHeight/2))
+          if(translateYValue<(element.parentNode.offsetHeight/2)){
+            element.classList.add("fadeout")
             translateYValue = element.parentNode.offsetHeight-10;
+            clearInterval(titleAniVar)
+            var randomNumber = Math.random();
+            var min = 1;
+            var max = 10;
+            var scaledRandomNumber = Math.floor(randomNumber * (max - min + 1)) + min;
+            setTimeout(function() {
+              var titleAniVar = setInterval(titleAniDownUp, 80)
+            }, scaledRandomNumber*1000);
+          }
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
-      var titleAniVar = setInterval(titleAniDownUp, 100)
+      var titleAniVar = setInterval(titleAniDownUp, 80)
     };
     onMounted(() => {
       setProperMetrics();
@@ -66,6 +77,9 @@ export default {
   </main>
 </template>
 <style>
+.fadeout{
+  opacity:0;
+}
 .banner:before{
   content: "";
   background: #000000eb;
