@@ -9,12 +9,37 @@ export default {
     const setProperMetrics = async () => {
       const headerHeight = document.querySelector("header").offsetHeight;
       document.querySelector(".banner > div.box > div.titles").setAttribute('style', `top:${headerHeight}px`);
-      document.querySelectorAll('.banner div.box>div.titles>h2>div').forEach(element => {
+      document.querySelectorAll('.banner div.box>div.titles>h2>div:first-child').forEach(element => {
         element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;height:${element.parentNode.offsetHeight}px`)
       })
+      document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
+        const translateY=element.parentNode.offsetWidth-10
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateY--}px) rotateX(65deg)`)
+      })
+    };
+    const setAnimations = async () => {
+      const titleAniDownUp = async () => {
+        document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
+          var myElement = document.getElementById("myElement");
+          var computedStyle = window.getComputedStyle(myElement);
+          var transformValue = computedStyle.getPropertyValue("transform");
+          var translateYValue = 0;
+          if (transformValue && transformValue !== 'none') {
+              var translateYMatch = transformValue.match(/translateY\(([^)]+)\)/);
+              if (translateYMatch) {
+                  translateYValue = parseFloat(translateYMatch[1])--;
+              }
+          }
+          if(translateYValue>element.parentNode.offsetWidth/2)
+            translateYValue = element.parentNode.offsetWidth-10;
+          element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateYValue}px) rotateX(65deg)`)
+        })
+      }
+      var titleAniVar = setInterval(titleAniDownUp, 100)
     };
     onMounted(() => {
       setProperMetrics();
+      setAnimations()
     });
 
     return {
@@ -175,7 +200,14 @@ export default {
     background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
     filter: blur(5px);
 }
-.banner div.box > div.titles > h2 > div:last-child {}
+.banner div.box > div.titles > h2 > div:last-child {
+    position: absolute;
+    height: 10px;
+    background: #bfbfbf87;
+    transform: rotateX(65deg);
+    border-radius: 0 0 50% 50%;
+    filter: blur(3px);
+}
 .banner div.box > div.data{}
 .banner > a{
   display: flex;
