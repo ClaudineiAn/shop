@@ -26,10 +26,10 @@ export default {
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
-          if(translateYValue<(element.parentNode.offsetHeight))
-            operation = true
-          if(translateYValue>(element.parentNode.offsetHeight/2))
+          if(translateYValue<(element.parentNode.offsetHeight-10))
             operation = false
+          if(translateYValue>(element.parentNode.offsetHeight/2))
+            operation = true
           if(operation)
             translateYValue++
           else
@@ -37,7 +37,7 @@ export default {
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
-      var titleAniVar = setInterval(titleAniDownUp, 200)
+      var titleAniVar = setInterval(titleAniDownUp, 100)
     };
     onMounted(() => {
       setProperMetrics();
