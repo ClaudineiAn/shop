@@ -26,7 +26,7 @@ export default {
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
-          if(translateYValue<(element.parentNode.offsetHeight-10))
+          if(translateYValue<(element.parentNode.offsetHeight))
             operation = true
           if(translateYValue>(element.parentNode.offsetHeight/2))
             operation = false
