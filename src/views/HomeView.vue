@@ -20,7 +20,7 @@ export default {
     const setAnimations = async () => {
       const titleAniDownUp = async () => {
         document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
-          var transform = element.getAttribute('slyle');
+          var transform = element.getAttribute('style');
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
