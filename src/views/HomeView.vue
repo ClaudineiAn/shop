@@ -26,12 +26,12 @@ export default {
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
           translateYValue--
-          if(translateYValue<(element.parentNode.offsetHeight))
+          if(translateYValue<(element.parentNode.offsetHeight/2))
             translateYValue = element.parentNode.offsetHeight-10;
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
-      var titleAniVar = setInterval(titleAniDownUp, 200)
+      var titleAniVar = setInterval(titleAniDownUp, 100)
     };
     onMounted(() => {
       setProperMetrics();
