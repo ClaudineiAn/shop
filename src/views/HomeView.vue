@@ -31,9 +31,9 @@ export default {
       </div>
       <div class="box">
         <div class="titles">
-          <h2>Trolley<div></div></h2>
-          <h2>Home<div></div></h2>
-          <h2>Favorite<div></div></h2>
+          <h2>Trolley<div></div><div></div></h2>
+          <h2>Home<div></div><div></div></h2>
+          <h2>Favorite<div></div><div></div></h2>
         </div>
         <div class="data">
         </div>
@@ -169,6 +169,13 @@ export default {
 .banner div.box > div.titles > h2:last-child:after{
   content: "Favorite"
 }
+.banner div.box > div.titles > h2 > div:first-child {
+    position: absolute;
+    top: 1.2vw;
+    background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
+    filter: blur(5px);
+}
+.banner div.box > div.titles > h2 > div:last-child {}
 .banner div.box > div.data{}
 .banner > a{
   display: flex;
