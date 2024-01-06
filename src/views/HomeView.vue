@@ -20,24 +20,18 @@ export default {
     const setAnimations = async () => {
       const titleAniDownUp = async () => {
         document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
-          var operation = true
           element.classList.remove("fadeout")
           var transform = element.getAttribute('style');
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
-          if(translateYValue<(element.parentNode.offsetHeight-10))
-            operation = false
-          if(translateYValue>(element.parentNode.offsetHeight/2))
-            operation = true
-          if(operation)
-            translateYValue++
-          else
-            translateYValue--
+          translateYValue--
+          if(translateYValue<(element.parentNode.offsetHeight))
+            translateYValue = element.parentNode.offsetHeight-10;
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
-      var titleAniVar = setInterval(titleAniDownUp, 100)
+      var titleAniVar = setInterval(titleAniDownUp, 200)
     };
     onMounted(() => {
       setProperMetrics();
