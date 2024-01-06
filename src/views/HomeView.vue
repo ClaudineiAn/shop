@@ -23,9 +23,9 @@ export default {
           var computedStyle = window.getComputedStyle(element);
           var transformValue = computedStyle.getPropertyValue("transform");
           var translateYValue = 0;
-          console.log(transformValue)
           if (transformValue && transformValue !== 'none') {
               var translateYMatch = transformValue.match(/translateY\(([^)]+)\)/);
+              console.log(translateYMatch)
               if (translateYMatch) {
                   translateYValue = parseFloat(translateYMatch[1]);
               }
