@@ -14,7 +14,7 @@ export default {
       })
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
         const translateY=element.parentNode.offsetWidth-10
-        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateY--}px) rotateX(65deg)`)
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateY}px) rotateX(65deg)`)
       })
     };
     const setAnimations = async () => {
