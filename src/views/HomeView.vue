@@ -27,9 +27,10 @@ export default {
           if (transformValue && transformValue !== 'none') {
               var translateYMatch = transformValue.match(/translateY\(([^)]+)\)/);
               if (translateYMatch) {
-                  translateYValue = parseFloat(translateYMatch[1])--;
+                  translateYValue = parseFloat(translateYMatch[1]);
               }
           }
+          translateYValue--
           if(translateYValue>element.parentNode.offsetWidth/2)
             translateYValue = element.parentNode.offsetWidth-10;
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateYValue}px) rotateX(65deg)`)
