@@ -30,6 +30,7 @@ export default {
               }
           }
           translateYValue--
+          console.log(translateYValue+"   "+(element.parentNode.offsetHeight/2))
           if(translateYValue<(element.parentNode.offsetHeight/2))
             translateYValue = element.parentNode.offsetHeight-10;
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
