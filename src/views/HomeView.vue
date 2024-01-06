@@ -14,8 +14,7 @@ export default {
       })
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
         const translateY=element.parentNode.offsetHeight-10
-        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateY}px) rotateX(65deg)`)
-        console.log(translateY)
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateY}px) rotateX(65deg)`)
       })
     };
     const setAnimations = async () => {
@@ -31,10 +30,9 @@ export default {
               }
           }
           translateYValue--
-          if(translateYValue>element.parentNode.offsetHeight/2)
+          if(translateYValue<element.parentNode.offsetHeight/2)
             translateYValue = element.parentNode.offsetHeight-10;
-          console.log(translateYValue)
-          element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateYValue}px) rotateX(65deg)`)
+          element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
       var titleAniVar = setInterval(titleAniDownUp, 100)
