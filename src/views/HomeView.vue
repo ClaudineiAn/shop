@@ -20,14 +20,17 @@ export default {
     const setAnimations = async () => {
       const titleAniDownUp = async () => {
         document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
-          element.classList.remove("fadeout")
           var transform = element.getAttribute('style');
           var translateYValue = 0;
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
           translateYValue--
-          if(translateYValue<0)
+          if(translateYValue<0){
             translateYValue = element.parentNode.offsetHeight-10;
+            element.classList.remove("fadeout")
+          }
+          if(translateYValue<(element.parentNode.offsetHeight/2))
+            element.classList.add("fadeout")
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
