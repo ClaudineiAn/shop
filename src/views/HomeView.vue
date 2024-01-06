@@ -26,18 +26,8 @@ export default {
           var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
           translateYValue = parseFloat(translateYMatch[1]);
           translateYValue--
-          if(translateYValue<(element.parentNode.offsetHeight/2)){
-            element.classList.add("fadeout")
-            translateYValue = element.parentNode.offsetHeight-10;
-            clearInterval(titleAniVar)
-            var randomNumber = Math.random();
-            var min = 1;
-            var max = 10;
-            var scaledRandomNumber = Math.floor(randomNumber * (max - min + 1)) + min;
-            setTimeout(function() {
-              var titleAniVar = setInterval(titleAniDownUp, 80)
-            }, scaledRandomNumber*1000);
-          }
+          if(translateYValue<(element.parentNode.offsetHeight/2))
+            translateYValue = element.parentNode.offsetHeight-10
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
