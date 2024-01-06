@@ -20,8 +20,7 @@ export default {
     const setAnimations = async () => {
       const titleAniDownUp = async () => {
         document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
-          var myElement = document.getElementById("myElement");
-          var computedStyle = window.getComputedStyle(myElement);
+          var computedStyle = window.getComputedStyle(element);
           var transformValue = computedStyle.getPropertyValue("transform");
           var translateYValue = 0;
           if (transformValue && transformValue !== 'none') {
