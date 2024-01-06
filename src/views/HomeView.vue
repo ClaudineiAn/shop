@@ -13,7 +13,7 @@ export default {
         element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;height:${element.parentNode.offsetHeight}px`)
       })
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
-        const translateY=element.parentNode.offsetWidth-10
+        const translateY=element.parentNode.offsetHeight-10
         element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateY}px) rotateX(65deg)`)
       })
     };
@@ -30,8 +30,8 @@ export default {
               }
           }
           translateYValue--
-          if(translateYValue>element.parentNode.offsetWidth/2)
-            translateYValue = element.parentNode.offsetWidth-10;
+          if(translateYValue>element.parentNode.offsetHeight/2)
+            translateYValue = element.parentNode.offsetHeight-10;
           element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transorm: translateY(${translateYValue}px) rotateX(65deg)`)
         })
       }
