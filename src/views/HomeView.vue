@@ -172,7 +172,7 @@ export default {
   box-shadow: 0px 15px 10px;
   color: transparent;
   background: #f8eb6bb8;
-  transform: rotateX(-85deg) translateY(240px);
+  transform: rotateX(-85deg) translateY(calc(140px + 10vw));
   filter: blur(20px);
 }
 .banner div.box > div.titles > h2:first-child:before{
@@ -210,6 +210,9 @@ export default {
     transform: rotateX(65deg);
     border-radius: 0 0 50% 50%;
     filter: blur(3px);
+}
+.banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
+  opacity: 0;
 }
 .banner div.box > div.data{}
 .banner > a{
