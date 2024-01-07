@@ -76,11 +76,6 @@ import UkIcon from '../components/icons/IconUk.vue'
     margin-top: -2px;
   }
 }
-@media only screen and (max-width: 550px) {
-    #iconuk{
-        display: none;
-    }
-}
 </style>
 <script>
 </script>

@@ -13,14 +13,14 @@
               <span>{{ email }}</span>
           </div>
       </div>
-      <RouterLink to="/trolley" class="trolley">
+      <RouterLink to="/trolley" class="optionsBox">
         <TrolleyIcon class="options"/>Trolley
       </RouterLink>
-      <RouterLink to="/favorite" class="favorite">
+      <RouterLink to="/favorite" class="optionsBox">
         <FavoriteIcon class="options"/>Favorite
       </RouterLink>
       <RouterLink to="/addproduct" class="optionsBox">
-          <AdminAddProduct class="options"/>New Prodct
+          <AdminAddProduct class="options"/>New Product
       </RouterLink>
       <RouterLink to="/logout" class="optionsBox">
           <UserLogOut class="options"/>Log Out
