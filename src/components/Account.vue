@@ -13,6 +13,12 @@
               <span>{{ email }}</span>
           </div>
       </div>
+      <RouterLink to="/trolley" class="trolley">
+        <TrolleyIcon class="options"/>Trolley
+      </RouterLink>
+      <RouterLink to="/favorite" class="favorite">
+        <FavoriteIcon class="options"/>Favorite
+      </RouterLink>
       <RouterLink to="/addproduct" class="optionsBox">
           <AdminAddProduct class="options"/>New Prodct
       </RouterLink>
@@ -94,6 +100,8 @@ import AccontIcon from './icons/IconAccont.vue'
 import UserLogOut from './icons/IconLogOutUser.vue'
 import AdminAddProduct from './icons/IconAdminAddProduct.vue'
 import CameraIcon from './icons/IconCamera.vue'
+import TrolleyIcon from './icons/IconTrolley.vue'
+import FavoriteIcon from './icons/IconFavorite.vue'
 
 import api from "../services/api.ts"
 import {showResponse,events} from "../assets/main.js"

@@ -23,7 +23,6 @@ export const checkIfLogged = async () => {
       <Logo />
       <Language />
       <SearchBar />
-      <Utils />
       <LoginRegisterButton v-if="!isLoggedIn"/>
       <Account v-else/>
     </nav>
@@ -53,7 +52,6 @@ import { onMounted } from 'vue'
 import Logo from '../components/Logo.vue'
 import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
-import Utils from '../components/Utils.vue'
 import LoginRegisterButton from '../components/LoginRegisterButton.vue'
 import Account from '../components/Account.vue'
 
