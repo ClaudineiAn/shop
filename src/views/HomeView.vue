@@ -152,6 +152,7 @@ export default {
   display: flex;
   color: transparent;
   height: fit-content;
+  font-size: 2vw;
 }
 .banner div.box>div.titles>h2:nth-child(2) {
     font-size: 4vw;

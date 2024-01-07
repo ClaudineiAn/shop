@@ -80,8 +80,6 @@ const generateSearchList = (searched) => {
 <template>
     <div id="search-bar" class="d-flex ml-auto mr-auto align-center">
       <i class="i-search"></i>
-      <hr />
-      <v-text-field placeholder="Search" class="d-flex align-center search"></v-text-field>
     </div>
     <div class="popup" style='display:none'>
       <div>
@@ -95,42 +93,6 @@ const generateSearchList = (searched) => {
 .i-search{
   font-size: 15px;
   margin: 2px;
-  color: #F8EB6B;
-}
-hr{
-  height: 24px!important;
-  margin: 0.4vw;
-  border: 1px solid #F8EB6B;
-}
-#search-bar{
-  border-radius: 20px;
-  padding: 0.1vw 0.7vw;
-  height: 40px;
-  width: 215px;
-  border: 1px solid #F8EB6B;
-}
-#search-bar :deep(.v-field__input){
-  background: transparent;
-  border: none;
-}
-#search-bar :deep(.v-input__details){
-  display: none;
-}
-#search-bar input::placeholder {
-  color: #F8EB6B;
-  opacity: 1;
-}
-.search :deep(.v-field__outline::before){
-  border-style: none !important;
-}
-#search-bar .v-input__control{
-  width: 167px;
-  height: 30px;
-}
-#search-bar input{
-  padding-top: 0;
-  padding-bottom: 0;
-  min-height: 30px;
   color: #F8EB6B;
 }
 #search-bar ~ div.popup{
@@ -247,30 +209,6 @@ hr{
 }
 #search-bar ~ div.popup > div > ul > li > div:last-child > h2:last-child{
   margin-top: auto;
-}
-@media only screen and (min-width: 900px) {
-  #search-bar{
-    width: 405px;
-  }
-  #search-bar .v-input__control{
-    width: 345px;
-  }
-}
-@media only screen and (min-width: 580px) {
-  #search-bar{
-    width: 42px;
-    height: 42px;
-    border: none;
-    transition: .2s linear;
-    margin: 0 0 0 auto !important;
-  }
-  .i-search{
-    font-size: 25px;
-    cursor: pointer;
-  }
-  #search-bar > hr, #search-bar > div.search{
-    display: none !important;
-  }
 }
 </style>
 <script>
