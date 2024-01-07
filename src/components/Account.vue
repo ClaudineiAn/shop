@@ -94,6 +94,18 @@
   height: 20px;
   margin-right: 10px;
 }
+@media only screen and (max-width: 360px) {
+  .accountPopUp{
+    left: calc(96.6vw - 312px);
+    width: 300px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .accountPopUp{
+    left: calc(96.6vw - 262px);
+    width: 250px;
+  }
+}
 </style>
 <script>
 import AccontIcon from './icons/IconAccont.vue'
@@ -134,7 +146,7 @@ export const updateProfileImg = async () => {
   }
 }
 export default {
-  components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon },
+  components: { AccontIcon, UserLogOut, AdminAddProduct, CameraIcon, TrolleyIcon, FavoriteIcon },
   setup() {
     const imgSrc = ref(null);
 
