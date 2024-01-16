@@ -9,7 +9,7 @@ export default {
     const setProperMetrics = async () => {
       const headerHeight = document.querySelector("header").offsetHeight;
       document.querySelector(".banner > div.box > div.titles").setAttribute('style', `top:${headerHeight}px`);
-      document.querySelectorAll('.banner div.box>div.titles>h2>div:first-child').forEach(element => {
+      document.querySelectorAll('.banner div.box>div.titles>h2>div:nth-child(4)').forEach(element => {
         element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;height:${element.parentNode.offsetHeight}px`)
       })
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
@@ -38,7 +38,7 @@ export default {
     };
     onMounted(() => {
       setProperMetrics();
-      setAnimations()
+      //setAnimations()
     });
 
     return {
@@ -197,7 +197,7 @@ export default {
 .banner div.box > div.titles > h2:last-child:after{
   content: "Favorite"
 }
-.banner div.box > div.titles > h2 > div:first-child {
+.banner div.box>div.titles>h2>div:nth-child(4) {
     position: absolute;
     top: 1.2vw;
     background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
@@ -226,6 +226,48 @@ export default {
   margin: 0 auto;
   width: 30px;
   height: 30px;
+}
+.lightning {
+    width: 1px;
+    height: 9px;
+    background: white;
+    opacity: 0;
+}
+.lightning1 {
+    animation: lightning 10s linear infinite;
+}
+.lightning2 {
+    margin: auto 0 auto 0;
+    animation: lightning 10s 2s linear infinite;
+}
+@Keyframes lightning {
+    0% {
+        opacity:0.5;
+    }
+    8% {
+        opacity:0;
+    }
+}
+.lightning2:first-child{
+  transform: rotate(120deg);
+  height: 20px;
+}
+.lightning2:nth-child(2){
+  transform: translateX(16px) rotate(64deg);
+  height: 20px;
+}
+.lightning2:nth-child(3){
+  transform: translateX(37px) rotate(106deg);
+  height: 30px;
+}
+.lightning1:nth-child(5){
+    transform: rotate(45deg);
+}
+.lightning1:nth-child(6){
+    transform: translateX(-2px) translateY(7px) rotate(-25deg);
+}
+.lightning1:nth-child(7){
+    transform: translateX(-4px) translateY(14px) rotate(45deg);
 }
 </style>
 <script>
