@@ -153,7 +153,7 @@ export default {
   font-size: 2vw;
 }
 .banner div.box>div.titles>h2:nth-child(2) {
-    font-size: 4vw;
+    font-size: calc(5vw + 10px);
 }
 .banner div.box > div.titles > h2:before{
   overflow: hidden;
@@ -170,7 +170,7 @@ export default {
   box-shadow: 0px 15px 10px;
   color: transparent;
   background: #f8eb6bb8;
-  transform: rotateX(-85deg) translateY(calc(40px + 24vw));
+  transform: rotateX(-85deg) translateY(calc(90px + 30vw));
   filter: blur(20px);
 }
 .banner div.box > div.titles > h2:first-child:before{
@@ -253,32 +253,37 @@ export default {
 }
 @Keyframes lightning {
     0% {
-        opacity:0.5;
+        opacity:0.4;
     }
     8% {
         opacity:0;
     }
 }
-.lightning2:first-child{
-  transform: rotate(120deg);
-  height: 20px;
+.lightning2:first-child {
+    transform: rotate(120deg);
+    height: calc(20px + 3vw);
 }
-.lightning2:nth-child(2){
-  transform: translateX(16px) rotate(64deg);
-  height: 20px;
+
+.lightning2:nth-child(2) {
+    transform: translateX(calc(12px + 3vw)) rotate(63deg);
+    height: calc(20px + 3vw);
 }
-.lightning2:nth-child(3){
-  transform: translateX(37px) rotate(106deg);
-  height: 30px;
+
+.lightning2:nth-child(3) {
+    transform: translateX(calc(39px + 5.1vw)) rotate(112deg);
+    height: calc(30px + 3.5vw);
 }
-.lightning1:nth-child(5){
-    transform: rotate(45deg);
+
+.lightning1:nth-child(5) {
+    transform: rotate(45deg)
 }
-.lightning1:nth-child(6){
-    transform: translateX(-2px) translateY(7px) rotate(-25deg);
+
+.lightning1:nth-child(6) {
+    transform: translateX(-4px) translateY(calc(10px + 1vw)) rotate(-25deg);
 }
-.lightning1:nth-child(7){
-    transform: translateX(-4px) translateY(14px) rotate(45deg);
+
+.lightning1:nth-child(7) {
+    transform: translateX(calc(-4px - 0.4vw)) translateY(calc(14px + 2.5vw)) rotate(45deg);
 }
 </style>
 <script>
