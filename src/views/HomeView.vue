@@ -20,7 +20,9 @@ export default {
       })
     };
     onMounted(() => {
-      setProperMetrics();
+      setProperMetrics()
+      window.addEventListener('resize', setProperMetrics);
+
     });
 
     return {
@@ -168,7 +170,7 @@ export default {
   box-shadow: 0px 15px 10px;
   color: transparent;
   background: #f8eb6bb8;
-  transform: rotateX(-85deg) translateY(calc(140px + 10vw));
+  transform: rotateX(-85deg) translateY(calc(40px + 20vw));
   filter: blur(20px);
 }
 .banner div.box > div.titles > h2:first-child:before{
@@ -200,19 +202,25 @@ export default {
   filter: blur(5px);
 }
 .banner div.box > div.titles > h2 > div:last-child {
-  position: absolute;
-  height: 10px;
-  background: #bfbfbf87;
-  transform: rotateX(65deg);
-  border-radius: 0 0 50% 50%;
-  filter: blur(3px);
-  transform: translateY(var(--main-title-ani-to)) rotateX(65deg);
-  animation: main-title-ani 2s linear infinite
+    position: absolute;
+    height: 10px;
+    background: #bfbfbf87;
+    border-radius: 0 0 50% 50%;
+    filter: blur(3px);
+    transform: translateY(var(--main-title-ani-to)) rotateX(65deg);
+    animation: main-title-ani 2s linear infinite
 }
 @Keyframes main-title-ani {
-  0% {
-    transform: translateY(var(--main-title-ani-from)) rotateX(65deg);
-  }
+    0% {
+        transform: translateY(var(--main-title-ani-from)) rotateX(65deg)
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(var(--main-title-ani-to)) rotateX(65deg)
+    }
+    100% {
+        opacity: 0;
+    }
 }
 .banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
   opacity: 0;
