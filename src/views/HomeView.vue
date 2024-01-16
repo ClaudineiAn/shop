@@ -206,12 +206,12 @@ export default {
   transform: rotateX(65deg);
   border-radius: 0 0 50% 50%;
   filter: blur(3px);
-  transform: translateY(--main-title-ani-to) rotateX(65deg);
+  transform: translateY(var(--main-title-ani-to)) rotateX(65deg);
   animation: main-title-ani 2s linear infinite
 }
 @Keyframes main-title-ani {
   0% {
-    transform: translateY(--main-title-ani-from) rotateX(65deg);
+    transform: translateY(var(--main-title-ani-from)) rotateX(65deg);
   }
 }
 .banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
