@@ -15,30 +15,12 @@ export default {
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
         const translateY=element.parentNode.offsetHeight-10
         element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateY}px) rotateX(65deg)`)
+        document.documentElement.style.setProperty('--main-title-ani-from', element.parentNode.offsetHeight-10+"px")
+        document.documentElement.style.setProperty('--main-title-ani-to', element.parentNode.offsetHeight/2+"px")
       })
-    };
-    const setAnimations = async () => {
-      const titleAniDownUp = async () => {
-        document.querySelectorAll('.banner div.box>div.titles>h2:nth-child(2)>div:last-child').forEach(element => {
-          var transform = element.getAttribute('style');
-          var translateYValue = 0;
-          var translateYMatch = transform.match(/translateY\(([^)]+)\)/);
-          translateYValue = parseFloat(translateYMatch[1]);
-          translateYValue--
-          if(translateYValue<0){
-            translateYValue = element.parentNode.offsetHeight-10;
-            element.classList.remove("fadeout")
-          }
-          if(translateYValue<(element.parentNode.offsetHeight/2))
-            element.classList.add("fadeout")
-          element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateYValue}px) rotateX(65deg)`)
-        })
-      }
-      var titleAniVar = setInterval(titleAniDownUp, 100)
     };
     onMounted(() => {
       setProperMetrics();
-      //setAnimations()
     });
 
     return {
@@ -80,6 +62,10 @@ export default {
   </main>
 </template>
 <style>
+:root {
+  --main-title-ani-from: 0px;
+  --main-title-ani-to: 0px;
+}
 .fadeout{
   opacity:0;
 }
@@ -208,18 +194,25 @@ export default {
   content: "Favorite"
 }
 .banner div.box>div.titles>h2>div:nth-child(4) {
-    position: absolute;
-    top: 1.2vw;
-    background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
-    filter: blur(5px);
+  position: absolute;
+  top: 1.2vw;
+  background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
+  filter: blur(5px);
 }
 .banner div.box > div.titles > h2 > div:last-child {
-    position: absolute;
-    height: 10px;
-    background: #bfbfbf87;
-    transform: rotateX(65deg);
-    border-radius: 0 0 50% 50%;
-    filter: blur(3px);
+  position: absolute;
+  height: 10px;
+  background: #bfbfbf87;
+  transform: rotateX(65deg);
+  border-radius: 0 0 50% 50%;
+  filter: blur(3px);
+  transform: translateY(--main-title-ani-to) rotateX(65deg);
+  animation: main-title-ani 2s linear infinite
+}
+@Keyframes main-title-ani {
+  0% {
+    transform: translateY(--main-title-ani-from) rotateX(65deg);
+  }
 }
 .banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
   opacity: 0;
