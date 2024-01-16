@@ -14,7 +14,7 @@ export default {
       })
       document.querySelectorAll('.banner div.box>div.titles>h2>div:last-child').forEach(element => {
         const translateY=element.parentNode.offsetHeight-10
-        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;transform: translateY(${translateY}px) rotateX(65deg)`)
+        element.setAttribute("style",`width:${element.parentNode.offsetWidth}px;`)
         document.documentElement.style.setProperty('--main-title-ani-from', element.parentNode.offsetHeight-10+"px")
         document.documentElement.style.setProperty('--main-title-ani-to', element.parentNode.offsetHeight/2+"px")
       })
