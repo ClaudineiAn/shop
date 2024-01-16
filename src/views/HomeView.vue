@@ -56,7 +56,7 @@ export default {
       <div class="box">
         <div class="titles">
           <h2>Trolley</h2>
-          <h2><div></div><div></div><div></div>Home<div><div></div><div></div><div></div></div><div></div></h2>
+          <h2><div></div><div></div><div></div>Home<div></div><div></div><div></div><div></div><div></div></h2>
           <h2>Favorite</h2>
         </div>
         <div class="data">
