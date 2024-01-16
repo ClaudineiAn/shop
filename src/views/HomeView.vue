@@ -170,7 +170,7 @@ export default {
   box-shadow: 0px 15px 10px;
   color: transparent;
   background: #f8eb6bb8;
-  transform: rotateX(-85deg) translateY(calc(40px + 20vw));
+  transform: rotateX(-85deg) translateY(calc(40px + 24vw));
   filter: blur(20px);
 }
 .banner div.box > div.titles > h2:first-child:before{
@@ -180,7 +180,7 @@ export default {
   content: "Trolley"
 }
 .banner div.box > div.titles > h2:nth-child(2){
-  font-size: 4vw;
+  font-size: 5vw;
 }
 .banner div.box > div.titles > h2:nth-child(2):before{
   content: "Home"
