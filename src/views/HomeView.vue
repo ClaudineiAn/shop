@@ -1,6 +1,7 @@
 <script>
 import { onMounted } from 'vue'
 import ArrowIcon from '../components/icons/IconArrow.vue'
+import api from '../services/api.ts'
 export default {
   components: {
     ArrowIcon
