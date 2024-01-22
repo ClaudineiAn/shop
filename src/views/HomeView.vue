@@ -20,7 +20,7 @@ export default {
         document.documentElement.style.setProperty('--main-title-ani-to', element.parentNode.offsetHeight/2+"px")
       })
     };
-    onMounted(() => {
+    onMounted( async () => {
       setProperMetrics()
       window.addEventListener('resize', setProperMetrics);
       try {
