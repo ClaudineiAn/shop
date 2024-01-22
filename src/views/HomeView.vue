@@ -22,7 +22,14 @@ export default {
     onMounted(() => {
       setProperMetrics()
       window.addEventListener('resize', setProperMetrics);
-
+      try {
+        const res = await api.get("/home")
+        if(res){
+          console.log(res)
+        }
+      } catch (error) {
+          console.log(error)
+      }
     });
 
     return {
@@ -149,7 +156,7 @@ export default {
   margin: 2vw 7vw;
   display: flex;
   color: transparent;
-  height: fit-content;
+  height: calc(65% - 4px);
   font-size: 2vw;
 }
 .banner div.box>div.titles>h2:nth-child(2) {
