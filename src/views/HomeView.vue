@@ -50,11 +50,12 @@ export default {
               countWidth++
           }
           var template=""
+          var count=0
           for(var y=0;y<countHeight;y++){
             template+="<div>"
             for(var x=0;x<countWidth;x++){
-              //res.data.forEach(element => {
-              template+="<div></div>"
+              template+=`<div>${res.data[count].nome}</div>`
+              count++
             }
             template+="</div>"
           }
