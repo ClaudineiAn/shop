@@ -2,10 +2,6 @@
 import { onMounted } from 'vue'
 import ArrowIcon from '../components/icons/IconArrow.vue'
 import api from '../services/api.ts'
-counst getImageUrl(imageFileName) = () => {
-  const imageUrl = require(`@/assets/images/${imageFileName}`)
-  return imageUrl
-}
 export default {
   components: {
     ArrowIcon
@@ -59,7 +55,7 @@ export default {
             template+="<div>"
             for(var x=0;x<countWidth;x++){
               if(res.data[count]!==undefined){
-                booksNav+=`<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
+                booksNav += `<img src="${require(`@/assets/images/${book.imagem.split(', ')[0]}`)}" />`
               }
               count++
             }
