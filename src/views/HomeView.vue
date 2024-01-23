@@ -48,7 +48,7 @@ export default {
             else
               countWidth++
           }
-          var template
+          var template=""
           for(var y=0;y<countHeight;y++){
             template+="<div>"
             for(var x=0;x<countWidth;x++){
