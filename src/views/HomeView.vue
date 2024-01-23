@@ -26,6 +26,7 @@ export default {
       try {
         const res = await api.get("/home")
         if(res){
+          console.log(res)
           const boxDimensions = {width:100,height:100}
           const reductions = document.querySelector(".banner div.box>div.titles").offsetHeight+document.querySelector("header").offsetHeight
           var height=true
@@ -52,6 +53,7 @@ export default {
           for(var y=0;y<countHeight;y++){
             template+="<div>"
             for(var x=0;x<countWidth;x++){
+              //res.data.forEach(element => {
               template+="<div></div>"
             }
             template+="</div>"
