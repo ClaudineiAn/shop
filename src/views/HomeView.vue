@@ -55,7 +55,7 @@ export default {
             template+="<div>"
             for(var x=0;x<countWidth;x++){
               if(res.data[count]!==undefined){
-                template+=`<img src="${require(`@/assets/images/${book.imagem.split(', ')[0]}`)}" />`
+                template+=`<img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" />`
               }
               count++
             }
