@@ -2,6 +2,10 @@
 import { onMounted } from 'vue'
 import ArrowIcon from '../components/icons/IconArrow.vue'
 import api from '../services/api.ts'
+counst getImageUrl(imageFileName) = () => {
+  const imageUrl = require(`@/assets/images/${imageFileName}`)
+  return imageUrl
+}
 export default {
   components: {
     ArrowIcon
@@ -54,8 +58,9 @@ export default {
           for(var y=0;y<countHeight;y++){
             template+="<div>"
             for(var x=0;x<countWidth;x++){
-              if(res.data[count]!==undefined)
-              template+=`<div>${res.data[count].nome}</div>`
+              if(res.data[count]!==undefined){
+                booksNav+=`<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
+              }
               count++
             }
             template+="</div>"
