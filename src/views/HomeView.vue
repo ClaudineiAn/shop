@@ -54,6 +54,7 @@ export default {
           for(var y=0;y<countHeight;y++){
             template+="<div>"
             for(var x=0;x<countWidth;x++){
+              if(res.data[count]!==undefined)
               template+=`<div>${res.data[count].nome}</div>`
               count++
             }
