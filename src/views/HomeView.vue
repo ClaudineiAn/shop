@@ -26,7 +26,37 @@ export default {
       try {
         const res = await api.get("/home")
         if(res){
-          console.log(res)
+          const boxDimensions = {width:100,height:100}
+          const reductions = document.querySelector(".banner div.box>div.titles").offsetHeight+document.querySelector("header").offsetHeight
+          var height=true
+          var manyHeight=reductions
+          var countHeight=0
+          while(height){
+            manyHeight+=boxDimensions.height
+            if(manyHeight>=document.querySelector("body").offsetHeight)
+              height=false
+            else
+              countHeight++
+          }
+          var width=true
+          var manyWidth=0
+          var countWidth=0
+          while(width){
+            manyWidth+=boxDimensions.width
+            if(manyWidth>=document.querySelector("body").offsetWidth)
+              width=false
+            else
+              countWidth++
+          }
+          var template
+          for(var y=0;y<countHeight;y++){
+            template+="<div>"
+            for(var x=0;x<countWidth;x++){
+              template+="<div></div>"
+            }
+            template+="</div>"
+          }
+          document.querySelector(".banner div.box>div.data").innerHTML=template
         }
       } catch (error) {
           console.log(error)
