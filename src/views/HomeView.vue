@@ -263,7 +263,22 @@ export default {
 .banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
   opacity: 0;
 }
-.banner div.box > div.data{}
+.banner div.box>div.data {
+    position: relative;
+    top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.banner div.box>div.data > div >div {
+    height: 100px;
+    width: 100px;
+    background: white;
+}
+
+.banner div.box>div.data > div {
+    display: flex;
+}
 .banner > a{
   display: flex;
   flex-direction: column;
