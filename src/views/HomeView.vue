@@ -55,7 +55,19 @@ export default {
             template+="<div>"
             for(var x=0;x<countWidth;x++){
               if(res.data[count]!==undefined){
-                template+=`<div><img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" /></div>`
+                template+="<div>"
+                template+=`<img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" />`
+                template+="<div>"
+                template+="<div>"
+                template+="</div>"
+                template+="<div>"
+                template+="</div>"
+                template+="<div>"
+                template+="</div>"
+                template+="<div>"
+                template+="</div>"
+                template+="</div>"
+                template+="</div>"
               }
               count++
             }
@@ -274,26 +286,38 @@ export default {
     display: flex;
     flex-direction: column;
 }
-
+.banner div.box>div.data>div {
+    margin-top: calc(2vw + 10px);
+    display: flex;
+}
 .banner div.box>div.data>div>div {
     width: 110px;
     height: 110px;
-    object-fit: contain;
-    margin-top: calc(2vw + 10px);
-    transition: 0.3s;
+    transition: .3s;
+    transform: scale(1);
+}
+.banner div.box>div.data>div>div:hover {
+    transform: scale(1.2);
 }
 .banner div.box>div.data>div>div{
     transform: scale(1.2);
 }
-.banner div.box>div.data>div>div:before{
+.banner div.box>div.data>div>div:hover:before {
     content: "";
     background: #4531005c;
-    position: relative;
-    left: -132px;
-    width: 132px;
-    height: 132px;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    transform: rotate(45deg);
 }
-
+.banner div.box>div.data>div>div>img {
+    width: 110px;
+    height: 110px;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
 W.banner div.box>div.data > div {
     display: flex;
 }
