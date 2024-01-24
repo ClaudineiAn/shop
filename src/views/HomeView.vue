@@ -299,9 +299,6 @@ export default {
 .banner div.box>div.data>div>div:hover {
     transform: scale(1.2);
 }
-.banner div.box>div.data>div>div{
-    transform: scale(1.2);
-}
 .banner div.box>div.data>div>div:hover:before {
     content: "";
     background: #4531005c;
