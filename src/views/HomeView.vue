@@ -55,7 +55,7 @@ export default {
             template+="<div>"
             for(var x=0;x<countWidth;x++){
               if(res.data[count]!==undefined){
-                template+=`<img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" />`
+                template+=`<div><img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" /</div>>`
               }
               count++
             }
@@ -275,13 +275,26 @@ export default {
     flex-direction: column;
 }
 
-.banner div.box>div.data > div >div {
-    height: 100px;
-    width: 100px;
-    background: white;
+.banner div.box>div.data>div>div {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
+    margin-top: calc(2vw + 10px);
+    transition: 0.3s;
+}
+.banner div.box>div.data>div>div{
+    transform: scale(1.2);
+}
+.banner div.box>div.data>div>div:before{
+    content: "";
+    background: #4531005c;
+    position: relative;
+    left: -132px;
+    width: 132px;
+    height: 132px;
 }
 
-.banner div.box>div.data > div {
+W.banner div.box>div.data > div {
     display: flex;
 }
 .banner > a{
