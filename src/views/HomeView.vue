@@ -356,6 +356,7 @@ export default {
 .banner div.box>div.data>div>div>div {
     display: none;
     position: absolute;
+    top: 0;
     flex-direction: column;
     align-items: center;
     width: 100%;
