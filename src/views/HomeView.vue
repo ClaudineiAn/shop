@@ -107,6 +107,7 @@ export default {
             template+="</div>"
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
+          console.log(template)
         }
       } catch (error) {
           console.log(error)
@@ -331,6 +332,9 @@ export default {
 }
 .banner div.box>div.data>div>div:hover {
     transform: scale(1.2);
+}
+.banner div.box>div.data>div>div:hover > div {
+    display: flex;
 }
 .banner div.box>div.data>div>div:hover:before {
     content: "";
