@@ -173,6 +173,7 @@ export default {
                 template+="</div>"
                 template+="<div>"
                 var formats = JSON.parse(res.data[count].formats)
+                console.log(formats)
                 formats[0].forEach((format, index) => {
                   switch (format.name) {
                     case 'Kindle':
