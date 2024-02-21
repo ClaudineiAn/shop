@@ -197,7 +197,7 @@ export default {
                       template+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
                       template+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
                   }
-                }
+                })
                 template+="</div>"
                 template+="</div>"
                 template+="<div>"
