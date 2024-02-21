@@ -173,8 +173,8 @@ export default {
                 template+="</div>"
                 template+="<div>"
                 var formats = JSON.parse(res.data[count].formats)
-                formats.forEach((format, index) => {
-                  switch (format[index].name) {
+                formats[0].forEach((format, index) => {
+                  switch (format.name) {
                     case 'Kindle':
                       template+=`<div><span>Dimensions</span><span>${res.data[count].dimensoes}</span></div>`
                       template+=`<div><span>Publishing</span><span>${res.data[count].editora}</span></div>`
@@ -184,7 +184,6 @@ export default {
                       template+=`<div><span>Pages</span><span>${res.data[count].numero_de_paginas}</span></div>`
                       template+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
                       template+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
-                      if(res.data[count].tamanho_do_arquivo!==0)
                       template+=`<div class="new"><span>File Size</span><span>${res.data[count].tamanho_do_arquivo}</span></div>`
                       break;
                     default:
