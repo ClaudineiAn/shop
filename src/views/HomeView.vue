@@ -172,7 +172,7 @@ export default {
                 template+="</div>"
                 template+="</div>"
                 template+="<div>"
-                var formats = eval(res.data[count].formats)
+                var formats = JSON.parse(res.data[count].formats)
                 formats.forEach((format, index) => {
                   switch (format[index].name) {
                     case 'Kindle':
