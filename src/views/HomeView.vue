@@ -239,10 +239,10 @@ export default {
                 template+="</div>"
                 template+="</div>"
                 template+="</div>"
+                template+="</div>"
               }
               count++
             }
-            template+="</div>"
             template+="</div>"
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
