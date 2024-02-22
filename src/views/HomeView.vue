@@ -110,6 +110,7 @@ export default {
                 template+=`<img src="${require(`@/assets/images/${res.data[count].imagem.split(', ')[0]}`)}" />`
                 template+="</div>"
                 template+="<div>"
+                template+="<div>"
                 template+="<h2>"
                 if(res.data[count].edicao!==0)
                 template+=`<span>${res.data[count].edicao}</span>`
@@ -241,6 +242,7 @@ export default {
               }
               count++
             }
+            template+="</div>"
             template+="</div>"
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
