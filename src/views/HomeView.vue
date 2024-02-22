@@ -206,17 +206,17 @@ export default {
                     template+="<div class='selected'>"
                   else
                     template+="<div>"
-                  template+=`<span>${format[index].name}</span>`
+                  template+=`<span>${format.name}</span>`
                   template+="<div>"
-                  if(format[index].discount===0)
-                    template+=`<span>${format[index].current}</span><span>${format[index].price}</span>`
+                  if(format.discount===0)
+                    template+=`<span>${res.data[count].current}</span><span>${format.price}</span>`
                   else{
                     template+="<div>"
                     template+="<div>"
-                    template+=`<span>${format[index].current}</span><span>${format[index].price}</span><span></span><div><span>Discount</span><div><span>${format[index].discount}</span><span>%</span></div></div>`
+                    template+=`<span>${res.data[count].current}</span><span>${format.price}</span><span></span><div><span>Discount</span><div><span>${format.discount}</span><span>%</span></div></div>`
                     template+="</div>"
                     template+="<div>"
-                    template+=`<span>${format[index].current}</span><span>${format[index].price*(format[index].discount/100)}</span>`
+                    template+=`<span>${res.data[count].current}</span><span>${format.price*(format.discount/100)}</span>`
                     template+="</div>"
                     template+="</div>"
                   }
