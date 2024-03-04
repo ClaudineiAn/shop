@@ -134,7 +134,7 @@ export default {
                   starGradient=50
                 if(res.data[count].score<0)
                   starGradient=75
-                for(i=0;i<5;i++)
+                for(var i=0;i<5;i++)
                   templatePopup+=`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><linearGradient id="fill" x1="0%" y1="0%" x2="0%" y2="100%">
     <stop offset="0%" style="stop-color: rgba(255, 215, 0, 0.5); stop-opacity: 1" />
     <stop offset="${starGradient}%" style="stop-color: rgba(255, 215, 0, 0.5); stop-opacity: 0" />
