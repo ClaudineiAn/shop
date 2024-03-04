@@ -127,11 +127,11 @@ export default {
                 templatePopup+="<div>"
                 var starGradient=0
                 if(res.data[count].score>3.74)
-                  starGradient=75
+                  starGradient=25
                 else if(res.data[count].score>2.49)
                   starGradient=50
                 else if(res.data[count].score>0)
-                  starGradient=25
+                  starGradient=75
                 else if(res.data[count].score===0)
                   starGradient=100
                 for(var i=0;i<5;i++)
