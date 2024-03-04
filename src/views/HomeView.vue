@@ -125,7 +125,25 @@ export default {
                 templatePopup+="<div>"
                 templatePopup+="<div>"
                 templatePopup+="<div>"
-                templatePopup+="<div></div>"
+                templatePopup+=`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">`
+                var starGradient=100
+                if(res.data[count].score>4.49)
+                  starGradient=0
+                if(res.data[count].score>3.74)
+                  starGradient=25
+                if(res.data[count].score>2.49)
+                  starGradient=50
+                if(res.data[count].score>0)
+                  starGradient=75
+                templatePopup+=`<linearGradient id="fill" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" style="stop-color: rgba(255, 215, 0, 0.5); stop-opacity: 1" />
+    <stop offset="${starGradient}%" style="stop-color: rgba(255, 215, 0, 0.5); stop-opacity: 0" />
+    <stop offset="${starGradient}%" style="stop-color: rgb(255, 215, 0); stop-opacity: 1" />
+    <stop offset="100%" style="stop-color: rgb(255, 215, 0); stop-opacity: 1" />
+  </linearGradient>
+<rect width="24" height="24" fill="transparent"><rect width="24" height="24" fill="transparent"></rect>
+<path d="M11.5245 4.46353C11.6741 4.00287 12.3259 4.00287 12.4755 4.46353L13.9084 8.87336C13.9753 9.07937 14.1673 9.21885 14.3839 9.21885H19.0207C19.505 9.21885 19.7064 9.83866 19.3146 10.1234L15.5633 12.8488C15.3881 12.9761 15.3148 13.2018 15.3817 13.4078L16.8145 17.8176C16.9642 18.2783 16.437 18.6613 16.0451 18.3766L12.2939 15.6512C12.1186 15.5239 11.8814 15.5239 11.7061 15.6512L7.95488 18.3766C7.56303 18.6613 7.03578 18.2783 7.18546 17.8176L8.6183 13.4078C8.68524 13.2018 8.61191 12.9761 8.43667 12.8488L4.68544 10.1234C4.29358 9.83866 4.49497 9.21885 4.97933 9.21885H9.6161C9.83272 9.21885 10.0247 9.07937 10.0916 8.87336L11.5245 4.46353Z" stroke="#453100" fill="url(#fill)" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>`
                 templatePopup+="<div></div>"
                 templatePopup+="<div></div>"
                 templatePopup+="<div></div>"
@@ -642,6 +660,134 @@ export default {
 .lightning1:nth-child(7) {
     transform: translateX(calc(-4px - 0.4vw)) translateY(calc(14px + 2.5vw)) rotate(45deg);
 }
+
+.popup > .view {}
+
+.popup > .view > div:first-child{}
+
+.popup > .view > div:first-child > img{}
+
+.popup > .view > div:last-child{}
+
+.popup > .view > div:last-child > div:first-child{}
+
+.popup > .view > div:last-child > div:first-child > h2{}
+
+.popup > .view > div:last-child > div:first-child > h2 > span:first-child{}
+
+.popup > .view > div:last-child > div:first-child > h2 > span:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(2) > p{}
+
+.popup > .view > div:last-child > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:nth-child(4){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(4){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:first-child > img{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > input{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > div{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > div > span:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > div > span:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > div > input{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:first-child > img{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:first-child > span:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:first-child > span:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:nth-child(3) > span:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:nth-child(3) > input{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:last-child > div:last-child > div:last-child > span{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:last-child > div{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:last-child > div.new{}
+
+.popup > .view > div:last-child > div:last-child{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div.selected{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div > span{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div > div{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div > div > span:first-child{}
+
+.popup > .view > div:last-child > div:last-child > div:first-child > div > div > span:last-child{}
+
+.popup > .view > div:last-child > div:last-child > div:last-child{}
+
+.popup > .view > div:last-child > div:last-child > div:last-child > div{}
+
+.popup > .view > div:last-child > div:last-child > div:last-child > div > svg{}
+
+.popup > .view > div:last-child > div:last-child > div:last-child > div > span{}
+
+.popup > .view > div:last-child > div:last-child > div:last-child > div > input{}
 </style>
 <script>
 </script>
