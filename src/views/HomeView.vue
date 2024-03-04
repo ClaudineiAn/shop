@@ -125,15 +125,15 @@ export default {
                 templatePopup+="<div>"
                 templatePopup+="<div>"
                 templatePopup+="<div>"
-                var starGradient=100
+                var starGradient=0
                 if(res.data[count].score>4.49)
-                  starGradient=0
+                  starGradient=100
                 else if(res.data[count].score>3.74)
-                  starGradient=25
+                  starGradient=75
                 else if(res.data[count].score>2.49)
                   starGradient=50
                 else if(res.data[count].score>0)
-                  starGradient=75
+                  starGradient=25
                 for(var i=0;i<5;i++)
                   templatePopup+=`<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><linearGradient id="fill" x1="0%" y1="0%" x2="0%" y2="100%">
     <stop offset="0%" style="stop-color: rgba(255, 215, 0, 0.5); stop-opacity: 1" />
