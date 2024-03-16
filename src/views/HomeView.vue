@@ -125,6 +125,7 @@ export default {
                 templatePopup+="<div>"
                 templatePopup+="<div>"
                 templatePopup+="<div>"
+                templatePopup+="<div>"
                 var starGradient=0
                 if(res.data[count].score>3.74)
                   starGradient=25
@@ -150,6 +151,7 @@ export default {
                 templatePopup+="<div></div>"
                 templatePopup+="<div></div>"
                 templatePopup+="<div></div>"
+                templatePopup+="</div>"
                 templatePopup+="</div>"
                 templatePopup+="<div>"
                 templatePopup+="<div>"
@@ -286,7 +288,7 @@ export default {
               }
               return -1;
             }
-            event.target.parentNode.setAttribute("data-val",res.data[getChildPosition(children)].score)
+            event.target.parentNode.setAttribute("data-val",res.data[getChildPosition(event.target.parentNode.parentNode.parentNode.parentNode.parentNode)].score)
           }));
         }
       } catch (error) {
