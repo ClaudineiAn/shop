@@ -276,7 +276,17 @@ export default {
             event.target.parentNode.parentNode.setAttribute("data-val","5.0")
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child").forEach(element => element.addEventListener("mouseleave", function(event) {
-            event.target.parentNode.setAttribute("data-val",res.data[event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode].score)
+            const parent = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
+            const children = parent.children;
+            function getChildPosition(child) {
+              for (let i = 0; i < children.length; i++) {
+                  if (children[i] === child) {
+                      return i;
+                  }
+              }
+              return -1;
+            }
+            event.target.parentNode.setAttribute("data-val",res.data[getChildPosition(children)].score)
           }));
         }
       } catch (error) {
