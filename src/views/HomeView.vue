@@ -260,6 +260,24 @@ export default {
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
           document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child > div:first-child").addEventListener("mouseenter", function(event) {
+            event.target.parentNode.parentNode.setAttribute("data-val","1.0")
+          });
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child > div:nth-child(2)").addEventListener("mouseenter", function(event) {
+            event.target.parentNode.parentNode.setAttribute("data-val","2.0")
+          });
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child > div:nth-child(3)").addEventListener("mouseenter", function(event) {
+            event.target.parentNode.parentNode.setAttribute("data-val","3.0")
+          });
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child > div:nth-child(4)").addEventListener("mouseenter", function(event) {
+            event.target.parentNode.parentNode.setAttribute("data-val","4.0")
+          });
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child > div:last-child").addEventListener("mouseenter", function(event) {
+            event.target.parentNode.parentNode.setAttribute("data-val","5.0")
+          });
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > div:last-child").addEventListener("mouseleave", function(event) {
+            event.target.parentNode.setAttribute("data-val",res.data[event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode].score)
+          });
         }
       } catch (error) {
           console.log(error)
