@@ -262,15 +262,15 @@ export default {
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
           document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
-          function startsAni(target,To){
-            var from=target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0]
+          function startsAni(target,to){
+            var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
             if(ani)
               clearInterval(ani)
             if(from>to)
               const ani = setInterval(function() {
                   from--
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
                   if(from===to)
                     clearInterval(ani)
               }, 200)
