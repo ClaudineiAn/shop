@@ -26,7 +26,7 @@ export default {
       if(ani)
         clearInterval(ani)
       if(from>to)
-        const ani = setInterval(function() {
+        ani = setInterval(function() {
             from--
             target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
             target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
@@ -34,7 +34,7 @@ export default {
               clearInterval(ani)
         }, 200)
       if(from<to)
-        const ani = setInterval(function() {
+        ani = setInterval(function() {
             from++
             target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
             target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
