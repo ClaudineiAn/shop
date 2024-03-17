@@ -294,7 +294,7 @@ export default {
           document.querySelector(".banner div.box>div.data").innerHTML=template
           document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
-            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before").setAttribute("class","index")
+            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child").setAttribute("class","index")
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","5")
@@ -317,7 +317,7 @@ export default {
             startsAni(event.target, 80)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child").forEach(element => element.addEventListener("mouseleave", function(event) {
-            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before").removeAttribute("class")
+            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child").removeAttribute("class")
             const parent = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
             const children = parent.children
             function getChildPosition(child) {
@@ -326,7 +326,18 @@ export default {
                       return i
               return -1
             }
-            event.target.firstElementChild.setAttribute("data-val",res.data[getChildPosition(event.target.parentNode.parentNode.parentNode.parentNode.parentNode)].score)
+            let score=res.data[getChildPosition(event.target.parentNode.parentNode.parentNode.parentNode.parentNode)].score
+            event.target.firstElementChild.setAttribute("data-val",score)
+            var starGradient=0
+            if(score>3.74)
+              starGradient=25
+            else if(score>2.49)
+              starGradient=50
+            else if(score>0)
+              starGradient=75
+            else if(score===0)
+              starGradient=100
+            startsAni(event.target.lastElementChild.lastElementChild, starGradient)
           }));
         }
       } catch (error) {
