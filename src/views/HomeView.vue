@@ -262,31 +262,59 @@ export default {
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
           document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
+          function startsAni(target,To){
+            var from=target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0]
+            if(ani)
+              clearInterval(ani)
+            if(from>to)
+              const ani = setInterval(function() {
+                  from--
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                  if(from===to)
+                    clearInterval(ani)
+              }, 200)
+            if(from<to)
+              const ani = setInterval(function() {
+                  from++
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                  if(from===to)
+                    clearInterval(ani)
+              }, 200)
+          }
+          document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
+            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before").classList.add("index")
+          }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","5")
+            startsAni(event.target, 0)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(2)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","4")
+            startsAni(event.target, 20)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(3)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","3")
+            startsAni(event.target, 40)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(4)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","2")
+            startsAni(event.target, 60)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:last-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","1")
+            startsAni(event.target, 80)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child").forEach(element => element.addEventListener("mouseleave", function(event) {
-            const parent = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode;
-            const children = parent.children;
+            document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before").classList.remove("index")
+            const parent = event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode
+            const children = parent.children
             function getChildPosition(child) {
-              for (let i = 0; i < children.length; i++) {
-                  if (children[i] === child) {
-                      return i;
-                  }
-              }
-              return -1;
+              for(let i=0;i<children.length;i++)
+                  if(children[i]===child)
+                      return i
+              return -1
             }
             event.target.firstElementChild.setAttribute("data-val",res.data[getChildPosition(event.target.parentNode.parentNode.parentNode.parentNode.parentNode)].score)
           }));
