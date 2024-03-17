@@ -28,17 +28,22 @@ export default {
       if(from>to)
         ani = setInterval(function() {
             from--
-            target.parentNode.previousElementSibling.children.forEach(element => console.log(element))
-            /*target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))*/
+            const parent = target.parentNode.previousElementSibling;
+            for (let i = 0; i < parent.children.length; i++) {
+              parent.children[i].firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from + "%");
+              parent.children[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from + "%");
+            }
             if(from===to)
               clearInterval(ani)
         }, 200)
       if(from<to)
         ani = setInterval(function() {
-            from++/*
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")*/
+            from++
+            const parent = target.parentNode.previousElementSibling;
+            for (let i = 0; i < parent.children.length; i++) {
+              parent.children[i].firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from + "%");
+              parent.children[i].firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from + "%");
+            }
             if(from===to)
               clearInterval(ani)
         }, 200)
