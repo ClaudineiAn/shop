@@ -19,7 +19,29 @@ export default {
         document.documentElement.style.setProperty('--main-title-ani-from', element.parentNode.offsetHeight-10+"px")
         document.documentElement.style.setProperty('--main-title-ani-to', element.parentNode.offsetHeight/2+"px")
       })
-    };
+    }
+    let ani;
+    function startsAni(target,to){
+      var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+      if(ani)
+        clearInterval(ani)
+      if(from>to)
+        const ani = setInterval(function() {
+            from--
+            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+            if(from===to)
+              clearInterval(ani)
+        }, 200)
+      if(from<to)
+        const ani = setInterval(function() {
+            from++
+            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+            if(from===to)
+              clearInterval(ani)
+        }, 200)
+    }
     onMounted( async () => {
       setProperMetrics()
       window.addEventListener('resize', setProperMetrics);
@@ -262,29 +284,6 @@ export default {
           }
           document.querySelector(".banner div.box>div.data").innerHTML=template
           document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
-          let ani;
-          function startsAni(target,to){
-            var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
-            if(ani)
-              clearInterval(ani)
-            console.log(from+"  "+to+"   "+from>to+"   "+from<to)
-            if(from>to)
-              const ani = setInterval(function() {
-                  from--
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
-                  if(from===to)
-                    clearInterval(ani)
-              }, 200)
-            if(from<to)
-              const ani = setInterval(function() {
-                  from++
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
-                  target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
-                  if(from===to)
-                    clearInterval(ani)
-              }, 200)
-          }
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
             document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before").classList.add("index")
           }));
