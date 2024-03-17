@@ -20,28 +20,6 @@ export default {
         document.documentElement.style.setProperty('--main-title-ani-to', element.parentNode.offsetHeight/2+"px")
       })
     }
-    let ani;
-    function startsAni(target,to){
-      var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
-      if(ani)
-        clearInterval(ani)
-      if(from>to)
-        const ani = setInterval(function() {
-            from--
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
-            if(from===to)
-              clearInterval(ani)
-        }, 200)
-      if(from<to)
-        const ani = setInterval(function() {
-            from++
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
-            target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
-            if(from===to)
-              clearInterval(ani)
-        }, 200)
-    }
     onMounted( async () => {
       setProperMetrics()
       window.addEventListener('resize', setProperMetrics);
@@ -289,22 +267,127 @@ export default {
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","5")
+            function startsAni(target,to){
+              var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+              if(ani)
+                clearInterval(ani)
+              if(from>to)
+                const ani = setInterval(function() {
+                    from--
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+              if(from<to)
+                const ani = setInterval(function() {
+                    from++
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+            }
             startsAni(event.target, 0)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(2)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","4")
+            function startsAni(target,to){
+              var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+              if(ani)
+                clearInterval(ani)
+              if(from>to)
+                const ani = setInterval(function() {
+                    from--
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+              if(from<to)
+                const ani = setInterval(function() {
+                    from++
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+            }
             startsAni(event.target, 20)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(3)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","3")
+            function startsAni(target,to){
+              var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+              if(ani)
+                clearInterval(ani)
+              if(from>to)
+                const ani = setInterval(function() {
+                    from--
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+              if(from<to)
+                const ani = setInterval(function() {
+                    from++
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+            }
             startsAni(event.target, 40)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(4)").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","2")
+            function startsAni(target,to){
+              var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+              if(ani)
+                clearInterval(ani)
+              if(from>to)
+                const ani = setInterval(function() {
+                    from--
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+              if(from<to)
+                const ani = setInterval(function() {
+                    from++
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+            }
             startsAni(event.target, 60)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:last-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","1")
+            function startsAni(target,to){
+              var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
+              if(ani)
+                clearInterval(ani)
+              if(from>to)
+                const ani = setInterval(function() {
+                    from--
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+              if(from<to)
+                const ani = setInterval(function() {
+                    from++
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%")
+                    target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%")
+                    if(from===to)
+                      clearInterval(ani)
+                }, 200)
+            }
             startsAni(event.target, 80)
           }));
           document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child").forEach(element => element.addEventListener("mouseleave", function(event) {
