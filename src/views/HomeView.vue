@@ -28,7 +28,7 @@ export default {
       if(from>to)
         ani = setInterval(function() {
             from--
-            console.log(target.parentNode.previousElementSibling.children)
+            target.parentNode.previousElementSibling.children.forEach(element => console.log(element))
             /*target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.setAttribute("offset", from+"%"))
             target.parentNode.previousElementSibling.children.forEach(element => element.firstElementChild.firstElementChild.nextElementSibling.nextElementSibling.setAttribute("offset", from+"%"))*/
             if(from===to)
