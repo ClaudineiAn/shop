@@ -267,6 +267,7 @@ export default {
             var from=parseInt(target.parentNode.previousElementSibling.firstElementChild.firstElementChild.firstElementChild.nextElementSibling.getAttribute("offset").match(/\d+/)[0])
             if(ani)
               clearInterval(ani)
+            console.log(from+"  "+to+"   "+from>to+"   "+from<to)
             if(from>to)
               const ani = setInterval(function() {
                   from--
