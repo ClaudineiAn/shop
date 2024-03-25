@@ -1,20 +1,5 @@
 <script>
-import { ref, watch } from 'vue'
-import Cookies from 'js-cookie'
-
-const isLoggedIn = ref(false)
-
-export const checkIfLogged = async () => {
-    try {
-        if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
-            isLoggedIn.value = true
-        } else {
-            isLoggedIn.value = false
-        }
-    } catch (error) {
-        isLoggedIn.value = false
-    }
-}
+import {isLoggedIn,checkIfLogged} from '../assets/main.js'
 </script>
 
 <template>
@@ -48,7 +33,6 @@ button{
 }
 </style>
 <script setup>
-import { onMounted } from 'vue'
 import Logo from '../components/Logo.vue'
 import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'

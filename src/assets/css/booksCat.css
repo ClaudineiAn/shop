@@ -1,0 +1,53 @@
+#booksCat{
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  #booksCat > div:first-child{
+    display: flex;
+    height: fit-content;
+  }
+  #booksCat > div:first-child > div{
+    margin: 0 auto;
+  }
+  #booksCat > div:first-child > div:first-child{
+    order: 3;
+    opacity: 1;
+    transform: translateY(0);
+    animation: loadfadeup 1s;
+  }
+  #booksCat > div:first-child > div:nth-child(2){
+    order: 2;
+  }
+  #booksCat > div:first-child > div:nth-child(3){
+    order: 4;
+  }
+  #booksCat > div:first-child > div:nth-child(4){
+    order: 1;
+  }
+  #booksCat > div:first-child > div:last-child{
+    order: 5;
+  }
+  #booksCat > div:first-child > div:nth-child(2), #booksCat > div:first-child > div:nth-child(3){
+    opacity: 1;
+    transform: translateY(0);
+    animation: loadfadeupfase2 2s;
+  }
+  #booksCat > div:first-child > div:nth-child(4), #booksCat > div:first-child > div:last-child{
+    opacity: 1;
+    transform: translateY(0);
+    animation: loadfadeupfase3 3s;
+  }
+  #booksCat > div:first-child > div > a > h2{
+    margin: auto;
+    font-size: 3vw;
+    position: relative;
+    color: transparent;
+  }
+  #booksCat > div:first-child > div:nth-child(4) > a > h2, #booksCat > div:first-child > div:last-child > a > h2{}
+  #booksCat > div:first-child > div:nth-child(2) > a > h2, #booksCat > div:first-child > div:nth-child(3) > a > h2{
+    font-size: 4vw;
+  }
+  #booksCat > div:first-child > div:first-child > a > h2{
+    font-size: 5vw;
+  }

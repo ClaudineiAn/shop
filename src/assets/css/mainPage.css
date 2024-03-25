@@ -1,0 +1,352 @@
+:root {
+    --main-title-ani-from: 0px;
+    --main-title-ani-to: 0px;
+  }
+  .fadeout{
+    opacity:0;
+  }
+  .banner:before{
+    content: "";
+    background: #000000eb;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+  }
+  .banner{
+    display: flex;
+    background-image: url("../assets/images/home.jpg");
+    color: white;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+  }
+  .banner > div{
+    z-index: 1;
+  }
+  .banner > div:first-child{
+    margin: auto;
+  }
+  .banner > div:first-child > h1{
+    position: relative;
+    color: transparent;
+    font-size: 20vw;
+  }
+  .banner > div:first-child > h1:before{
+    content: "Shop";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: gold;
+    border-right: 2px solid #a59337;
+    overflow: hidden;
+    background: linear-gradient(to right, #F8EB6B, #453100, #0F0F02, #453100, #F8EB6B), #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: logoAnime 6s cubic-bezier(0.73, 0.01, 0.31, 0.97) infinite;
+    background-size: 200% auto;
+    background-position: left;
+  }
+  @keyframes logoAnime {
+    0% {
+      width: 0;
+      background-position: -100% 0;
+    }
+    50% {
+      width: 100%;
+    }
+    75% {
+      background-position: -50% 0;
+    }
+    100% {
+      width: 0;
+      background-position: 100% 0;
+    }
+  }
+  .banner div.box{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #f8eb6b;
+    background: #0000008c;
+  }
+  .banner div.box > div.titles{
+    position: relative;
+    display: flex;
+  }
+  .banner div.box > div.titles > h2{
+    margin: 2vw 7vw;
+    display: flex;
+    color: transparent;
+    height: calc(65% - 4px);
+    font-size: 2vw;
+  }
+  .banner div.box>div.titles>h2:nth-child(2) {
+      font-size: calc(5vw + 10px);
+  }
+  .banner div.box > div.titles > h2:before{
+    overflow: hidden;
+    background: linear-gradient(transparent, #f8eb6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: none;
+  }
+  .banner div.box>div.titles>h2:not(:nth-child(2)):after {
+      transform: rotateX(-85deg) translateY(130px);
+  }
+  .banner div.box > div.titles > h2:after{
+    position: absolute;
+    box-shadow: 0px 15px 10px;
+    color: transparent;
+    background: #f8eb6bb8;
+    transform: rotateX(-85deg) translateY(calc(90px + 30vw));
+    filter: blur(20px);
+  }
+  .banner div.box > div.titles > h2:first-child:before{
+    content: "Trolley"
+  }
+  .banner div.box > div.titles > h2:first-child:after{
+    content: "Trolley"
+  }
+  .banner div.box > div.titles > h2:nth-child(2){
+    font-size: 5vw;
+  }
+  .banner div.box > div.titles > h2:nth-child(2):before{
+    content: "Home"
+  }
+  .banner div.box > div.titles > h2:nth-child(2):after{
+    content: "Home"
+  }
+  .banner div.box > div.titles > h2:last-child{}
+  .banner div.box > div.titles > h2:last-child:before{
+    content: "Favorite"
+  }
+  .banner div.box > div.titles > h2:last-child:after{
+    content: "Favorite"
+  }
+  .banner div.box>div.titles>h2>div:nth-child(4) {
+    position: absolute;
+    top: 1.2vw;
+    background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
+    filter: blur(5px);
+  }
+  .banner div.box > div.titles > h2 > div:last-child {
+      position: absolute;
+      height: 10px;
+      background: #bfbfbf87;
+      border-radius: 0 0 50% 50%;
+      filter: blur(3px);
+      transform: translateY(var(--main-title-ani-to)) rotateX(65deg);
+      animation: main-title-ani 2s linear infinite
+  }
+  @Keyframes main-title-ani {
+      0% {
+          transform: translateY(var(--main-title-ani-from)) rotateX(65deg)
+      }
+      50% {
+          opacity: 1;
+          transform: translateY(var(--main-title-ani-to)) rotateX(65deg)
+      }
+      100% {
+          opacity: 0;
+      }
+  }
+  .banner div.box>div.titles>h2:not(:nth-child(2))>div:last-child{
+    opacity: 0;
+  }
+  .banner div.box>div.data {
+      position: relative;
+      top: 50px;
+      display: flex;
+      flex-direction: column;
+  }
+  .banner div.box>div.data>div {
+      margin-top: calc(2vw + 10px);
+      display: flex;
+  }
+  .banner div.box>div.data>div>div {
+      width: 110px;
+      height: 110px;
+      transition: .3s;
+      transform: scale(1);
+  }
+  .banner div.box>div.data>div>div:hover {
+      transform: scale(1.2);
+  }
+  .banner div.box>div.data>div>div:hover > div:not(:last-child) {
+      display: flex;
+  }
+  .banner div.box>div.data>div>div:hover:before {
+      content: "";
+      background: #4531005c;
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+      transform: rotate(45deg);
+      box-shadow: inset 0 0 8px 2px;
+  }
+  .banner div.box>div.data>div>div>img {
+      width: 110px;
+      height: 110px;
+      -o-object-fit: contain;
+      object-fit: contain;
+  }
+  .banner div.box>div.data > div {
+      display: flex;
+  }
+  .banner div.box>div.data>div>div>div:not(:last-child) {
+      display: none;
+      position: absolute;
+      top: 0;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+  }
+  
+  .banner div.box>div.data>div>div:hover:after {
+      content: "";
+      display: block;
+      top: calc(50% - 5px);
+      left: calc(50% - 5px);
+      width: 10px;
+      height: 10px;
+      position: absolute;
+      z-index: 2;
+      transform: rotate(45deg);
+      box-shadow: 0 0 21px 10px #f8eb6b;
+      background: #f8eb6b;
+  }
+  
+  .banner div.box>div.data>div>div>div>div,.banner div.box>div.data>div>div>div>div>div {
+      width: calc(25px + 0.6vw);
+  }
+  
+  .banner div.box>div.data>div>div>div>div:first-child {margin-bottom: auto;}
+  
+  .banner div.box>div.data>div>div>div>div:nth-child(2) {
+      display: flex;
+      width: 100%;
+  }
+  
+  .banner div.box>div.data>div>div>div>div:last-child {
+      margin-top: auto;
+  }
+  
+  .banner div.box>div.data>div>div>div>div>div:first-child {
+      margin-right: auto;
+  }
+  
+  .banner div.box>div.data>div>div>div>div>div:last-child {
+      margin-left: auto;
+  }
+  
+  .banner div.box>div.data>div>div>div>div>div:first-child, .banner div.box>div.data>div>div>div>div>div:last-child {
+      display: flex;
+      align-items: center;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(2) {
+      transform: rotate(45deg);
+      z-index: 4;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(2)>div {
+      display: flex;
+      width: 100%;
+      height: 50%;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(2)>div>div {
+      width: 50%;
+      height: 100%;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(2)>div>div:hover {
+      box-shadow: inset 0 0 10px 2px;
+      background: #00000029;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(3) {
+      z-index: 2;
+  }
+  
+  .banner div.box>div.data>div>div>div:nth-child(4) {
+      z-index: 0;
+      background: #4531009e;
+      transform: rotate(45deg)
+  }
+  
+  .banner div.box>div.data>div>div>div:last-child{}
+  
+  .banner > a{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    z-index: 0;
+    color: #F8EB6B;
+  }
+  .banner > a > svg{
+    margin: 0 auto;
+    width: 30px;
+    height: 30px;
+  }
+  .lightning {
+      width: 1px;
+      height: 9px;
+      background: white;
+      opacity: 0;
+  }
+  .lightning1 {
+      animation: lightning 10s linear infinite;
+  }
+  .lightning2 {
+      margin: auto 0 auto 0;
+      animation: lightning 10s 2s linear infinite;
+  }
+  @Keyframes lightning {
+      0% {
+          opacity:0.4;
+      }
+      8% {
+          opacity:0;
+      }
+  }
+  .lightning2:first-child {
+      transform: rotate(120deg);
+      height: calc(20px + 3vw);
+  }
+  
+  .lightning2:nth-child(2) {
+      transform: translateX(calc(12px + 3vw)) rotate(63deg);
+      height: calc(20px + 3vw);
+  }
+  
+  .lightning2:nth-child(3) {
+      transform: translateX(calc(39px + 5.1vw)) rotate(112deg);
+      height: calc(30px + 3.5vw);
+  }
+  
+  .lightning1:nth-child(5) {
+      transform: rotate(45deg)
+  }
+  
+  .lightning1:nth-child(6) {
+      transform: translateX(-4px) translateY(calc(10px + 1vw)) rotate(-25deg);
+  }
+  
+  .lightning1:nth-child(7) {
+      transform: translateX(calc(-4px - 0.4vw)) translateY(calc(14px + 2.5vw)) rotate(45deg);
+  }
+  
+  .view img {
+      width: 20px;
+  }

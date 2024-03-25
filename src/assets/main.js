@@ -15,6 +15,20 @@ const checkIfLog = () => {
         return true
 }
 
+export const isLoggedIn = ref(false)
+
+export const checkIfLogged = async () => {
+    try {
+        if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
+            isLoggedIn.value = true
+        } else {
+            isLoggedIn.value = false
+        }
+    } catch (error) {
+        isLoggedIn.value = false
+    }
+}
+
 export const makeLog = async (email, password) => {
     const router = useRouter()
 
@@ -258,4 +272,33 @@ export const events = () => {
     if(checkIfLog())
         account()
     bookView()
+}
+export const inputEffect = () => {
+    const inputs = document.querySelectorAll("input[type='text'], input[type='password']")
+  
+    inputs.forEach(element => {
+      element.addEventListener('focus', () => {
+        if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
+          const newElement = document.createElement('div')
+          const newHr = document.createElement('hr')
+          newElement.textContent = element.getAttribute("placeholder")
+          element.setAttribute("placeholder","")
+          element.parentNode.insertBefore(newHr, element.parentNode.lastChild)
+          element.parentNode.insertBefore(newElement, element.parentNode.lastChild)
+        }
+      })
+    })
+  
+    inputs.forEach(element => {
+      element.addEventListener('blur', async () => {
+        if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
+          element.nextSibling.classList.add("out")
+          element.nextSibling.nextSibling.classList.add("out")
+          await new Promise(resolve => setTimeout(resolve, 300))
+          element.setAttribute("placeholder",element.getAttribute("data-placeholder"))
+          element.parentNode.removeChild(element.nextSibling)
+          element.parentNode.removeChild(element.nextSibling)
+        }
+      })
+    })
 }
