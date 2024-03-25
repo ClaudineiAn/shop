@@ -14,7 +14,7 @@
   }
   .banner{
     display: flex;
-    background-image: url("../assets/images/home.jpg");
+    background-image: url("../images/home.jpg");
     color: white;
     background-size: cover;
     height: 100vh;
