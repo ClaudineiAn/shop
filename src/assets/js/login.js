@@ -47,12 +47,12 @@ const validateEmail = (value) => {
   export default {
     data() {
       return {
-        route = useRoute(),
-        router= useRouter(),
-        email= ref(''),
-        password= ref(''),
-        emailError= ref(''),
-        passwordError= ref('')
+        route: useRoute(),
+        router: useRouter(),
+        email: ref(''),
+        password: ref(''),
+        emailError: ref(''),
+        passwordError: ref('')
       }
     },
     validation,
