@@ -103,7 +103,7 @@ export default {
       category: '',
       first: true,
       actualCat: null,
-      pathnameSplited: window.location.pathname.split('/'),
+      pathnameSplited: window.location.pathname.split('/')[-1],
       extIndex: -1,
       playing: true,
       counter: ref(10),
@@ -134,7 +134,7 @@ export default {
       let first = true
       let booksNav = ''
       console.log(this.pathnameSplited)
-      this.actualCat=this.capitalizeFirstLetter(this.pathnameSplited[this.pathnameSplited.length - 1])
+      this.actualCat=this.capitalizeFirstLetter(this.pathnameSplited)
 
       await this.getBooks()
       if(Object.prototype.toString.call(this.books)==='[object Object]')
