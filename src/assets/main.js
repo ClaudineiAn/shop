@@ -3,7 +3,6 @@ import axios from "axios"
 import { updateCookie } from '../plugins/cookies.js'
 import Cookies from 'js-cookie'
 import { RouterView, useRoute, useRouter } from 'vue-router'
-import {checkIfLogged} from '../views/HeaderView.vue'
 import {clearintervalId,setPlaying,getPlaying,getCounter,startIntervalBooks} from '../views/BooksView.vue'
 import {setEmail, setName, updateProfileImg} from '../components/Account.vue'
 import api from '../services/api.ts'
