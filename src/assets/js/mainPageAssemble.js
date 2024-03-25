@@ -1,4 +1,4 @@
-import api from '../services/api.ts'
+import api from '../../services/api.ts'
 export const setProperMetrics = async () => {
     const headerHeight = document.querySelector("header").offsetHeight;
     document.querySelector(".banner > div.box > div.titles").setAttribute('style', `top:${headerHeight}px`);
