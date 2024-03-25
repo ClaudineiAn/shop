@@ -2,7 +2,7 @@ import { onMounted, ref } from "vue"
 import { useRoute, useRouter } from 'vue-router'
 import axios from "axios"
 
-import { makeLog, inputEffect } from '../assets/main.js'
+import { makeLog, inputEffect } from '../main.js'
 
 const validateConfirm = (value) => {
   if (!value) {

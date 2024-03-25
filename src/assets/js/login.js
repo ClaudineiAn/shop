@@ -1,7 +1,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
-import { makeLog,inputEffect } from '../assets/main.js'
+import { makeLog,inputEffect } from '../main.js'
 
 const validation = () => {
     const form = document.querySelector('form')
