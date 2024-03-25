@@ -1,5 +1,5 @@
 import { ref, onBeforeMount, onMounted, nextTick } from "vue"
-import api from "../services/api.ts"
+import api from "../../services/api.js"
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import {events} from "../assets/main.js"
 
