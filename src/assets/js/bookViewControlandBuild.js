@@ -133,7 +133,7 @@ export default {
       let extIndex = 0
       let first = true
       let booksNav = ''
-      console.log(this.pathnameSplited)
+      console.log(window.location.pathname+"   "+window.location.pathname.match(/[^V]+$/)[0])
       this.actualCat=this.capitalizeFirstLetter(this.pathnameSplited)
 
       await this.getBooks()
