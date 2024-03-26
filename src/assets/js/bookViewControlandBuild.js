@@ -103,7 +103,7 @@ export default {
       category: '',
       first: true,
       actualCat: null,
-      pathnameSplited: null,
+      pathnameSplited: window.location.pathname.match(/[^V]+$/)[0],
       extIndex: -1,
       playing: true,
       counter: ref(10),
@@ -133,7 +133,6 @@ export default {
       let extIndex = 0
       let first = true
       let booksNav = ''
-      this.pathnameSplited=window.location.pathname.split('/')[-1]
       console.log(this.pathnameSplited)
       this.actualCat=this.capitalizeFirstLetter(this.pathnameSplited)
 
