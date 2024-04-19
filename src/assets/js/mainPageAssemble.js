@@ -281,7 +281,9 @@ export const setProperMetrics = async () => {
             }
             template+="</div>"
         }
+        console.log(template)
         document.querySelector(".banner div.box>div.data").innerHTML=template
+        console.log(templatePopup)
         document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
             document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child").setAttribute("class","index")
