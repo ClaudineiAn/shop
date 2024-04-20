@@ -86,49 +86,118 @@
     z-index: 1;
 }
 
+
 .popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child{
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     align-items: flex-start;
+    justify-content: center;
 }
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg{
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child{
+    display: flex;
+    width: fit-content;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    top: calc(-1.6vw + -2px);
 }
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg:first-child{}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div{top: calc(-1.6vw + -5px);}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg:nth-child(2){}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child:before{
+    content: attr(data-val);
+    opacity: 0;
+}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child:hover > div > div:first-child > div:before{
+    position: absolute;
+    width: 100%;
+    height: calc(100% - (1.6vw + 5px));
+    top: calc(1.6vw + 5px);
+    margin-left: calc(-1vw + -5px);
+    font-size: calc(2vw + 30px);
+    color: #453100bd;
+    z-index: -1;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    opacity: 1;
+    transition: 2s;
+}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg{width: calc(3vw + 10px);margin-left: calc(-1vw + -2px);transition: 2s;}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg:nth-child(3){}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg{margin-left: calc(-1vw + -5px);}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg:nth-child(4){}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg:first-child{}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > svg:last-child{}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg:nth-child(4){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg:last-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg:first-child{
+    width: calc(4.5vw + 15px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg:nth-child(2){
+    width: calc(5.25vw + 17.5px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg:nth-child(3){
+    width: calc(6vw + 20px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg:nth-child(4){
+    width: calc(5.25vw + 17.5px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div:hover > div:first-child > div > svg:nth-child(5){
+    width: calc(4.5vw + 15px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div > svg > path{
+    transform: translateY(5px);
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child{
+    position: absolute;
+    width: calc((4.5vw + 15px)*5);
+    height: calc(4.5vw + 15px);
+    top: calc((4.5vw + 15px)/7.1428571429);
+    margin: 0 auto;
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div{
+    height: 20%;
+}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child{}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(2){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(3){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:nth-child(4){}
+
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:last-child{}
 
 .popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2){}
 
 .popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:first-child{}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(2){}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(3){}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:nth-child(4){}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:first-child > img{}
 
 .popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:last-child{}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3){}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:last-child > div{}
 
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:first-child{}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:first-child > img{}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child{}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div{}
-
-.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > input{}
+.popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(2) > div:last-child > div > input{}
 
 .popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:nth-child(3) > div:last-child > div > div{}
 
