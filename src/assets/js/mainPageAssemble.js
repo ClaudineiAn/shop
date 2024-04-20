@@ -288,7 +288,9 @@ export const setProperMetrics = async () => {
         document.querySelectorAll(".banner div.box>div.data>div>div>div:nth-child(2)>div:last-child>div:last-child").forEach((element, index) => {
             element.addEventListener("click", function(event) {
                 var i = index + 1;
-                document.querySelectorAll(`.banner div.box>div.popup>div:nth-child(${i})`).removeAttribute("style")
+                document.querySelectorAll(`.banner div.box>div.popup>div:nth-child(${i})`).forEach(popup => {
+                    popup.removeAttribute("style");
+                });
             });
         });
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
