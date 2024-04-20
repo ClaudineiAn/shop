@@ -212,28 +212,30 @@ export const setProperMetrics = async () => {
                 templatePopup+="<div>"
                 var formats = JSON.parse(res.data[count].formats)
                 formats.forEach((format) => {
-                switch (format.name) {
-                    case 'Kindle':
-                    templatePopup+=`<div><span>Dimensions</span><span>${res.data[count].dimensoes}</span></div>`
-                    templatePopup+=`<div><span>Publishing</span><span>${res.data[count].editora}</span></div>`
-                    if(res.data[count].idade_de_leitura!=="0")
-                    templatePopup+=`<div><span>Age</span><span>${res.data[count].idade_de_leitura}</span></div>`
-                    templatePopup+=`<div><span>Language</span><span>${res.data[count].idioma}</span></div>`
-                    templatePopup+=`<div><span>Pages</span><span>${res.data[count].numero_de_paginas}</span></div>`
-                    templatePopup+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
-                    templatePopup+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
-                    templatePopup+=`<div class="new"><span>File Size</span><span>${res.data[count].tamanho_do_arquivo}</span></div>`
-                    break;
-                    default:
-                    templatePopup+=`<div><span>Dimensions</span><span>${res.data[count].dimensoes}</span></div>`
-                    templatePopup+=`<div><span>Publishing</span><span>${res.data[count].editora}</span></div>`
-                    if(res.data[count].idade_de_leitura!=="0")
-                    templatePopup+=`<div><span>Age</span><span>${res.data[count].idade_de_leitura}</span></div>`
-                    templatePopup+=`<div><span>Language</span><span>${res.data[count].idioma}</span></div>`
-                    templatePopup+=`<div><span>Pages</span><span>${res.data[count].numero_de_paginas}</span></div>`
-                    templatePopup+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
-                    templatePopup+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
-                }
+                    format.forEach((dataFormat) => {
+                        switch (dataFormat.name) {
+                            case 'Kindle':
+                            templatePopup+=`<div><span>Dimensions</span><span>${res.data[count].dimensoes}</span></div>`
+                            templatePopup+=`<div><span>Publishing</span><span>${res.data[count].editora}</span></div>`
+                            if(res.data[count].idade_de_leitura!=="0")
+                            templatePopup+=`<div><span>Age</span><span>${res.data[count].idade_de_leitura}</span></div>`
+                            templatePopup+=`<div><span>Language</span><span>${res.data[count].idioma}</span></div>`
+                            templatePopup+=`<div><span>Pages</span><span>${res.data[count].numero_de_paginas}</span></div>`
+                            templatePopup+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
+                            templatePopup+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
+                            templatePopup+=`<div class="new"><span>File Size</span><span>${res.data[count].tamanho_do_arquivo}</span></div>`
+                            break;
+                            default:
+                            templatePopup+=`<div><span>Dimensions</span><span>${res.data[count].dimensoes}</span></div>`
+                            templatePopup+=`<div><span>Publishing</span><span>${res.data[count].editora}</span></div>`
+                            if(res.data[count].idade_de_leitura!=="0")
+                            templatePopup+=`<div><span>Age</span><span>${res.data[count].idade_de_leitura}</span></div>`
+                            templatePopup+=`<div><span>Language</span><span>${res.data[count].idioma}</span></div>`
+                            templatePopup+=`<div><span>Pages</span><span>${res.data[count].numero_de_paginas}</span></div>`
+                            templatePopup+=`<div><span>Writer</span><span>${res.data[count].por}</span></div>`
+                            templatePopup+=`<div><span>Published</span><span>${res.data[count].publicado}</span></div>`
+                        }
+                    })
                 })
                 templatePopup+="</div>"
                 templatePopup+="</div>"
@@ -281,9 +283,7 @@ export const setProperMetrics = async () => {
             }
             template+="</div>"
         }
-        console.log(template)
         document.querySelector(".banner div.box>div.data").innerHTML=template
-        console.log(templatePopup)
         document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
             document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child").setAttribute("class","index")
