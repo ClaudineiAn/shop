@@ -124,17 +124,6 @@ export const obrl = (to, from, next) => {
   next()
 }
 
-export const mountedBook = function () {
-  generateBooksHTML()
-  const start = setInterval(() => {
-    if (document.querySelector('#booksList > div > ul > div > li.active') !== null) {
-      startInterval()
-      addEvents()
-      clearInterval(start)
-    }
-  }, 1)
-}
-
 export const methodsBook = () => {
   async function getBooks() {
     try {
@@ -340,10 +329,21 @@ export const methodsBook = () => {
       a.addEventListener('click', handleLinkClick)
     })
   }
-  
+
   function handleLinkClick(event) {
     event.preventDefault();
     const href = event.currentTarget.getAttribute('href');
     $router.push(href);
   }
+}
+
+export const mountedBook = function () {
+  generateBooksHTML()
+  const start = setInterval(() => {
+    if (document.querySelector('#booksList > div > ul > div > li.active') !== null) {
+      startInterval()
+      addEvents()
+      clearInterval(start)
+    }
+  }, 1)
 }
