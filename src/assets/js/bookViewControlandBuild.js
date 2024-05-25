@@ -1,36 +1,32 @@
-import { ref, onBeforeMount, onMounted, nextTick } from "vue"
-import api from "../../services/api.ts"
-import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
-import {events} from "../main.js"
+import { ref, onMounted, nextTick } from 'vue'
+import api from '../../services/api.ts'
+import { useRouter, onBeforeRouteLeave } from 'vue-router'
 
 const currentPath = ref('')
-
 const router = useRouter()
-
-var category = ''
-var first = true
-
-var extIndex=-1
-var playing = true
-
+const category = ref('')
+const first = ref(true)
+const extIndex = ref(-1)
+const playing = ref(true)
 const counter = ref(10)
+let intervalId = null
+let prevActiveNav = null
+let prevActive = null
 
-let intervalId, prevActiveNav, prevActive
-
-export const clearintervalId = () => {
+export const clearIntervalId = () => {
   clearInterval(intervalId)
 }
 
 export const setPlaying = (v) => {
-  playing=v
+  playing.value = v
 }
 
 export const getPlaying = () => {
-  return playing
+  return playing.value
 }
 
 export const getCounter = () => {
-  return counter
+  return counter.value
 }
 
 export const startIntervalBooks = () => {
@@ -38,61 +34,70 @@ export const startIntervalBooks = () => {
 }
 
 const startInterval = async () => {
-  if (intervalId)
-    clearInterval(intervalId)
-  intervalId = setInterval(async() => {
-    counter.value--;
-    document.querySelectorAll("#booksList > div > ul > div > li.active")
-    if (counter.value === -1)
-      if(document.querySelector("#booksList > div > ul > div > li.active").nextSibling.classList.value===""&&document.querySelector("#booksList > div > ul > div > li.active").nextSibling.nextSibling.classList.value==="")
-        document.querySelector('#booksList > div > ul > div > li.active').innerHTML = "<span>0</span>"
-      else
-        document.querySelector('#booksList > div > ul > div > li.active').innerHTML = ""
-    else
-      if(document.querySelector("#booksList > div > ul > div > li.active").nextSibling.classList.value===""&&document.querySelector("#booksList > div > ul > div > li.active").nextSibling.nextSibling.classList.value==="")
-        document.querySelector('#booksList > div > ul > div > li.active').innerHTML = "<span>" + counter.value + "</span>"
-      else
-        document.querySelector('#booksList > div > ul > div > li.active').innerHTML = ""
+  if (intervalId) clearInterval(intervalId)
+  intervalId = setInterval(async () => {
+    counter.value--
+    const activeLi = document.querySelector('#booksList > div > ul > div > li.active')
+    if (counter.value === -1) {
+      if (
+        activeLi.nextSibling.classList.value === '' &&
+        activeLi.nextSibling.nextSibling.classList.value === ''
+      )
+        activeLi.innerHTML = '<span>0</span>'
+      else activeLi.innerHTML = ''
+    } else {
+      if (
+        activeLi.nextSibling.classList.value === '' &&
+        activeLi.nextSibling.nextSibling.classList.value === ''
+      )
+        activeLi.innerHTML = '<span>' + counter.value + '</span>'
+      else activeLi.innerHTML = ''
+    }
     if (counter.value === -1) {
       stopInterval()
-      document.querySelectorAll('#booksList > div > div:first-child > h2,#booksList > div > div:first-child > div:nth-child(2),#booksList > div > div:first-child > div:last-child > div:first-child,#booksList > div > div:first-child > div:last-child > div:last-child').forEach(element => {
-        element.classList.add('out')
-      })
-      await new Promise(resolve => setTimeout(resolve, 2100))
-      document.querySelectorAll('#booksList > div > div:first-child > h2,#booksList > div > div:first-child > div:nth-child(2),#booksList > div > div:first-child > div:last-child > div:first-child,#booksList > div > div:first-child > div:last-child > div:last-child').forEach(element => {
-        element.classList.remove('out')
-      })
+      document
+        .querySelectorAll(
+          '#booksList > div > div:first-child > h2, #booksList > div > div:first-child > div:nth-child(2), #booksList > div > div:first-child > div:last-child > div:first-child, #booksList > div > div:first-child > div:last-child > div:last-child'
+        )
+        .forEach((element) => {
+          element.classList.add('out')
+        })
+      await new Promise((resolve) => setTimeout(resolve, 2100))
+      document
+        .querySelectorAll(
+          '#booksList > div > div:first-child > h2, #booksList > div > div:first-child > div:nth-child(2), #booksList > div > div:first-child > div:last-child > div:first-child, #booksList > div > div:first-child > div:last-child > div:last-child'
+        )
+        .forEach((element) => {
+          element.classList.remove('out')
+        })
       prevActiveNav = document.querySelector('#booksList > div > ul > div > li.active')
       prevActiveNav.innerHTML = ''
       if (prevActiveNav.parentNode.nextSibling === null)
-        document.querySelector('#booksList > div > ul > div:first-child > li').classList.add("active")
-      else
-        prevActiveNav.parentNode.nextSibling.firstChild.classList.add("active")
-      prevActiveNav.classList.remove("active")
-      document.querySelectorAll('#booksList > div > ul > div > li').forEach(element => {
-        element.classList.remove("show")
-        element.nextSibling.classList.remove("show")
-        element.nextSibling.nextSibling.classList.remove("show")
+        document.querySelector('#booksList > div > ul > div:first-child > li').classList.add('active')
+      else prevActiveNav.parentNode.nextSibling.firstChild.classList.add('active')
+      prevActiveNav.classList.remove('active')
+      document.querySelectorAll('#booksList > div > ul > div > li').forEach((element) => {
+        element.classList.remove('show')
+        element.nextSibling.classList.remove('show')
+        element.nextSibling.nextSibling.classList.remove('show')
       })
       prevActive = document.querySelector('#booksList > div.active')
-      if (prevActive.nextSibling === document.querySelector("#booksList > div:last-child"))
-        document.querySelector('#booksList > div:first-child').classList.add("active")
-      else
-        prevActive.nextSibling.classList.add("active")
-      prevActive.classList.remove("active")
+      if (prevActive.nextSibling === document.querySelector('#booksList > div:last-child'))
+        document.querySelector('#booksList > div:first-child').classList.add('active')
+      else prevActive.nextSibling.classList.add('active')
+      prevActive.classList.remove('active')
       startInterval()
       counter.value = 10
     }
-    if (counter.value < -1)
-      stopInterval()
-    playing=true
+    if (counter.value < -1) stopInterval()
+    playing.value = true
   }, 1000)
 }
 
 const stopInterval = () => {
   clearInterval(intervalId)
-  counter.value=10
-  playing=false
+  counter.value = 10
+  playing.value = false
 }
 
 export const dataBooks = () => {
@@ -110,23 +115,26 @@ export const dataBooks = () => {
     intervalId: null,
     prevActiveNav: null,
     prevActive: null,
-  };
+  }
 }
+
 export const obrl = (to, from, next) => {
   clearInterval(intervalId)
-  playing=false
+  playing.value = false
   next()
 }
-export const mountedBook = () => {
+
+export const mountedBook = function () {
   this.generateBooksHTML()
   const start = setInterval(() => {
-    if(document.querySelector("#booksList > div > ul > div > li.active")!==null){
+    if (document.querySelector('#booksList > div > ul > div > li.active') !== null) {
       this.startInterval()
       this.addEvents()
       clearInterval(start)
     }
-  },1)
+  }, 1)
 }
+
 export const methodsBook = () => {
   async function getBooks() {
     try {
