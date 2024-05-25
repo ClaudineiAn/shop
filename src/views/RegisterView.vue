@@ -9,56 +9,17 @@ import exported from '../assets/js/register.js'
         {{ route.query.error }}
       </div>
       <div class="form-group">
-        <label for="name">First Name:</label>
+        <label for="name">Username:</label>
         <input
           id="name"
           type="text"
           v-model="name"
           name="name"
           @input="exported.validateName(exported.name)"
-          placeholder="First Name"
-          data-placeholder="First Name"
+          placeholder="Username"
+          data-placeholder="Username"
         />
         <span class="error-message">{{ exported.nameError }}</span>
-      </div>
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input
-          @input="exported.validateEmail(exported.email)"
-          id="email"
-          type="text"
-          v-model="email"
-          name="email"
-          placeholder="Email"
-          data-placeholder="Email"
-        />
-        <span class="error-message">{{ exported.emailError }}</span>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          @input="exported.validatePassword(exported.password)"
-          id="password"
-          type="password"
-          v-model="password"
-          name="password"
-          placeholder="Password"
-          data-placeholder="Password"
-        />
-        <span class="error-message">{{ exported.passwordError }}</span>
-      </div>
-      <div class="form-group">
-        <label for="confirm">Confirm Password:</label>
-        <input
-          @input="exported.validateConfirm(exported.confirm)"
-          id="confirm"
-          type="password"
-          v-model="confirm"
-          name="confirm"
-          placeholder="Confirm Password"
-          data-placeholder="Confirm Password"
-        />
-        <span class="error-message">{{ exported.conError }}</span>
       </div>
       <button type="submit" class="btn-primary">Submit</button>
     </form>

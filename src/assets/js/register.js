@@ -1,51 +1,13 @@
 import { onMounted, ref } from "vue"
 import { useRoute, useRouter } from 'vue-router'
-import axios from "axios"
 
 import { makeLog, inputEffect } from '../main.js'
 
-const validateConfirm = (value) => {
-  if (!value) {
-    this.conError.value = 'Required.'
-  } else if (value !== password.value) {
-    this.conError.value = 'Password is different.'
-  } else {
-    this.conError.value = '';
-  }
-}
 const validateName = (value) => {
   if (!value) {
     this.nameError.value = 'Required.';
   } else {
     this.nameError.value = '';
-  }
-}
-const validateEmail = (value) => {
-  if (!value) {
-    this.emailError.value = 'Required.';
-  } else if (value.length > 50) {
-    this.emailError.value = 'Max 50 characters.';
-  } else {
-    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!pattern.test(value)) {
-        this.emailError.value = 'Invalid e-mail.';
-    } else {
-        this.emailError.value = '';
-    }
-  }
-}
-const validatePassword = (value) => {
-  if (!value) {
-    this.passwordError.value = 'Required.';
-  } else if (value.length < 8) {
-    this.passwordError.value = 'Min 8 characters.';
-  } else {
-    this.passwordError.value = '';
-  }
-  if (confirm.value !== password.value&&confirm.value) {
-    this.conError.value = 'Password is different.'
-  } else {
-    this.conError.value = '';
   }
 }
 export default {
@@ -54,45 +16,76 @@ export default {
         route: useRoute(),
         router: useRouter(),
         name: ref(''),
-        email: ref(''),
-        password: ref(''),
-        confirm: ref(''),
         nameError: ref(''),
-        emailError: ref(''),
-        passwordError: ref(''),
-        conError: ref('')
     }
   },
-  validateConfirm,
   validateName,
-  validateEmail,
-  validatePassword,
   onMounted() {
     const form = document.querySelector('form')
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault()
-      validateConfirm(confirm.value)
       validateName(name.value)
-      validateEmail(email.value)
-      validatePassword(password.value)
-      if (
-        nameError.value ||
-        emailError.value ||
-        passwordError.value ||
-        conError.value
-      ) {
+      if (nameError.value) {
         return
       }
+      const abi = [
+          {
+              "constant": true,
+              "inputs": [],
+              "name": "getUser",
+              "outputs": [
+                  {
+                      "name": "",
+                      "type": "string"
+                  }
+              ],
+              "payable": false,
+              "stateMutability": "view",
+              "type": "function"
+          },
+          {
+              "constant": false,
+              "inputs": [
+                  {
+                      "name": "_username",
+                      "type": "string"
+                  }
+              ],
+              "name": "register",
+              "outputs": [],
+              "payable": false,
+              "stateMutability": "nonpayable",
+              "type": "function"
+          },
+          {
+              "anonymous": false,
+              "inputs": [
+                  {
+                      "indexed": true,
+                      "name": "userAddress",
+                      "type": "address"
+                  },
+                  {
+                      "indexed": false,
+                      "name": "username",
+                      "type": "string"
+                  }
+              ],
+              "name": "UserRegistered",
+              "type": "event"
+          }
+      ];
+      const contractAddress = '0x7EF2e0048f5bAeDe046f6BF797943daF4ED8CB47';
+      const userAuthContract = new web3.eth.Contract(abi, contractAddress);
       try {
-        const cryptoPassword = await axios.get('https://cautious-puce-neckerchief.cyclic.app/registerVue?email='+email.value+'&password='+password.value+'&name='+name.value)
-        password.value = cryptoPassword.data[0].password
-      } catch (error) {
-          if (error.response?.status === 301)
-            return await router.push('/register?error='+error.response.data.error)
+          const accounts = await web3.eth.getAccounts();
+          await userAuthContract.methods.register(name.value).send({ from: accounts[0] });
+          makeLog(name.value)
+          await router.push('/')
+      } catch (err) {
+          return await router.push('/register?error=An error occurred while registering the user.')
       }
-      makeLog(email, password)
-      await router.push('/')
     })
     inputEffect()
   }

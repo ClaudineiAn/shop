@@ -18,7 +18,7 @@ export const isLoggedIn = ref(false)
 
 export const checkIfLogged = async () => {
     try {
-        if (Cookies.get('id')!=='undefined'||Cookies.get('email')!=='undefined'||Cookies.get('name')!=='undefined'||Cookies.get('typeProfile')!=='undefined'){
+        if (Cookies.get('name')!=='undefined'){
             isLoggedIn.value = true
         } else {
             isLoggedIn.value = false
@@ -28,29 +28,14 @@ export const checkIfLogged = async () => {
     }
 }
 
-export const makeLog = async (email, password) => {
+export const makeLog = async (name) => {
     const router = useRouter()
 
-    if(Cookies.get('id')==='undefined'||Cookies.get('email')==='undefined'||Cookies.get('name')==='undefined'||Cookies.get('typeProfile')==='undefined'){
-        try {
-        const res = await axios.get('http://localhost:3000/checkLogin?email='+email.value+'&password='+password.value)
-        if(res){
-            updateCookie('id', res.data[0].idusuario)
-            updateCookie('email', res.data[0].email)
-            updateCookie('name', res.data[0].nome)
-            updateCookie('typeProfile', res.data[0].perfil_idperfil)
-            checkIfLogged()
-            setEmail(Cookies.get('email'))
-            setName(Cookies.get('name'))
-            updateProfileImg()
-            return 200
-        }
-        } catch (error) {
-            if (error.response?.status === 401)
-                return error.response.data.error
-            else if (error.response?.status === 500)
-                return error.response.data.error
-        }
+    if(Cookies.get('name')==='undefined'){
+        updateCookie('name', res.data[0].nome)
+        checkIfLogged()
+        setName(Cookies.get('name'))
+        //updateProfileImg()
     }
 }
 
