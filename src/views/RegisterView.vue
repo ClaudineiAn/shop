@@ -2,7 +2,7 @@
 import exported from '../assets/js/register.js'
 </script>
 <template>
-  oi
+  oi2
 </template>
 
 <style scoped>
