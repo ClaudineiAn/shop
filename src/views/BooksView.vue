@@ -40,20 +40,20 @@ main{
 @import url('../assets/css/booksList.css');
 </style>
 <script>
-import { data, onBeforeRouteLeave, mounted, methods } from '../assets/js/bookViewControlandBuild.js'
+import { dataBooks, obrl, mountedBook, methodsBook } from '../assets/js/bookViewControlandBuild.js'
 
 export default {
   data(){
-    return data()
+    return dataBooks()
   },
   methods:{
-    ...methods
+    ...methodsBook
   },
   mounted(){
-    mounted.call(this)
+    mountedBook.call(this)
   },
   onBeforeRouteLeave(to, from, next){
-    onBeforeRouteLeave.call(this,to,from,next)
+    obrl.call(this,to,from,next)
   },
 }
 </script>
