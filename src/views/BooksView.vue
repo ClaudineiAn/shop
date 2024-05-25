@@ -40,14 +40,34 @@ main{
 @import url('../assets/css/booksList.css');
 </style>
 <script>
-import exported from '../assets/js/bookViewControlandBuild.js'
+import exported from '../assets/js/bookViewControlandBuild.js';
 
 export default {
-  data(){
-    exported.data()
+  data() {
+    return {
+      // Use data from the imported file
+      // If exported.data() returns an object, you can directly return it here
+      ...exported.data(),
+    };
   },
-  methods: exported.methods,
-  mounted: exported.mounted,
-  beforeRouteLeave: exported.beforeRouteLeave,
-}
+  methods: {
+    // Use methods from the imported file
+    ...exported.methods,
+  },
+  mounted() {
+    // Call the mounted function from the imported file, if available
+    if (exported.mounted) {
+      exported.mounted.call(this);
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    // Call the beforeRouteLeave function from the imported file, if available
+    if (exported.beforeRouteLeave) {
+      exported.beforeRouteLeave.call(this, to, from, next);
+    } else {
+      next();
+    }
+  },
+};
+
 </script>
