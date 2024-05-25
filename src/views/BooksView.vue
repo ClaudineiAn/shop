@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import api from '../services/api.ts'
 import { ref, onMounted } from 'vue'
 import { dataBooks, obrl, mountedBook, methodsBook } from '../assets/js/bookViewControlandBuild.js'
 

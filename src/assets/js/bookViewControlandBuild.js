@@ -125,11 +125,11 @@ export const obrl = (to, from, next) => {
 }
 
 export const mountedBook = function () {
-  this.generateBooksHTML()
+  generateBooksHTML()
   const start = setInterval(() => {
     if (document.querySelector('#booksList > div > ul > div > li.active') !== null) {
-      this.startInterval()
-      this.addEvents()
+      startInterval()
+      addEvents()
       clearInterval(start)
     }
   }, 1)
@@ -139,7 +139,7 @@ export const methodsBook = () => {
   async function getBooks() {
     try {
       const response = await api.get("/getbooksvue")
-      this.books.value = response.data
+      books.value = response.data
     } catch (error) {
       console.error(error)
     }
@@ -157,16 +157,16 @@ export const methodsBook = () => {
     let first = true
     let booksNav = ''
     console.log(window.location.pathname+"   "+window.location.pathname.match(/[^V]+$/)[0])
-    this.actualCat=this.capitalizeFirstLetter(this.pathnameSplited)
+    actualCat=capitalizeFirstLetter(pathnameSplited)
 
-    await this.getBooks()
-    if(Object.prototype.toString.call(this.books)==='[object Object]')
-      this.books=this.books._value
-    this.books.value.forEach((book, index) => {
-      if (this.actualCat === 'Books') {
-        this.actualCat=book.categoriaDescricao
+    await getBooks()
+    if(Object.prototype.toString.call(books)==='[object Object]')
+      books=books._value
+    books.value.forEach((book, index) => {
+      if (actualCat === 'Books') {
+        actualCat=book.categoriaDescricao
       }
-      if (book.categoriaDescricao === this.actualCat) {
+      if (book.categoriaDescricao === actualCat) {
         if(first)
           html += `<div class='active'>`;
         else  
@@ -209,7 +209,7 @@ export const methodsBook = () => {
             html += '</div>';
             html += '</div>';
             html += '<div>';
-            html += `<img src="${this.getImageUrl(book.imagem.split(', ')[0])}" />`;
+            html += `<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
             html += '<div></div>';
             html += '</div>';
             booksNav+='<div>';
@@ -217,7 +217,7 @@ export const methodsBook = () => {
             booksNav+=`<svg viewBox="-3 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"><linearGradient id="gradient"><stop offset="0%" stop-color="#F8EB6B"><animate attributeName="stop-color" values="#F8EB6B; #453100; #F8EB6B" dur="5s" repeatCount="indefinite"></animate></stop><stop offset="100%" stop-color="#F8EB6B"></stop></linearGradient><g fill="url(#gradient)" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"><g fill="url(#gradient)" id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-419.000000, -571.000000)" fill="#000000"><path fill="url(#gradient)" d="M440.415,583.554 L421.418,571.311 C420.291,570.704 419,570.767 419,572.946 L419,597.054 C419,599.046 420.385,599.36 421.418,598.689 L440.415,586.446 C441.197,585.647 441.197,584.353 440.415,583.554" id="play" sketch:type="MSShapeGroup"></path></g></g></svg>`
             booksNav+=`<svg viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="gradient"><stop offset="0%" stop-color="#F8EB6B"><animate attributeName="stop-color" values="#F8EB6B; #453100; #F8EB6B" dur="5s" repeatCount="indefinite"></animate></stop><stop offset="100%" stop-color="#F8EB6B"></stop></linearGradient><g fill="url(#gradient)" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g fill="url(#gradient)" id="Dribbble-Light-Preview" transform="translate(-227.000000, -3765.000000)" fill="#000000"><g fill="url(#gradient)" id="icons" transform="translate(56.000000, 160.000000)"><path d="M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606" id="pause-[#1006]"></path></g></g></g></svg>`
             booksNav+='<div>';
-            booksNav+=`<img src="${this.getImageUrl(book.imagem.split(', ')[0])}" />`;
+            booksNav+=`<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
             booksNav+='</div>';
             booksNav+='</div>';
             html += '</div>';
@@ -256,7 +256,7 @@ export const methodsBook = () => {
             html += '</div>';
             html += '</div>';
             html += '<div>';
-            html += `<img src="${this.getImageUrl(book.imagem.split(', ')[0])}" />`;
+            html += `<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
             html += '<div></div>';
             html += '</div>';
             booksNav+='<div>';
@@ -264,13 +264,13 @@ export const methodsBook = () => {
             booksNav+=`<svg viewBox="-3 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"><linearGradient id="gradient"><stop offset="0%" stop-color="#F8EB6B"><animate attributeName="stop-color" values="#F8EB6B; #453100; #F8EB6B" dur="5s" repeatCount="indefinite"></animate></stop><stop offset="100%" stop-color="#F8EB6B"></stop></linearGradient><g fill="url(#gradient)" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage"><g fill="url(#gradient)" id="Icon-Set-Filled" sketch:type="MSLayerGroup" transform="translate(-419.000000, -571.000000)" fill="#000000"><path fill="url(#gradient)" d="M440.415,583.554 L421.418,571.311 C420.291,570.704 419,570.767 419,572.946 L419,597.054 C419,599.046 420.385,599.36 421.418,598.689 L440.415,586.446 C441.197,585.647 441.197,584.353 440.415,583.554" id="play" sketch:type="MSShapeGroup"></path></g></g></svg>`
             booksNav+=`<svg viewBox="-1 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><linearGradient id="gradient"><stop offset="0%" stop-color="#F8EB6B"><animate attributeName="stop-color" values="#F8EB6B; #453100; #F8EB6B" dur="5s" repeatCount="indefinite"></animate></stop><stop offset="100%" stop-color="#F8EB6B"></stop></linearGradient><g fill="url(#gradient)" id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g fill="url(#gradient)" id="Dribbble-Light-Preview" transform="translate(-227.000000, -3765.000000)" fill="#000000"><g fill="url(#gradient)" id="icons" transform="translate(56.000000, 160.000000)"><path d="M172,3605 C171.448,3605 171,3605.448 171,3606 L171,3612 C171,3612.552 171.448,3613 172,3613 C172.552,3613 173,3612.552 173,3612 L173,3606 C173,3605.448 172.552,3605 172,3605 M177,3606 L177,3612 C177,3612.552 176.552,3613 176,3613 C175.448,3613 175,3612.552 175,3612 L175,3606 C175,3605.448 175.448,3605 176,3605 C176.552,3605 177,3605.448 177,3606" id="pause-[#1006]"></path></g></g></g></svg>`
             booksNav+='<div>';
-            booksNav+=`<img src="${this.getImageUrl(book.imagem.split(', ')[0])}" />`;
+            booksNav+=`<img src="${getImageUrl(book.imagem.split(', ')[0])}" />`;
             booksNav+='</div>';
             booksNav+='</div>';
             html += '</div>';
           }
         }
-        if (first && book.categoriaDescricao === this.actualCat)
+        if (first && book.categoriaDescricao === actualCat)
           first=false;
       }
     });
@@ -287,7 +287,7 @@ export const methodsBook = () => {
   async function cancelLink(event) {
     if(event!==null)
       event.preventDefault()
-    this.stopInterval()
+    stopInterval()
     document.querySelectorAll('#booksList > div > div:first-child > h2,#booksList > div > div:first-child > div:nth-child(2),#booksList > div > div:first-child > div:last-child > div:first-child,#booksList > div > div:first-child > div:last-child > div:last-child,#booksList > div > ul > div > li').forEach(element => {
       element.classList.add('out')
     })
@@ -298,14 +298,14 @@ export const methodsBook = () => {
       if (target && target.tagName === 'A')
         var href = target.getAttribute('href')
       var pathnameSplited=href.split('/')
-      this.actualCat=capitalizeFirstLetter(pathnameSplited[pathnameSplited.length - 1])
+      actualCat=capitalizeFirstLetter(pathnameSplited[pathnameSplited.length - 1])
       window.history.pushState({}, "Shop", href)
     }
     await new Promise(resolve => setTimeout(resolve, 2100))
     document.getElementById("booksList").innerHTML=""
     await new Promise(resolve => setTimeout(resolve, 900))
-    document.getElementById("booksList").innerHTML=this.generateBooksHTML()
-    this.startInterval()
+    document.getElementById("booksList").innerHTML=generateBooksHTML()
+    startInterval()
     addEvents()
   }
   function addEvents() {
@@ -321,7 +321,7 @@ export const methodsBook = () => {
     events()
     window.addEventListener("popstate", function(event) {
       pathnameSplited=window.location.href.split('/')
-      this.actualCat=capitalizeFirstLetter(pathnameSplited[pathnameSplited.length - 1])
+      actualCat=capitalizeFirstLetter(pathnameSplited[pathnameSplited.length - 1])
       cancelLink(null)
     })
     window.addEventListener('resize', function() {
@@ -336,13 +336,13 @@ export const methodsBook = () => {
             element.removeAttribute("style")
         })
     })
-    this.$el.querySelectorAll('a:not(.subnav)').forEach((a) => {
-      a.addEventListener('click', this.handleLinkClick)
+    $el.querySelectorAll('a:not(.subnav)').forEach((a) => {
+      a.addEventListener('click', handleLinkClick)
     })
   }
   function handleLinkClick(event) {
     event.preventDefault();
     const href = event.currentTarget.getAttribute('href');
-    this.$router.push(href);
+    $router.push(href);
   }
 }
