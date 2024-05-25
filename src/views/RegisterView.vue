@@ -2,7 +2,28 @@
 import exported from '../assets/js/register.js'
 </script>
 <template>
-  oi2
+  <div id="register" class="d-flex align-center flex-column">
+    <h1 data-title="Register">Register</h1>
+    <form @submit="handleSubmit">
+      <div class="error">
+        {{ route.query.error }}
+      </div>
+      <div class="form-group">
+        <label for="name">Username:</label>
+        <input
+          id="name"
+          type="text"
+          v-model="name"
+          name="name"
+          @input="exported.validateName(exported.name)"
+          placeholder="Username"
+          data-placeholder="Username"
+        />
+        <span class="error-message">{{ exported.nameError }}</span>
+      </div>
+      <button type="submit" class="btn-primary">Submit</button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
