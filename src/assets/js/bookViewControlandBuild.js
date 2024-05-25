@@ -335,9 +335,11 @@ export const methodsBook = () => {
     const href = event.currentTarget.getAttribute('href');
     $router.push(href);
   }
+  return generateBooksHTML
 }
 
 export const mountedBook = function () {
+  const generateBooksHTML=methodsBook()
   generateBooksHTML()
   const start = setInterval(() => {
     if (document.querySelector('#booksList > div > ul > div > li.active') !== null) {
