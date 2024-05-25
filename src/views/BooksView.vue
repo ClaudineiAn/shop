@@ -21,7 +21,7 @@
 <script>
 import api from '../services/api.ts'
 import { ref, onMounted } from 'vue'
-import { dataBooks, obrl, mountedBook, methodsBook } from '../assets/js/bookViewControlandBuild.js'
+import { dataBooks, obrl, mountedBook } from '../assets/js/bookViewControlandBuild.js'
 
 export default {
   setup() {
@@ -43,7 +43,6 @@ export default {
     return dataBooks()
   },
   methods: {
-    ...methodsBook,
     cancelLink(event) {
       event.preventDefault()
     },
