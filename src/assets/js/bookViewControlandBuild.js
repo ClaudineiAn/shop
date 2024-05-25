@@ -340,6 +340,7 @@ export const methodsBook = () => {
       a.addEventListener('click', handleLinkClick)
     })
   }
+  
   function handleLinkClick(event) {
     event.preventDefault();
     const href = event.currentTarget.getAttribute('href');
