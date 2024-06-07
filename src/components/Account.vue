@@ -10,7 +10,6 @@
           <input id="upload" type="file" ref="fileInput" accept="image/*" style="display: none" />
           <div class="group">
               <span>{{ name }}</span>
-              <span>{{ email }}</span>
           </div>
       </div>
       <RouterLink to="/trolley" class="optionsBox">
@@ -123,14 +122,10 @@ import { ref, onMounted } from 'vue'
 import axios from "axios"
 import Cookies from 'js-cookie'
 
-let email = Cookies.get('email')
 let name = Cookies.get('name')
 
-export const setEmail = (value) => {
-  email=value
-}
 export const setName = (value) => {
-  name=value
+  name=valued
 }
 export const updateProfileImg = async () => {
   if (Cookies.get('imageName') === "null" || Cookies.get('imageName') === undefined) {

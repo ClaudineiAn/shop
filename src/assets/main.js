@@ -4,7 +4,7 @@ import { updateCookie } from '../plugins/cookies.js'
 import Cookies from 'js-cookie'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import {clearintervalId,setPlaying,getPlaying,getCounter,startIntervalBooks} from '../views/BooksView.vue'
-import {setEmail, setName, updateProfileImg} from '../components/Account.vue'
+import {setName, updateProfileImg} from '../components/Account.vue'
 import api from '../services/api.ts'
 
 const checkIfLog = () => {

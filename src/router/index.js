@@ -30,14 +30,9 @@ const staticRoutes = [
     component: () => import('../views/FavoriteView.vue')
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/LoginView.vue')
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/RegisterView.vue')
+    path: '/access',
+    name: 'access',
+    component: () => import('../views/access.vue')
   },
   {
     path: '/logout',

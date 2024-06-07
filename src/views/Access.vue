@@ -1,63 +1,61 @@
+<script setup>
+import exported from '../assets/js/access.js'
+</script>
 <template>
-  <div id="register" class="d-flex align-center flex-column">
-    <h1 data-title="Register">Register</h1>
+  <div id="login" class="d-flex align-center flex-column">
+    <h1 data-title="Login">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
-        {{ route.query.error }}
+        {{exported.route.query.error}}
       </div>
       <div class="form-group">
-        <label for="name">Username:</label>
-        <input
-          id="name"
+        <input 
+          @input="exported.validateUsername(exported.username)"
+          v-model="email" 
           type="text"
-          v-model="name"
-          name="name"
-          @input="exported.validateName(exported.name)"
+          name="username" 
+          label="username"
           placeholder="Username"
           data-placeholder="Username"
-        />
-        <span class="error-message">{{ exported.nameError }}</span>
+        >
+        <span class="error-message">{{ exported.usernameError }}</span>
       </div>
-      <button type="submit" class="btn-primary">Submit</button>
+      <button type="submit" class="btn-primary">
+        Submit
+      </button>
     </form>
   </div>
 </template>
 
-<style scoped>
-.error {
+<style>
+.error{
   color: red;
 }
-
-#register {
+#login{
   height: 100vh;
   justify-content: center;
 }
-
-form {
+form{
   min-width: fit-content;
   width: 25%;
 }
-
 @media only screen and (max-width: 1000px) {
-  form {
+  form{
     width: 40%;
   }
 }
-
 @media only screen and (max-width: 760px) {
-  form {
+  form{
     width: 50%;
   }
 }
-
 @media only screen and (max-width: 600px) {
-  form {
+  form{
     width: 60%;
   }
 }
-
 @media only screen and (max-width: 500px) {
-  form {
+  form{
     width: 90%;
   }
 }
@@ -99,15 +97,12 @@ label {
 }
 </style>
 <script>
-import {onMountedRegister, dataRegister} from '../assets/js/register.js'
-import { ref, onMounted } from 'vue'
 
 export default {
-  data() {
-    return dataRegister()
+  data(){
+    exported.data()
   },
-  onMounted() {
-    onMountedRegister.call(this)
-  }
+  mounted: exported.mounted,
+  onMounted: exported.validation
 }
 </script>
