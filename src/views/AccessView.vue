@@ -14,7 +14,7 @@
           placeholder="Username"
           data-placeholder="Username"
         >
-        <span class="error-message">{{ usernameError }}</span>
+        <span id="errorAccess" class="error-message">{{ usernameError }}</span>
       </div>
       <button type="submit" class="btn-primary">
         Submit
@@ -97,14 +97,13 @@ export default {
     const usernameError = ref('');
 
     const setusernameError = (v) => {
-      usernameError.value = '';
-      usernameError.value = v;
+      document.querySelector("#errorAccess").innerHTML=v
     };
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-      validateUsername(username.value, setusernameError);
-      if (usernameError.value) {
+      await validateUsername(username.value, setusernameError);
+      if (document.querySelector("#errorAccess").innerHTML!=="") {
         return;
       }
       await validation(router, username.value, setusernameError);
@@ -114,7 +113,7 @@ export default {
     };
 
     const onUsernameInput = () => {
-      setusernameError(''); // Reset error message
+      setusernameError('');
       validateUsername(username.value, setusernameError);
     };
 
@@ -125,7 +124,6 @@ export default {
     return {
       route,
       username,
-      usernameError,
       handleSubmit,
       onUsernameInput
     };

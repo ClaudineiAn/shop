@@ -18,7 +18,7 @@ export const validateUsername = (username, setError) => {
 
 export const validation = async (router, username, setError) => {
   validateUsername(username, setError);
-  if (setError.value) {
+  if (document.querySelector("#errorAccess").innerHTML!=="") {
     return;
   }
   try {
