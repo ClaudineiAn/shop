@@ -102,6 +102,7 @@ export default {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
+      mountedAccess();
       validateUsername(username.value, setusernameError);
       if (usernameError.value) {
         return;
