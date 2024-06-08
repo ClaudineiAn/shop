@@ -1,6 +1,3 @@
-<script setup>
-import {dataAccess, mountedAccess, onMountedAccess} from '../assets/js/access.js'
-</script>
 <template>
   <div id="login" class="d-flex align-center flex-column">
     <h1 data-title="Login">Access</h1>
@@ -97,16 +94,4 @@ label {
 }
 </style>
 <script>
-
-export default {
-  data(){
-    return dataAccess()
-  },
-  mounted() {
-    mountedAccess.call(this)
-  },
-  onMounted() {
-    onMountedAccess.call(this)
-  },
-}
 </script>
