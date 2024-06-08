@@ -81,21 +81,21 @@ const validateUsername = (value) => {
         this.usernameError.value = '';
     }
   }
-  export default {
-    data() {
-      return {
+
+
+export const dataAccess = () => {
+    return {
         route: useRoute(),
         router: useRouter(),
         username: ref(''),
         usernameError: ref('')
-      }
-    },
-    validation,
-    validateUsername,
-    mounted() {
-        inputEffect()
-    },
-    onMounted() {
-        validation()
     }
-  }
+}
+
+export const mountedAccess = () => {
+    inputEffect()
+}
+
+export const onMountedAccess = () => {
+    validation()
+}

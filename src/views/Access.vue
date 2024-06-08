@@ -1,5 +1,5 @@
 <script setup>
-import exported from '../assets/js/access.js'
+import {dataAccess, mountedAccess, onMountedAccess} from '../assets/js/access.js'
 </script>
 <template>
   <div id="login" class="d-flex align-center flex-column">
@@ -100,9 +100,13 @@ label {
 
 export default {
   data(){
-    exported.data()
+    return dataAccess()
   },
-  mounted: exported.mounted,
-  onMounted: exported.validation
+  mounted() {
+    mountedAccess.call(this)
+  },
+  onMounted() {
+    onMountedAccess.call(this)
+  },
 }
 </script>
