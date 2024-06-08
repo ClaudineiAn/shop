@@ -13,12 +13,11 @@
           name="username" 
           placeholder="Username"
           data-placeholder="Username"
-          @value="$route.query.errorNickname"
+          :value="$route.query.errorNickname"
         >
         <span class="error-message">
           {{ $route.query.errorNickname }}
         </span>
-        {{window.history.pushState({}, '', getCleanedUrl())}}
       </div>
       <button type="submit" class="btn-primary">
         Submit
@@ -99,21 +98,10 @@ export default {
     const router = useRouter();
     const username = ref('');
     const usernameError = ref('');
-    
-    function getCleanedUrl() {
-      let index = window.location.href.indexOf("?");
-      if (index !== -1) {
-        return currentUrl.slice(0, index);
-      }
-      return currentUrl;
-    }
-
-    
-
 
     const setusernameError = async (v, u) => {
       await router.push('/access?errorNickname='+v+'&username='+u);
-      return v !== ''
+      return v !== '';
     };
 
     const handleSubmit = async (event) => {
@@ -129,6 +117,10 @@ export default {
 
     onMounted(() => {
       mountedAccess();
+      
+      // Clean the URL
+      const cleanedUrl = router.currentRoute.value.path;
+      router.replace({ path: cleanedUrl });
     });
 
     return {
