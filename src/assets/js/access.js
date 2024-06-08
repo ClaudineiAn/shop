@@ -4,11 +4,11 @@ import { makeLog, inputEffect } from '../main.js';
 
 export const validateUsername = (username, usernameError) => {
   if (!username) {
-    usernameError.value = 'Required.';
+    usernameError = ref('Required.');
   } else if (username.length > 50) {
-    usernameError.value = 'Max 50 characters.';
+    usernameError = ref('Max 50 characters.');
   } else {
-    usernameError.value = '';
+    usernameError = ref('');
   }
 };
 
@@ -40,7 +40,7 @@ export const validation = async (router, username, usernameError) => {
           await router.push('/access?error=' + logged);
         }
       } else {
-        usernameError.value = 'Invalid user.';
+        usernameError = ref('Invalid user.');
       }
     }
   } catch (err) {
