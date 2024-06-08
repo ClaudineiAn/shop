@@ -1,3 +1,7 @@
+import { useRoute, useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { makeLog, inputEffect } from '../main.js'
+
 const validateUsername = (usernameRef, usernameErrorRef) => {
   if (!usernameRef.value) {
     usernameErrorRef.value = 'Required.';
