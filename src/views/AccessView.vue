@@ -3,11 +3,11 @@
     <h1 data-title="Login">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
-        {{ route.query.error }}
+        {{ $route.query.error }}
       </div>
       <div class="form-group">
         <input 
-          @input="validateUsername"
+          @input="onUsernameInput"
           v-model="username" 
           type="text"
           name="username" 
@@ -22,6 +22,7 @@
     </form>
   </div>
 </template>
+
 <style>
 .error {
   color: red;
@@ -82,33 +83,46 @@ h1 {
   background-color: #0056b3;
 }
 </style>
+
 <script>
 import { ref } from 'vue';
-import { validateUsername, validation, dataAccess, mountedAccess } from '../assets/js/access.js';
+import { useRoute, useRouter } from 'vue-router';
+import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
 
 export default {
-  data() {
-    return {
-      dataAccess: dataAccess(),
-      usernameError: ref('')
+  setup() {
+    const route = useRoute();
+    const router = useRouter();
+    const username = ref('');
+    const usernameError = ref('');
+
+    const setusernameError = (v) => {
+      usernameError.value = v;
     };
-  },
-  methods: {
-    handleSubmit(event) {
+
+    const handleSubmit = async (event) => {
       event.preventDefault();
-      validateUsername(this.dataAccess.username);
-      if (this.usernameError) {
+      validateUsername(username.value, setusernameError);
+      if (usernameError.value) {
         return;
       }
-      validation(this.dataAccess.router, this.dataAccess.username);
-    }
-  },
-  mounted() {
-    mountedAccess.call(this);
+      await validation(router, username.value, setusernameError);
+    };
+
+    const onUsernameInput = () => {
+      setusernameError(''); // Reset error message
+      validateUsername(username.value, setusernameError);
+    };
+
+    mountedAccess();
+
+    return {
+      route,
+      username,
+      usernameError,
+      handleSubmit,
+      onUsernameInput
+    };
   }
 };
-
-export const setusernameError = (v) => {
-  this.usernameError.value=v
-}
 </script>

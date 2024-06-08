@@ -1,23 +1,26 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
-import { setusernameError } from '../../views/AccessView.vue';
 
-export const validateUsername = (username) => {
+export const setusernameError = (v, setError) => {
+  setError(v);
+};
+
+export const validateUsername = (username, setError) => {
   if (!username) {
-    setusernameError('Required.');
-    return
+    setusernameError('Required.', setError);
   } else if (username.length > 50) {
-    setusernameError('Max 50 characters.');
-    return
+    setusernameError('Max 50 characters.', setError);
   } else {
-    setusernameError('');
-    return
+    setusernameError('', setError);
   }
 };
 
-export const validation = async (router, username) => {
-  validateUsername(username);
+export const validation = async (router, username, setError) => {
+  validateUsername(username, setError);
+  if (setError.value) {
+    return;
+  }
   try {
     const response = await fetch('../../../UserAuth_compData.json');
     const abi = await response.json();
@@ -42,7 +45,7 @@ export const validation = async (router, username) => {
           await router.push('/access?error=' + logged);
         }
       } else {
-        setusernameError('Invalid user.');
+        setusernameError('Invalid user.', setError);
       }
     }
   } catch (err) {
@@ -58,6 +61,6 @@ export const dataAccess = () => {
   };
 };
 
-export const mountedAccess = function () {
+export const mountedAccess = () => {
   inputEffect();
 };
