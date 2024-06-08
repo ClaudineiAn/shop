@@ -85,7 +85,7 @@ h1 {
 </style>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
 
@@ -102,18 +102,24 @@ export default {
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-      mountedAccess();
       validateUsername(username.value, setusernameError);
       if (usernameError.value) {
         return;
       }
       await validation(router, username.value, setusernameError);
+      nextTick(() => {
+        mountedAccess();
+      });
     };
 
     const onUsernameInput = () => {
       setusernameError(''); // Reset error message
       validateUsername(username.value, setusernameError);
     };
+
+    onMounted(() => {
+      mountedAccess();
+    });
 
     return {
       route,
@@ -122,9 +128,6 @@ export default {
       handleSubmit,
       onUsernameInput
     };
-  },
-  mounted() {
-    mountedAccess.call(this);
   }
 };
 </script>
