@@ -2,22 +2,23 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
 
-export const setusernameError = (v, username, setError) => {
-  return setError(v, username);
+export const setusernameError = (v, setError) => {
+  setError(v);
 };
 
 export const validateUsername = (username, setError) => {
   if (!username) {
-    return setusernameError('Required.', username, setError);
+    setusernameError('Required.', setError);
   } else if (username.length > 50) {
-    return setusernameError('Max 50 characters.', username, setError);
+    setusernameError('Max 50 characters.', setError);
   } else {
-    return setusernameError('', username, setError);
+    setusernameError('', setError);
   }
 };
 
 export const validation = async (router, username, setError) => {
-  if (validateUsername(username, setError)) {
+  validateUsername(username, setError);
+  if (setError.value) {
     return;
   }
   try {
@@ -28,7 +29,7 @@ export const validation = async (router, username, setError) => {
     const accounts = await web3.eth.getAccounts();
 
     if (!accounts || accounts.length === 0) {
-      await router.push('/access?error=No accounts found. Please login to MetaMask.'+'&username='+username);
+      await router.push('/access?error=No accounts found. Please login to MetaMask.');
       return;
     }
 
@@ -41,14 +42,14 @@ export const validation = async (router, username, setError) => {
         if (logged === 200) {
           await router.push('/');
         } else {
-          await router.push('/access?error=' + logged+'&username='+username);
+          await router.push('/access?error=' + logged);
         }
       } else {
         setusernameError('Invalid user.', setError);
       }
     }
   } catch (err) {
-    await router.push('/access?error=An error occurred during authentication.'+'&username='+username);
+    await router.push('/access?error=An error occurred during authentication.');
   }
 };
 

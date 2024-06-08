@@ -1,6 +1,6 @@
 <template>
   <div id="login" class="d-flex align-center flex-column">
-    <h1 data-title="Access">Access</h1>
+    <h1 data-title="Login">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
         {{ $route.query.error }}
@@ -13,11 +13,8 @@
           name="username" 
           placeholder="Username"
           data-placeholder="Username"
-          :value="$route.query.errorNickname"
         >
-        <span class="error-message">
-          {{ $route.query.errorNickname }}
-        </span>
+        <span class="error-message">{{ usernameError }}</span>
       </div>
       <button type="submit" class="btn-primary">
         Submit
@@ -88,7 +85,7 @@ h1 {
 </style>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
 
@@ -99,15 +96,20 @@ export default {
     const username = ref('');
     const usernameError = ref('');
 
-    const setusernameError = async (v, u) => {
-      await router.push('/access?errorNickname='+v+'&username='+u);
-      return v !== '';
+    const setusernameError = (v) => {
+      usernameError.value = v;
     };
 
     const handleSubmit = async (event) => {
       event.preventDefault();
       validateUsername(username.value, setusernameError);
+      if (usernameError.value) {
+        return;
+      }
       await validation(router, username.value, setusernameError);
+      await nextTick(() => {
+        mountedAccess();
+      });
     };
 
     const onUsernameInput = () => {
@@ -117,10 +119,6 @@ export default {
 
     onMounted(() => {
       mountedAccess();
-      
-      // Clean the URL
-      const cleanedUrl = router.currentRoute.value.path;
-      router.replace({ path: cleanedUrl });
     });
 
     return {
