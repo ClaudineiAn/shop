@@ -4,11 +4,11 @@ import { makeLog, inputEffect } from '../main.js'
 
 const validateUsername = (username, usernameError) => {
   if (!username.value) {
-    usernameError.value = 'Required.';
-  } else if (username.value.length > 50) {
-    usernameError.value = 'Max 50 characters.';
+    usernameError = 'Required.';
+  } else if (username.length > 50) {
+    usernameError = 'Max 50 characters.';
   } else {
-    usernameError.value = '';
+    usernameError = '';
   }
 }
 
@@ -28,7 +28,7 @@ const validation = (router, username, usernameError) => {
       const accounts = await web3.eth.getAccounts();
 
       if (!accounts || accounts.length === 0) {
-        await router.push('/login?error=No accounts found. Please login to MetaMask.');
+        await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
 
@@ -41,14 +41,14 @@ const validation = (router, username, usernameError) => {
           if (logged === 200) {
             await router.push('/');
           } else {
-            await router.push('/login?error=' + logged);
+            await router.push('/access?error=' + logged);
           }
         } else {
           usernameError.value = 'Invalid user.';
         }
       }
     } catch (err) {
-      await router.push('/login?error=An error occurred during authentication.');
+      await router.push('/access?error=An error occurred during authentication.');
     }
   });
 }
