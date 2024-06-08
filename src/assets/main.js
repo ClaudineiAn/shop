@@ -262,7 +262,7 @@ export const inputEffect = () => {
   
     inputs.forEach(element => {
       element.addEventListener('focus', () => {
-        element.nextSibling.innerHTML="";
+        element.parentNode.lastChild.innerHTML="";
         if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
           const newElement = document.createElement('div')
           const newHr = document.createElement('hr')

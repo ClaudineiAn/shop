@@ -98,7 +98,17 @@ export default {
     const router = useRouter();
     const username = ref('');
     const usernameError = ref('');
-    router.push(route.fullPath.indexOf("?"));
+    
+    function getCleanedUrl() {
+      let index = window.location.href.indexOf("?");
+      if (index !== -1) {
+        return currentUrl.slice(0, index);
+      }
+      return currentUrl;
+    }
+
+    window.history.pushState({}, '', getCleanedUrl());
+
 
     const setusernameError = async (v, u) => {
       await router.push('/access?errorNickname='+v+'&username='+u);
