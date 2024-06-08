@@ -97,6 +97,7 @@ export default {
     const usernameError = ref('');
 
     const setusernameError = (v) => {
+      usernameError.value = '';
       usernameError.value = v;
     };
 
