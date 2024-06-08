@@ -104,6 +104,9 @@ export default {
       event.preventDefault();
       validateUsername(username.value, setusernameError);
       if (usernameError.value) {
+        await nextTick(() => {
+          mountedAccess();
+        });
         return;
       }
       await validation(router, username.value, setusernameError);
