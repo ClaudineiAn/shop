@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { makeLog, inputEffect } from '../main.js'
 
 const validateUsername = (username, usernameError) => {
+  console.log(username+"   "+usernameError)
   if (!username.value) {
     usernameError = 'Required.';
   } else if (username.length > 50) {
@@ -21,7 +22,7 @@ const validation = (router, username, usernameError) => {
       return;
     }
     try {
-      const response = await fetch('../../UserAuth_compData.json');
+      const response = await fetch('../../../UserAuth_compData.json');
       const abi = await response.json();
       const contractAddress = process.env.USERAUTH;
       const userAuthContract = new web3.eth.Contract(abi, contractAddress);
