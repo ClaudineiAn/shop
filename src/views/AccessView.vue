@@ -114,8 +114,6 @@ export default {
       validateUsername(username.value, setusernameError);
     };
 
-    mountedAccess();
-
     return {
       route,
       username,
@@ -123,6 +121,9 @@ export default {
       handleSubmit,
       onUsernameInput
     };
+  },
+  mounted() {
+    mountedAccess.call(this);
   }
 };
 </script>
