@@ -18,6 +18,7 @@
         <span class="error-message">
           {{ $route.query.errorNickname }}
         </span>
+        {{window.history.pushState({}, '', getCleanedUrl());}}
       </div>
       <button type="submit" class="btn-primary">
         Submit
@@ -107,7 +108,7 @@ export default {
       return currentUrl;
     }
 
-    window.history.pushState({}, '', getCleanedUrl());
+    
 
 
     const setusernameError = async (v, u) => {
