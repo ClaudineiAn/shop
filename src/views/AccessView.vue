@@ -105,11 +105,11 @@ export default {
     ...methodsAccess(),
     handleSubmit(event) {
       event.preventDefault();
-      this.validateUsername(this.username);
+      validateUsername(this.username,this.usernameError);
       if (this.usernameError.value) {
         return;
       }
-      this.validation();
+      validation(this.router,this.username,this.usernameError);
     }
   },
   mounted() {
