@@ -1,7 +1,7 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
-import { setusernameError } from '../view/AccessView.vue';
+import { setusernameError } from '../../view/AccessView.vue';
 
 export const validateUsername = (username) => {
   if (!username) {
