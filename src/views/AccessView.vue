@@ -13,8 +13,11 @@
           name="username" 
           placeholder="Username"
           data-placeholder="Username"
+          @value="$route.query.errorNickname"
         >
-        <span class="error-message">{{ usernameError }}</span>
+        <span class="error-message">
+          {{ $route.query.errorNickname }}
+        </span>
       </div>
       <button type="submit" class="btn-primary">
         Submit
@@ -96,23 +99,14 @@ export default {
     const username = ref('');
     const usernameError = ref('');
 
-    const setusernameError = (v) => {
-      usernameError.value = v;
+    const setusernameError = async (v, u) => {
+      await router.push('/access?errorNickname='+v+'&username='+u);
     };
 
     const handleSubmit = async (event) => {
       event.preventDefault();
       validateUsername(username.value, setusernameError);
-      if (usernameError.value) {
-        await nextTick(() => {
-          mountedAccess();
-        });
-        return;
-      }
       await validation(router, username.value, setusernameError);
-      await nextTick(() => {
-        mountedAccess();
-      });
     };
 
     const onUsernameInput = () => {
