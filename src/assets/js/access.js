@@ -1,23 +1,19 @@
-import { useRoute, useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { makeLog, inputEffect } from '../main.js'
-
-const validateUsername = (value, usernameError) => {
-  if (!value) {
-    usernameError.value = 'Required.';
-  } else if (value.length > 50) {
-    usernameError.value = 'Max 50 characters.';
+const validateUsername = (usernameRef, usernameErrorRef) => {
+  if (!usernameRef.value) {
+    usernameErrorRef.value = 'Required.';
+  } else if (usernameRef.value.length > 50) {
+    usernameErrorRef.value = 'Max 50 characters.';
   } else {
-    usernameError.value = '';
+    usernameErrorRef.value = '';
   }
 }
 
-const validation = (router, username, usernameError) => {
+const validation = (router, usernameRef, usernameErrorRef) => {
   const form = document.querySelector('form');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    validateUsername(username.value, usernameError);
-    if (usernameError.value) {
+    validateUsername(usernameRef, usernameErrorRef);
+    if (usernameErrorRef.value) {
       return;
     }
     try {
@@ -36,15 +32,15 @@ const validation = (router, username, usernameError) => {
 
       if (!registeredUsername) {
         if (confirm('You are about to create a new account. Is this what you would like?')) {
-          await userAuthContract.methods.register(username.value).send({ from: accounts[0] });
-          const logged = await makeLog(username.value);
+          await userAuthContract.methods.register(usernameRef.value).send({ from: accounts[0] });
+          const logged = await makeLog(usernameRef.value);
           if (logged === 200) {
             await router.push('/');
           } else {
             await router.push('/login?error=' + logged);
           }
         } else {
-          usernameError.value = 'Invalid user.';
+          usernameErrorRef.value = 'Invalid user.';
         }
       }
     } catch (err) {
