@@ -84,25 +84,31 @@ h1 {
 </style>
 <script>
 import { ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
 import { validateUsername, validation, dataAccess, mountedAccess } from '../assets/js/access.js';
 
 export default {
   data() {
-    return dataAccess();
+    return {
+      dataAccess: dataAccess(),
+      usernameError: ref('')
+    };
   },
   methods: {
     handleSubmit(event) {
       event.preventDefault();
-      validateUsername(this.username, this.usernameError);
+      validateUsername(this.dataAccess.username, this.usernameError);
       if (this.usernameError) {
         return;
       }
-      validation(this.router, this.username, this.usernameError);
+      validation(this.dataAccess.router, this.dataAccess.username, this.usernameError);
     }
   },
   mounted() {
     mountedAccess.call(this);
   }
 };
+
+export const setusernameError = (v) => {
+  this.usernameError.value=v
+}
 </script>

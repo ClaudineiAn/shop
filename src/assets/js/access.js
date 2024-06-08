@@ -1,14 +1,15 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
+import { setusernameError } from '../view/AccessView';
 
 export const validateUsername = (username, usernameError) => {
   if (!username) {
-    usernameError = ref('Required.');
+    setusernameError('Required.');
   } else if (username.length > 50) {
-    usernameError = ref('Max 50 characters.');
+    setusernameError('Max 50 characters.');
   } else {
-    usernameError = ref('');
+    setusernameError('');
   }
 };
 
@@ -40,7 +41,7 @@ export const validation = async (router, username, usernameError) => {
           await router.push('/access?error=' + logged);
         }
       } else {
-        usernameError = ref('Invalid user.');
+        setusernameError('Invalid user.');
       }
     }
   } catch (err) {
@@ -52,8 +53,7 @@ export const dataAccess = () => {
   return {
     route: useRoute(),
     router: useRouter(),
-    username: ref(''),
-    usernameError: ref('')
+    username: ref('')
   };
 };
 
