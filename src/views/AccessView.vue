@@ -98,8 +98,7 @@ export default {
     const router = useRouter();
     const username = ref('');
     const usernameError = ref('');
-    const newUrl = $route.fullPath.indexOf("?");
-    $router.push(newUrl);
+    router.push(route.fullPath.indexOf("?"));
 
     const setusernameError = async (v, u) => {
       await router.push('/access?errorNickname='+v+'&username='+u);
