@@ -1,6 +1,6 @@
 <template>
   <div id="login" class="d-flex align-center flex-column">
-    <h1 data-title="Login">Access</h1>
+    <h1 data-title="Access">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
         {{ $route.query.error }}
@@ -88,7 +88,7 @@ h1 {
 </style>
 
 <script>
-import { ref, onMounted, nextTick } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
 
@@ -101,6 +101,7 @@ export default {
 
     const setusernameError = async (v, u) => {
       await router.push('/access?errorNickname='+v+'&username='+u);
+      return v !== ''
     };
 
     const handleSubmit = async (event) => {

@@ -3,22 +3,21 @@ import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
 
 export const setusernameError = (v, username, setError) => {
-  setError(v, username);
+  return setError(v, username);
 };
 
 export const validateUsername = (username, setError) => {
   if (!username) {
-    setusernameError('Required.', username, setError);
+    return setusernameError('Required.', username, setError);
   } else if (username.length > 50) {
-    setusernameError('Max 50 characters.', username, setError);
+    return setusernameError('Max 50 characters.', username, setError);
   } else {
-    setusernameError('', username, setError);
+    return setusernameError('', username, setError);
   }
 };
 
 export const validation = async (router, username, setError) => {
-  validateUsername(username, setError);
-  if (setError.value) {
+  if (validateUsername(username, setError)) {
     return;
   }
   try {
