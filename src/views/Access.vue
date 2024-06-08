@@ -94,4 +94,17 @@ label {
 }
 </style>
 <script>
+import {dataAccess, mountedAccess, onMountedAccess} from '../assets/js/access.js'
+
+export default {
+  data(){
+    return dataAccess()
+  },
+  mounted() {
+    mountedAccess.call(this)
+  },
+  onMounted() {
+    onMountedAccess.call(this)
+  },
+}
 </script>

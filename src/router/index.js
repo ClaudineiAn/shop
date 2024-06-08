@@ -32,7 +32,7 @@ const staticRoutes = [
   {
     path: '/access',
     name: 'access',
-    component: () => import('../views/Access.vue')
+    component: () => import('../views/FavoriteView.vue')
   },
   {
     path: '/logout',
