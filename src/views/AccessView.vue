@@ -116,6 +116,11 @@ export default {
     };
 
     onMounted(() => {
+      const currentUrl = this.$route.fullPath;
+      const newUrl = currentUrl.indexOf("?");
+      this.$router.push(newUrl);
+      this.currentUrl = newUrl;
+
       mountedAccess();
     });
 
