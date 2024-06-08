@@ -95,7 +95,7 @@ label {
 </style>
 
 <script>
-import { dataAccess, mountedAccess, methodsAccess } from '../assets/js/access.js'
+import { dataAccess, mountedAccess, validation, validateUsername } from '../assets/js/access.js'
 
 export default {
   data() {
@@ -105,11 +105,11 @@ export default {
     ...methodsAccess(),
     handleSubmit(event) {
       event.preventDefault();
-      this.validateUsername(this.username.value);
+      this.validateUsername(this.username);
       if (this.usernameError.value) {
         return;
       }
-      this.authenticateUser();
+      this.validation();
     }
   },
   mounted() {

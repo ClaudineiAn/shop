@@ -2,18 +2,18 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { makeLog, inputEffect } from '../main.js'
 
-const validateUsername = (username, usernameError) => {
+export const validateUsername = (username, usernameError) => {
   console.log(username+"   "+usernameError)
   if (!username.value) {
-    usernameError = 'Required.';
+    usernameError.value = 'Required.';
   } else if (username.length > 50) {
-    usernameError = 'Max 50 characters.';
+    usernameError.value = 'Max 50 characters.';
   } else {
-    usernameError = '';
+    usernameError.value = '';
   }
 }
 
-const validation = (router, username, usernameError) => {
+export const validation = (router, username, usernameError) => {
   const form = document.querySelector('form');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -65,15 +65,4 @@ export const dataAccess = () => {
 
 export const mountedAccess = function () {
   inputEffect();
-}
-
-export const methodsAccess = function () {
-  return {
-    validateUsername() {
-      validateUsername(this.username, this.usernameError);
-    },
-    authenticateUser() {
-      validation(this.router, this.username, this.usernameError);
-    }
-  };
 }
