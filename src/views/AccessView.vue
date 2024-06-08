@@ -18,7 +18,7 @@
         <span class="error-message">
           {{ $route.query.errorNickname }}
         </span>
-        {{window.history.pushState({}, '', getCleanedUrl());}}
+        {{window.history.pushState({}, '', getCleanedUrl())}}
       </div>
       <button type="submit" class="btn-primary">
         Submit
