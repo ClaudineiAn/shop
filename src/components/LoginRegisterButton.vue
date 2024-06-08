@@ -2,17 +2,12 @@
 </script>
 
 <template>
-    <RouterLink to="/login">
-        <v-btn class="ml-auto" variant="flat">
-        Login
-        </v-btn>
-    </RouterLink>
-    <RouterLink to="/register">
+    <RouterLink to="/access">
         <v-btn
         :rounded="0"
         color="primary"
         >
-        Register
+        Access
         </v-btn>
     </RouterLink>
 </template>
