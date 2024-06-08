@@ -23,6 +23,7 @@
     </form>
   </div>
 </template>
+
 <style>
 .error{
   color: red;
@@ -104,8 +105,8 @@ export default {
     ...methodsAccess(),
     handleSubmit(event) {
       event.preventDefault();
-      this.validateUsername();
-      if (this.usernameError) {
+      this.validateUsername(this.username.value);
+      if (this.usernameError.value) {
         return;
       }
       this.authenticateUser();
