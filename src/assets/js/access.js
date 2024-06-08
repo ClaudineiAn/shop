@@ -2,10 +2,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { makeLog, inputEffect } from '../main.js'
 
-const validateUsername = (value, usernameError) => {
-  if (!value) {
+const validateUsername = (username, usernameError) => {
+  if (!username.value) {
     usernameError.value = 'Required.';
-  } else if (value.length > 50) {
+  } else if (username.value.length > 50) {
     usernameError.value = 'Max 50 characters.';
   } else {
     usernameError.value = '';
@@ -16,7 +16,7 @@ const validation = (router, username, usernameError) => {
   const form = document.querySelector('form');
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    validateUsername(username.value, usernameError);
+    validateUsername(username, usernameError);
     if (usernameError.value) {
       return;
     }
