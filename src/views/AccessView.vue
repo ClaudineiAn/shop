@@ -107,7 +107,7 @@ export default {
         return;
       }
       await validation(router, username.value, setusernameError);
-      nextTick(() => {
+      await nextTick(() => {
         mountedAccess();
       });
     };
