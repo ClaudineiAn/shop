@@ -1,58 +1,52 @@
-import { useRoute, useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { makeLog, inputEffect } from '../main.js'
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { makeLog, inputEffect } from '../main.js';
 
 export const validateUsername = (username, usernameError) => {
-  console.log(username+"   "+usernameError)
-  if (!username.value) {
+  if (!username) {
     usernameError.value = 'Required.';
   } else if (username.length > 50) {
     usernameError.value = 'Max 50 characters.';
   } else {
     usernameError.value = '';
   }
-}
+};
 
-export const validation = (router, username, usernameError) => {
-  const form = document.querySelector('form');
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    validateUsername(username, usernameError);
-    if (usernameError.value) {
+export const validation = async (router, username, usernameError) => {
+  validateUsername(username, usernameError);
+  if (usernameError.value) return;
+
+  try {
+    const response = await fetch('../../../UserAuth_compData.json');
+    const abi = await response.json();
+    const contractAddress = process.env.USERAUTH;
+    const userAuthContract = new web3.eth.Contract(abi, contractAddress);
+    const accounts = await web3.eth.getAccounts();
+
+    if (!accounts || accounts.length === 0) {
+      await router.push('/access?error=No accounts found. Please login to MetaMask.');
       return;
     }
-    try {
-      const response = await fetch('../../../UserAuth_compData.json');
-      const abi = await response.json();
-      const contractAddress = process.env.USERAUTH;
-      const userAuthContract = new web3.eth.Contract(abi, contractAddress);
-      const accounts = await web3.eth.getAccounts();
 
-      if (!accounts || accounts.length === 0) {
-        await router.push('/access?error=No accounts found. Please login to MetaMask.');
-        return;
-      }
+    const registeredUsername = await userAuthContract.methods.getUser().call({ from: accounts[0] });
 
-      const registeredUsername = await userAuthContract.methods.getUser().call({ from: accounts[0] });
-
-      if (!registeredUsername) {
-        if (confirm('You are about to create a new account. Is this what you would like?')) {
-          await userAuthContract.methods.register(username.value).send({ from: accounts[0] });
-          const logged = await makeLog(username.value);
-          if (logged === 200) {
-            await router.push('/');
-          } else {
-            await router.push('/access?error=' + logged);
-          }
+    if (!registeredUsername) {
+      if (confirm('You are about to create a new account. Is this what you would like?')) {
+        await userAuthContract.methods.register(username).send({ from: accounts[0] });
+        const logged = await makeLog(username);
+        if (logged === 200) {
+          await router.push('/');
         } else {
-          usernameError.value = 'Invalid user.';
+          await router.push('/access?error=' + logged);
         }
+      } else {
+        usernameError.value = 'Invalid user.';
       }
-    } catch (err) {
-      await router.push('/access?error=An error occurred during authentication.');
     }
-  });
-}
+  } catch (err) {
+    await router.push('/access?error=An error occurred during authentication.');
+  }
+};
 
 export const dataAccess = () => {
   return {
@@ -61,8 +55,8 @@ export const dataAccess = () => {
     username: ref(''),
     usernameError: ref('')
   };
-}
+};
 
 export const mountedAccess = function () {
   inputEffect();
-}
+};

@@ -11,7 +11,6 @@
           v-model="username" 
           type="text"
           name="username" 
-          label="username"
           placeholder="Username"
           data-placeholder="Username"
         >
@@ -23,50 +22,45 @@
     </form>
   </div>
 </template>
-
 <style>
-.error{
+.error {
   color: red;
 }
-#login{
+#login {
   height: 100vh;
   justify-content: center;
 }
-form{
+form {
   min-width: fit-content;
   width: 25%;
 }
 @media only screen and (max-width: 1000px) {
-  form{
+  form {
     width: 40%;
   }
 }
 @media only screen and (max-width: 760px) {
-  form{
+  form {
     width: 50%;
   }
 }
 @media only screen and (max-width: 600px) {
-  form{
+  form {
     width: 60%;
   }
 }
 @media only screen and (max-width: 500px) {
-  form{
+  form {
     width: 90%;
   }
 }
 
-h1{
+h1 {
   margin-bottom: 20px;
 }
 
 .form-group {
   margin-bottom: 20px;
-}
-
-label {
-  margin-bottom: 5px;
 }
 
 .error-message {
@@ -87,33 +81,28 @@ label {
 .btn-primary:hover {
   background-color: #0056b3;
 }
-
-.hint {
-  font-size: 12px;
-  color: #777;
-}
 </style>
-
 <script>
-import { dataAccess, mountedAccess, validation, validateUsername } from '../assets/js/access.js'
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { validateUsername, validation, dataAccess, mountedAccess } from '../assets/js/access.js';
 
 export default {
   data() {
     return dataAccess();
   },
   methods: {
-    ...methodsAccess(),
     handleSubmit(event) {
       event.preventDefault();
-      validateUsername(this.username,this.usernameError);
-      if (this.usernameError.value) {
+      validateUsername(this.username, this.usernameError);
+      if (this.usernameError) {
         return;
       }
-      validation(this.router,this.username,this.usernameError);
+      validation(this.router, this.username, this.usernameError);
     }
   },
   mounted() {
     mountedAccess.call(this);
   }
-}
+};
 </script>
