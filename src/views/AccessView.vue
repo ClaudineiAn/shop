@@ -96,11 +96,11 @@ export default {
   methods: {
     handleSubmit(event) {
       event.preventDefault();
-      validateUsername(this.dataAccess.username, this.usernameError);
+      validateUsername(this.dataAccess.username);
       if (this.usernameError) {
         return;
       }
-      validation(this.dataAccess.router, this.dataAccess.username, this.usernameError);
+      validation(this.dataAccess.router, this.dataAccess.username);
     }
   },
   mounted() {

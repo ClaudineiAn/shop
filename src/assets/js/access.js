@@ -3,20 +3,21 @@ import { useRoute, useRouter } from 'vue-router';
 import { makeLog, inputEffect } from '../main.js';
 import { setusernameError } from '../view/AccessView';
 
-export const validateUsername = (username, usernameError) => {
+export const validateUsername = (username) => {
   if (!username) {
     setusernameError('Required.');
+    return
   } else if (username.length > 50) {
     setusernameError('Max 50 characters.');
+    return
   } else {
     setusernameError('');
+    return
   }
 };
 
-export const validation = async (router, username, usernameError) => {
-  validateUsername(username, usernameError);
-  if (usernameError.value) return;
-
+export const validation = async (router, username) => {
+  validateUsername(username);
   try {
     const response = await fetch('../../../UserAuth_compData.json');
     const abi = await response.json();
