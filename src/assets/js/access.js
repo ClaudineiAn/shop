@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { makeLog, inputEffect } from '../main.js'
 
 const validateUsername = (username, usernameError) => {
-  if (!username) {
+  console.log(username+"   "+usernameError)
+  if (!username.value) {
     usernameError = 'Required.';
   } else if (username.length > 50) {
     usernameError = 'Max 50 characters.';
