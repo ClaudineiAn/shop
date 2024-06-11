@@ -279,7 +279,6 @@ export const inputEffect = () => {
   
     inputs.forEach(element => {
       element.addEventListener('blur', async () => {
-        ifExists = true
         if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
           element.nextSibling.classList.add("out")
           element.nextSibling.nextSibling.classList.add("out")
