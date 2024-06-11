@@ -21,7 +21,6 @@ export const validation = async (router, username, setError) => {
   if (document.querySelector("#errorAccess").innerHTML!=="") {
     return;
   }
-  try {
     const response = {
       "compilerInput": "{\"language\":\"Solidity\",\"sources\":{\"userAuth.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.0;\\r\\n\\r\\ncontract UserAuth {\\r\\n    struct User {\\r\\n        string username;\\r\\n        address userAddress;\\r\\n    }\\r\\n\\r\\n    mapping(address => User) private users;\\r\\n    mapping(string => address) private usernames;\\r\\n\\r\\n    event UserRegistered(address indexed userAddress, string username);\\r\\n\\r\\n    function register(string memory _username) public {\\r\\n        require(users[msg.sender].userAddress == address(0), \\\"User already registered\\\");\\r\\n        require(usernames[_username] == address(0), \\\"Username already taken\\\");\\r\\n\\r\\n        users[msg.sender] = User(_username, msg.sender);\\r\\n        usernames[_username] = msg.sender;\\r\\n\\r\\n        emit UserRegistered(msg.sender, _username);\\r\\n    }\\r\\n\\r\\n    function getUser() public view returns (string memory) {\\r\\n        require(users[msg.sender].userAddress != address(0), \\\"User not registered\\\");\\r\\n        return users[msg.sender].username;\\r\\n    }\\r\\n}\\r\\n\"}},\"settings\":{\"optimizer\":{\"enabled\":false,\"runs\":200},\"outputSelection\":{\"*\":{\"\":[\"ast\"],\"*\":[\"abi\",\"metadata\",\"devdoc\",\"userdoc\",\"storageLayout\",\"evm.legacyAssembly\",\"evm.bytecode\",\"evm.deployedBytecode\",\"evm.methodIdentifiers\",\"evm.gasEstimates\",\"evm.assembly\"]}},\"remappings\":[]}}",
       "name": "UserAuth",
@@ -3844,9 +3843,6 @@ export const validation = async (router, username, setError) => {
         setusernameError('Invalid user.', setError);
       }
     }
-  } catch (err) {
-    await router.push('/access?error=An error occurred during authentication.');
-  }
 };
 
 export const dataAccess = () => {
