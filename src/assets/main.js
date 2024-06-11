@@ -264,7 +264,6 @@ export const inputEffect = () => {
       element.addEventListener('focus', () => {
         element.parentNode.lastChild.innerHTML="";
         if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
-          element.setAttribute("placeholder","")
           if(element.parentNode.querySelectorAll("hr,div").length>0){
             element.nextSibling.classList.remove("out")
             element.nextSibling.nextSibling.classList.remove("out")
@@ -274,6 +273,7 @@ export const inputEffect = () => {
             newElement.textContent = element.getAttribute("placeholder")
             element.parentNode.insertBefore(newHr, element.parentNode.lastChild)
             element.parentNode.insertBefore(newElement, element.parentNode.lastChild)
+            element.setAttribute("placeholder","")
           }
         }
       })
