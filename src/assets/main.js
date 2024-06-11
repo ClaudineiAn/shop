@@ -262,17 +262,19 @@ export const inputEffect = () => {
     
     inputs.forEach(element => {
       element.addEventListener('focus', () => {
-        element.setAttribute("placeholder",element.getAttribute("data-placeholder"))
-        element.parentNode.removeChild(element.nextSibling)
-        element.parentNode.removeChild(element.nextSibling)
         element.parentNode.lastChild.innerHTML="";
         if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
-          const newElement = document.createElement('div')
-          const newHr = document.createElement('hr')
-          newElement.textContent = element.getAttribute("placeholder")
-          element.setAttribute("placeholder","")
-          element.parentNode.insertBefore(newHr, element.parentNode.lastChild)
-          element.parentNode.insertBefore(newElement, element.parentNode.lastChild)
+          if(element.parentNode.querySelectorAll("hr,div").length>0){
+            element.setAttribute("placeholder","")
+            element.nextSibling.classList.remove("out")
+            element.nextSibling.nextSibling.classList.remove("out")
+          }else{
+            const newElement = document.createElement('div')
+            const newHr = document.createElement('hr')
+            newElement.textContent = element.getAttribute("placeholder")
+            element.parentNode.insertBefore(newHr, element.parentNode.lastChild)
+            element.parentNode.insertBefore(newElement, element.parentNode.lastChild)
+          }
         }
       })
     })
