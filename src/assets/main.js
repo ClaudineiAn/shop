@@ -259,12 +259,14 @@ export const events = () => {
 }
 export const inputEffect = () => {
     const inputs = document.querySelectorAll("input[type='text'], input[type='password']")
-    const ifExists = false
     
     inputs.forEach(element => {
       element.addEventListener('focus', () => {
+        element.setAttribute("placeholder",element.getAttribute("data-placeholder"))
+        element.parentNode.removeChild(element.nextSibling)
+        element.parentNode.removeChild(element.nextSibling)
         element.parentNode.lastChild.innerHTML="";
-        if(element.value===""&&element.parentNode.lastChild.innerHTML===""&&!ifExists){
+        if(element.value===""&&element.parentNode.lastChild.innerHTML===""){
           const newElement = document.createElement('div')
           const newHr = document.createElement('hr')
           newElement.textContent = element.getAttribute("placeholder")
@@ -282,7 +284,6 @@ export const inputEffect = () => {
           element.nextSibling.classList.add("out")
           element.nextSibling.nextSibling.classList.add("out")
           await new Promise(resolve => setTimeout(resolve, 300))
-          ifExists = false
           element.setAttribute("placeholder",element.getAttribute("data-placeholder"))
           element.parentNode.removeChild(element.nextSibling)
           element.parentNode.removeChild(element.nextSibling)
