@@ -19,7 +19,8 @@
     "vue-router": "^4.1.6",
     "vuetify": "^3.3.19",
     "vuetify-loader": "^1.9.2",
-    "waypoints": "^4.0.1"
+    "waypoints": "^4.0.1",
+    "web3": "^4.9.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
