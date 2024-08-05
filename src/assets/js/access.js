@@ -25,8 +25,10 @@ export const validation = async (router, username, setError) => {
 
   // Check if MetaMask is installed
   if (typeof window.ethereum !== 'undefined') {
+    console.log("a")
     // Create a new Web3 instance using the MetaMask provider
     const web3 = new Web3(window.ethereum);
+    console.log("b")
 
     try {
       // Request account access if needed
