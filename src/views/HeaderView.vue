@@ -1,5 +1,6 @@
 <script>
 import {isLoggedIn,checkIfLogged} from '../assets/main.js'
+checkIfLogged()
 </script>
 
 <template>
@@ -38,7 +39,5 @@ import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
 import LoginRegisterButton from '../components/LoginRegisterButton.vue'
 import Account from '../components/Account.vue'
-
-checkIfLogged()
 
 </script>
