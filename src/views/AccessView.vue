@@ -1,6 +1,6 @@
 <template>
   <div id="login" class="d-flex align-center flex-column">
-    <h1 data-title="Login">Access</h1>
+    <h1 data-title="Access">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
         {{ $route.query.error }}
