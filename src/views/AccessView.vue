@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import MetaMaskNotice from '../components/MetaMaskNotice.vue';
 </script>
 
