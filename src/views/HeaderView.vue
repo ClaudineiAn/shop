@@ -1,6 +1,6 @@
 <script>
-import {isLoggedIn,checkIfLogged} from '../assets/main.js'
-checkIfLogged()
+import {isLoggedIn} from '../assets/main.js'
+
 </script>
 
 <template>
@@ -9,7 +9,7 @@ checkIfLogged()
       <Logo />
       <Language />
       <SearchBar />
-      <LoginRegisterButton v-if="!isLoggedIn"/>
+      <LoginRegisterButton v-if="!Cookies.get('name') || Cookies.get('name') === 'undefined'"/>
       <Account v-else/>
     </nav>
   </header>
