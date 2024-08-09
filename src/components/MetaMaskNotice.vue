@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="showPopup" class="overlay">
+    <div class="overlay">
       <div class="popup">
         <h2>MetaMask Required</h2>
         <p>You need to register a MetaMask wallet to access this feature.</p>
@@ -12,31 +12,14 @@
 </template>
 
 <script>
-import { EventBus } from '../assets/js/eventBus';
-
 export default {
-  data() {
-    return {
-      showPopup: false, // Controls the visibility of the popup
-    };
-  },
-  mounted() {
-    EventBus.$on('openPopup', this.openPopup); // Listen for the 'openPopup' event
-  },
   methods: {
-    openPopup() {
-      this.showPopup = true;
-    },
-    closePopup() {
-      this.showPopup = false;
-    },
     redirectToMetaMask() {
       window.open('https://metamask.io/download.html', '_blank');
-    },
-  },
-  beforeDestroy() {
-    EventBus.$off('openPopup', this.openPopup); // Clean up the event listener
-  },
+    },closePopup() {
+      document.querySelector(".overlay").style.display="none"
+    }
+  }
 };
 </script>
 
@@ -49,7 +32,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;

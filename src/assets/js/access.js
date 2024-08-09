@@ -2,7 +2,6 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Web3 from 'web3';
 import { makeLog, inputEffect } from '../main.js';
-import { EventBus } from './eventBus';
 
 export const setusernameError = (v, setError) => {
   setError(v);
@@ -3862,13 +3861,9 @@ export const validation = async (router, username, setError) => {
       await router.push('/access?error=' + error.message);
     }
   } else {
-    initOpenMetaMaskButton()
+    document.querySelector(".overlay").style.display="flex"
   }
 };
-
-export function initOpenMetaMaskButton() {
-   EventBus.$emit('openPopup');
-}
 
 export const dataAccess = () => {
   return {
