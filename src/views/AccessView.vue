@@ -1,3 +1,7 @@
+<script>
+import MetaMaskNotice from '../components/MetaMaskNotice.vue';
+</script>
+
 <template>
   <div id="login" class="d-flex align-center flex-column">
     <h1 data-title="Access">Access</h1>
