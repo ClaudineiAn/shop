@@ -1,6 +1,6 @@
 <script>
 import {isLoggedIn} from '../assets/main.js'
-
+import Cookies from 'js-cookie'
 </script>
 
 <template>
