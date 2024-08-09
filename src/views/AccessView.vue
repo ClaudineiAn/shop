@@ -91,7 +91,7 @@ h1 {
 import { ref, onMounted, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
-import MetaMaskNotice from './components/MetaMaskNotice.vue';
+import MetaMaskNotice from '../components/MetaMaskNotice.vue';
 
 export default {
   setup() {
