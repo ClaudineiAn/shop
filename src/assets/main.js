@@ -7,33 +7,11 @@ import {clearintervalId,setPlaying,getPlaying,getCounter,startIntervalBooks} fro
 import {setName, updateProfileImg} from '../components/Account.vue'
 import api from '../services/api.ts'
 
-const checkIfLog = () => {
-    if(Cookies.get('id')==='undefined'||Cookies.get('email')==='undefined'||Cookies.get('name')==='undefined'||Cookies.get('typeProfile')==='undefined')
-        return false
-    else
-        return true
-}
-
-export const isLoggedIn = ref(false)
-
-export const checkIfLogged = async () => {
-    try {
-        if (Cookies.get('name')!=='undefined'){
-            isLoggedIn.value = true
-        } else {
-            isLoggedIn.value = false
-        }
-    } catch (error) {
-        isLoggedIn.value = false
-    }
-}
-
 export const makeLog = async (name) => {
     const router = useRouter()
 
     if(Cookies.get('name')==='undefined'){
         updateCookie('name', res.data[0].nome)
-        checkIfLogged()
         setName(Cookies.get('name'))
         //updateProfileImg()
     }

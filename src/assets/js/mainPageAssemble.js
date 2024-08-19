@@ -296,14 +296,14 @@ export const setProperMetrics = async () => {
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div").forEach(element => element.addEventListener("mouseenter", function(event) {
             document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:first-child").setAttribute("class","index")
         }));
-        const hoverStar = document.querySelectorAll('.sow');
+       /* const hoverStar = document.querySelectorAll('.popup>.view>div:last-child>div:nth- child(3)>div:first-child>div>div:first-child div:last-child div');
         hoverStar.addEventListener('mousemove', function(event) {
             const star = document.querySelector(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div>svg>path");
             const mouseY = (event.offsetY / star.height) * 100;
         });
         hoverStar.addEventListener('mouseleave', function() {
             hoverRect.style.background = '';
-        });
+        });*/
 
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","5")

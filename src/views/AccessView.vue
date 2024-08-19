@@ -1,6 +1,43 @@
+<script setup>
+import MetaMaskNotice from '../components/MetaMaskNotice.vue';
+import { ref, onMounted, nextTick } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
+
+const route = useRoute();
+const router = useRouter();
+const username = ref('');
+const usernameError = ref('');
+
+const setusernameError = (v) => {
+  document.querySelector("#errorAccess").innerHTML = v;
+};
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
+  await validateUsername(username.value, setusernameError);
+  if (document.querySelector("#errorAccess").innerHTML !== "") {
+    return;
+  }
+  await validation(router, username.value, setusernameError);
+  await nextTick(() => {
+    mountedAccess();
+  });
+};
+
+const onUsernameInput = () => {
+  setusernameError('');
+  validateUsername(username.value, setusernameError);
+};
+
+onMounted(() => {
+  mountedAccess();
+});
+</script>
+
 <template>
   <div id="login" class="d-flex align-center flex-column">
-    <h1 data-title="Login">Access</h1>
+    <h1 data-title="Access">Access</h1>
     <form @submit="handleSubmit">
       <div class="error">
         {{ $route.query.error }}
@@ -20,6 +57,9 @@
         Submit
       </button>
     </form>
+    <div>
+      <MetaMaskNotice />
+    </div>
   </div>
 </template>
 
@@ -83,50 +123,3 @@ h1 {
   background-color: #0056b3;
 }
 </style>
-
-<script>
-import { ref, onMounted, nextTick } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { validateUsername, validation, mountedAccess } from '../assets/js/access.js';
-
-export default {
-  setup() {
-    const route = useRoute();
-    const router = useRouter();
-    const username = ref('');
-    const usernameError = ref('');
-
-    const setusernameError = (v) => {
-      document.querySelector("#errorAccess").innerHTML=v
-    };
-
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      await validateUsername(username.value, setusernameError);
-      if (document.querySelector("#errorAccess").innerHTML!=="") {
-        return;
-      }
-      await validation(router, username.value, setusernameError);
-      await nextTick(() => {
-        mountedAccess();
-      });
-    };
-
-    const onUsernameInput = () => {
-      setusernameError('');
-      validateUsername(username.value, setusernameError);
-    };
-
-    onMounted(() => {
-      mountedAccess();
-    });
-
-    return {
-      route,
-      username,
-      handleSubmit,
-      onUsernameInput
-    };
-  }
-};
-</script>
