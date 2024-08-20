@@ -19,45 +19,41 @@ export const validateUsername = (username, setError) => {
 };
 
 export const validation = async (router, username, setError) => {
-  console.log('Starting validation...'); // Add this line
   validateUsername(username, setError);
   if (document.querySelector("#errorAccess").innerHTML !== "") {
-    console.log('Validation error present. Exiting...');
     return;
   }
 
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = provider.getSigner();
+    const signer = await provider.getSigner();
 
     try {
-      console.log('Requesting accounts...');
+      // Request MetaMask to connect to the user's wallet
       await provider.send('eth_requestAccounts', []);
-      
+
       const contractAddress = "0xDA0bab807633f07f013f94DD0E6A4F96F8742B53";
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
+      // Fetch the user's accounts
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
-        console.log('No accounts found.');
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
 
-      console.log('Fetching registered username...');
+      // Get the username registered with the user's address
       const registeredUsername = await userAuthContract.getUser();
+      console.log('Registered username:', registeredUsername);
 
       if (!registeredUsername) {
-        console.log('No registered username. Prompting for new account creation...');
         if (confirm('You are about to create a new account. Is this what you would like?')) {
           const tx = await userAuthContract.register(username);
           await tx.wait();
           const logged = await makeLog(username);
           if (logged === 200) {
-            console.log('Account created successfully. Redirecting...');
             await router.push('/');
           } else {
-            console.log('Error in account creation. Redirecting...');
             await router.push('/access?error=' + logged);
           }
         } else {
