@@ -24,7 +24,7 @@ export const validation = async (router, username, setError) => {
   }
 
   if (typeof window.ethereum !== 'undefined') {
-    const provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+    const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = provider.getSigner();
 
     try {
