@@ -18,6 +18,11 @@ export const validateUsername = (username, setError) => {
   }
 };
 
+const checkContractDeployment = async (provider, address) => {
+  const code = await provider.getCode(address);
+  return code !== '0x';
+};
+
 export const validation = async (router, username, setError) => {
   validateUsername(username, setError);
   if (document.querySelector("#errorAccess").innerHTML !== "") {
@@ -27,22 +32,27 @@ export const validation = async (router, username, setError) => {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
+    const contractAddress = "0xDA0bab807633f07f013f94DD0E6A4F96F8742B53";
+
+    // Check if the contract is deployed
+    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+    if (!isContractDeployed) {
+      console.error('Contract not deployed at this address.');
+      await router.push('/access?error=Contract not deployed at this address.');
+      return;
+    }
 
     try {
-      // Request MetaMask to connect to the user's wallet
       await provider.send('eth_requestAccounts', []);
 
-      const contractAddress = "0xDA0bab807633f07f013f94DD0E6A4F96F8742B53";
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
-      // Fetch the user's accounts
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
 
-      // Get the username registered with the user's address
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
 
@@ -65,7 +75,6 @@ export const validation = async (router, username, setError) => {
       await router.push('/access?error=' + error.message);
     }
   } else {
-    console.log('MetaMask is not available.');
     document.querySelector(".overlay").style.display = "flex";
   }
 };
