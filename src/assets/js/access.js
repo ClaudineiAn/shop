@@ -2,6 +2,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ethers } from 'ethers';
 import { makeLog, inputEffect } from '../main.js';
+import abi from './abi.json';
 
 export const setusernameError = (v, setError) => {
   setError(v);
@@ -29,8 +30,6 @@ export const validation = async (router, username, setError) => {
 
     try {
       await provider.send('eth_requestAccounts', []);
-      const response = await fetch('./abi.json');
-      const abi = await response.json();
 
       const contractAddress = "0xDA0bab807633f07f013f94DD0E6A4F96F8742B53";
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
