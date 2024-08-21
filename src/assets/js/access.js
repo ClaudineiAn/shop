@@ -26,14 +26,18 @@ const checkContractDeployment = async (provider, address) => {
 const switchToAvalancheFuji = async () => {
   try {
     // Attempt to switch to the Avalanche Fuji C-Chain network
+    console.log('Attempting to switch to Avalanche Fuji C-Chain...');
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xA869' }], // 0xA869 is the chain ID for Avalanche Fuji C-Chain
+      params: [{ chainId: '0xA869' }],
     });
+    console.log('Switched to Avalanche Fuji C-Chain successfully.');
   } catch (switchError) {
+    console.error('Error switching network:', switchError);
+
     if (switchError.code === 4902) {
       try {
-        // Add the Avalanche Fuji C-Chain network to MetaMask
+        console.log('Adding Avalanche Fuji C-Chain to MetaMask...');
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -51,12 +55,12 @@ const switchToAvalancheFuji = async () => {
           ],
         });
 
-        // After adding, switch to the newly added network
+        console.log('Added Avalanche Fuji C-Chain. Attempting to switch...');
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0xA869' }],
         });
-
+        console.log('Switched to Avalanche Fuji C-Chain successfully.');
       } catch (addError) {
         if (addError.code === -32002) {
           console.error('A request to add or switch to the network is already pending. Please check MetaMask.');
