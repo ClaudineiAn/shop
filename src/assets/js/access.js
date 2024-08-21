@@ -23,57 +23,77 @@ const checkContractDeployment = async (provider, address) => {
   return code !== '0x';
 };
 
-const switchToAvalancheFuji = async () => {
+const switchToNetwork = async (chainId, chainName, rpcUrl, blockExplorerUrl) => {
   try {
-    console.log('Attempting to switch to Avalanche Fuji C-Chain...');
+    console.log(`Attempting to switch to ${chainName}...`);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xa869' }], // Correct hexadecimal chain ID for Avalanche Fuji
+      params: [{ chainId }],
     });
-    console.log('Switched to Avalanche Fuji C-Chain successfully.');
+    console.log(`Switched to ${chainName} successfully.`);
   } catch (switchError) {
-    console.error('Error switching network:', switchError);
+    console.error(`Error switching to ${chainName}:`, switchError);
 
     if (switchError.code === 4902) {
       try {
-        console.log('Adding Avalanche Fuji C-Chain to MetaMask...');
+        console.log(`Adding ${chainName} to MetaMask...`);
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
-              chainId: '0xa869',
-              chainName: 'Avalanche Fuji C-Chain',
+              chainId,
+              chainName,
               nativeCurrency: {
-                name: 'Avalanche',
-                symbol: 'AVAX',
+                name: chainName,
+                symbol: chainName.slice(0, 4).toUpperCase(), // Use the first 4 characters of the chain name as symbol
                 decimals: 18,
               },
-              rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
-              blockExplorerUrls: ['https://testnet.snowtrace.io'],
+              rpcUrls: [rpcUrl],
+              blockExplorerUrls: [blockExplorerUrl],
             },
           ],
         });
 
-        console.log('Added Avalanche Fuji C-Chain. Attempting to switch...');
+        console.log(`Added ${chainName}. Attempting to switch...`);
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0xa869' }],
+          params: [{ chainId }],
         });
-        console.log('Switched to Avalanche Fuji C-Chain successfully.');
+        console.log(`Switched to ${chainName} successfully.`);
       } catch (addError) {
         if (addError.code === -32002) {
-          console.error('A request to add or switch to the network is already pending. Please check MetaMask.');
-          alert('A request to add the Avalanche Fuji C-Chain is already pending in MetaMask. Please open MetaMask and complete the request.');
+          console.error(`A request to add or switch to ${chainName} is already pending. Please check MetaMask.`);
+          alert(`A request to add or switch to ${chainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
         } else {
-          console.error('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
-          alert('Failed to add Avalanche Fuji C-Chain to MetaMask. Please try again.');
+          console.error(`Failed to add ${chainName} to MetaMask:`, addError);
+          alert(`Failed to add ${chainName} to MetaMask. Please try again.`);
         }
       }
     } else {
-      console.error('Failed to switch to Avalanche Fuji C-Chain:', switchError);
-      alert('Failed to switch to Avalanche Fuji C-Chain. Please try again.');
+      console.error(`Failed to switch to ${chainName}:`, switchError);
+      alert(`Failed to switch to ${chainName}. Please try again.`);
     }
   }
+};
+
+const switchToSepoliaThenAvalanche = async () => {
+  // Chain details for Sepolia
+  const sepoliaChainId = '0x5'; // 5 in hexadecimal
+  const sepoliaChainName = 'Sepolia Testnet';
+  const sepoliaRpcUrl = 'https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID';
+  const sepoliaBlockExplorerUrl = 'https://sepolia.etherscan.io';
+
+  // Chain details for Avalanche Fuji C-Chain
+  const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
+  const avalancheChainName = 'Avalanche Fuji C-Chain';
+  const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
+  const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
+
+  // Switch to Sepolia
+  await switchToNetwork(sepoliaChainId, sepoliaChainName, sepoliaRpcUrl, sepoliaBlockExplorerUrl);
+
+  // Switch to Avalanche Fuji C-Chain
+  await switchToNetwork(avalancheChainId, avalancheChainName, avalancheRpcUrl, avalancheBlockExplorerUrl);
 };
 
 export const validation = async (router, username, setError) => {
@@ -82,47 +102,43 @@ export const validation = async (router, username, setError) => {
     return;
   }
 
-  console.log('Requesting accounts...');
-  try {
-    if (typeof window.ethereum !== 'undefined') {
-      const provider = new ethers.BrowserProvider(window.ethereum);
+  console.log(0)
+  if (typeof window.ethereum !== 'undefined') {
+    await switchToSepoliaThenAvalanche();
 
-      // Ensure the user is connected to the correct network
-      await switchToAvalancheFuji();
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
 
-      // Request user accounts
+    console.log(1)
+    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+    if (!isContractDeployed) {
+      console.error('Contract not deployed at this address.');
+      await router.push('/access?error=Contract not deployed at this address.');
+      return;
+    }
+    
+    console.log(2)
+
+    try {
       await provider.send('eth_requestAccounts', []);
-      console.log('Accounts requested successfully');
 
-      const signer = await provider.getSigner();
-      console.log('Signer obtained:', signer);
-
-      const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
-      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-
-      if (!isContractDeployed) {
-        console.error('Contract not deployed at this address.');
-        await router.push('/access?error=Contract not deployed at this address.');
-        return;
-      }
-
-      console.log('Creating contract instance...');
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
-      console.log('Listing accounts...');
+      console.log(3)
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
+      
+      console.log(4)
 
-      console.log('Getting registered username...');
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
 
       if (!registeredUsername) {
         if (confirm('You are about to create a new account. Is this what you would like?')) {
-          console.log('Registering new username...');
           const tx = await userAuthContract.register(username);
           await tx.wait();
           const logged = await makeLog(username);
@@ -135,12 +151,12 @@ export const validation = async (router, username, setError) => {
           setusernameError('Invalid user.', setError);
         }
       }
-    } else {
-      document.querySelector(".overlay").style.display = "flex";
+    } catch (error) {
+      console.error('Validation error:', error);
+      await router.push('/access?error=' + error.message);
     }
-  } catch (error) {
-    console.error('Error during validation:', error);
-    await router.push('/access?error=Error during validation. ' + error.message);
+  } else {
+    document.querySelector(".overlay").style.display = "flex";
   }
 };
 
