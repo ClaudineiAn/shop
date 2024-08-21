@@ -19,8 +19,13 @@ export const validateUsername = (username, setError) => {
 };
 
 const checkContractDeployment = async (provider, address) => {
-  const code = await provider.getCode(address);
-  return code !== '0x';
+  try {
+    const code = await provider.getCode(address);
+    return code !== '0x';
+  } catch (error) {
+    console.error('Error checking contract deployment:', error);
+    throw error;
+  }
 };
 
 const switchToAvalanche = async () => {
@@ -88,17 +93,22 @@ export const validation = async (router, username, setError) => {
     const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
 
     console.log('Checking contract deployment...');
-    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-    if (!isContractDeployed) {
-      console.error('Contract not deployed at this address.');
-      await router.push('/access?error=Contract not deployed at this address.');
+    try {
+      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+      if (!isContractDeployed) {
+        console.error('Contract not deployed at this address.');
+        await router.push('/access?error=Contract not deployed at this address.');
+        return;
+      }
+    } catch (error) {
+      console.error('Error during contract deployment check:', error);
+      await router.push('/access?error=' + error.message);
       return;
     }
 
     console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
-
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
       console.log('Fetching accounts...');
@@ -109,26 +119,31 @@ export const validation = async (router, username, setError) => {
       }
 
       console.log('Accounts found. Fetching registered username...');
-      const registeredUsername = await userAuthContract.getUser();
-      console.log('Registered username:', registeredUsername);
+      try {
+        const registeredUsername = await userAuthContract.getUser();
+        console.log('Registered username:', registeredUsername);
 
-      if (!registeredUsername) {
-        if (confirm('You are about to create a new account. Is this what you would like?')) {
-          const tx = await userAuthContract.register(username);
-          await tx.wait();
-          const logged = await makeLog(username);
-          if (logged === 200) {
-            await router.push('/');
+        if (!registeredUsername) {
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + logged);
+            }
           } else {
-            await router.push('/access?error=' + logged);
+            setusernameError('Invalid user.', setError);
           }
-        } else {
-          setusernameError('Invalid user.', setError);
         }
+      } catch (contractError) {
+        console.error('Error fetching registered username:', contractError);
+        await router.push('/access?error=' + contractError.message);
       }
-    } catch (error) {
-      console.error('Validation error:', error);
-      await router.push('/access?error=' + error.message);
+    } catch (providerError) {
+      console.error('Error requesting accounts:', providerError);
+      await router.push('/access?error=' + providerError.message);
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
