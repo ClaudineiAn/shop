@@ -37,6 +37,15 @@ export const validation = async (router, username, setError) => {
   
       console.log('Getting signer...');
       const signer = await provider.getSigner();
+
+      console.log('Checking network...');
+      const network = await provider.getNetwork();
+      console.log('Connected to network:', network.name);
+      if (network.chainId !== 11155111) {  // Sepolia testnet chainId
+        console.error('Incorrect network. Please switch to Sepolia.');
+        await router.push('/access?error=Please switch to the Sepolia network.');
+        return;
+      }
   
       console.log('Checking contract deployment...');
       const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
