@@ -28,30 +28,35 @@ export const validation = async (router, username, setError) => {
   if (document.querySelector("#errorAccess").innerHTML !== "") {
     return;
   }
-
+console.log(0)
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
 
-    // Check if the contract is deployed
+console.log(1)
     const isContractDeployed = await checkContractDeployment(provider, contractAddress);
     if (!isContractDeployed) {
       console.error('Contract not deployed at this address.');
       await router.push('/access?error=Contract not deployed at this address.');
       return;
     }
+	
+console.log(2)
 
     try {
       await provider.send('eth_requestAccounts', []);
 
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
+console.log(3)
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
+	  
+console.log(4)
 
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
