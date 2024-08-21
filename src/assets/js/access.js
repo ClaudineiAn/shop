@@ -29,15 +29,26 @@ export const validation = async (router, username, setError) => {
     return;
   }
   
-  console.log(0)
+  console.log(0);
   if (typeof window.ethereum !== 'undefined') {
     try {
       console.log('Creating provider...');
       const provider = new ethers.BrowserProvider(window.ethereum);
   
+      console.log('Requesting accounts...');
+      await provider.send('eth_requestAccounts', []);
+  
       console.log('Getting signer...');
-      const signer = await provider.getSigner();
-
+      let signer;
+      try {
+        signer = await provider.getSigner();
+        console.log('Signer obtained:', signer);
+      } catch (err) {
+        console.error('Error getting signer:', err);
+        await router.push('/access?error=Error getting signer. ' + err.message);
+        return;
+      }
+  
       console.log('Checking network...');
       const network = await provider.getNetwork();
       console.log('Connected to network:', network.name);
@@ -56,9 +67,6 @@ export const validation = async (router, username, setError) => {
         await router.push('/access?error=Contract not deployed at this address.');
         return;
       }
-      
-      console.log('Requesting accounts...');
-      await provider.send('eth_requestAccounts', []);
   
       console.log('Creating contract instance...');
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
