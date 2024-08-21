@@ -23,6 +23,41 @@ const checkContractDeployment = async (provider, address) => {
   return code !== '0x';
 };
 
+const switchToAvalancheFuji = async () => {
+  try {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0xA869' }], // Chain ID 43113 in hexadecimal
+    });
+  } catch (switchError) {
+    // This error code indicates that the chain has not been added to MetaMask.
+    if (switchError.code === 4902) {
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0xA869',
+              chainName: 'Avalanche Fuji C-Chain',
+              nativeCurrency: {
+                name: 'Avalanche',
+                symbol: 'AVAX',
+                decimals: 18,
+              },
+              rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+              blockExplorerUrls: ['https://testnet.snowtrace.io'],
+            },
+          ],
+        });
+      } catch (addError) {
+        console.error('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
+      }
+    } else {
+      console.error('Failed to switch to Avalanche Fuji C-Chain:', switchError);
+    }
+  }
+};
+
 export const validation = async (router, username, setError) => {
   validateUsername(username, setError);
   if (document.querySelector("#errorAccess").innerHTML !== "") {
@@ -52,9 +87,9 @@ export const validation = async (router, username, setError) => {
       console.log('Checking network...');
       const network = await provider.getNetwork();
       console.log('Connected to network:', network.name);
-      if (network.chainId !== 11155111) {  // Sepolia testnet chainId
-        console.error('Incorrect network. Please switch to Sepolia.');
-        await router.push('/access?error=Please switch to the Sepolia network.');
+      if (network.chainId !== 43113) {  // Avalanche Fuji C-Chain chainId
+        console.error('Incorrect network. Switching to Avalanche Fuji C-Chain...');
+        await switchToAvalancheFuji(); // Call the function to switch the network
         return;
       }
   
