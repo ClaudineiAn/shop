@@ -88,28 +88,22 @@ export const validation = async (router, username, setError) => {
     console.log('Ethereum is defined. Starting network switch...');
     await switchToAvalanche();
 
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
     const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
+    const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
     console.log('Checking contract deployment...');
-    try {
-      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-      if (!isContractDeployed) {
-        console.error('Contract not deployed at this address.');
-        await router.push('/access?error=Contract not deployed at this address.');
-        return;
-      }
-    } catch (error) {
-      console.error('Error during contract deployment check:', error);
-      await router.push('/access?error=' + error.message);
+    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+    if (!isContractDeployed) {
+      console.error('Contract not deployed at this address.');
+      await router.push('/access?error=Contract not deployed at this address.');
       return;
     }
 
     console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
-      const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
       console.log('Fetching accounts...');
       const accounts = await provider.listAccounts();
@@ -138,12 +132,35 @@ export const validation = async (router, username, setError) => {
           }
         }
       } catch (contractError) {
+        // Handle error where user is not registered
         console.error('Error fetching registered username:', contractError);
-        await router.push('/access?error=' + contractError.message);
+
+        if (contractError.message.includes('User not registered')) {
+          // Register the user if not registered
+          try {
+            if (confirm('You are about to create a new account. Is this what you would like?')) {
+              const tx = await userAuthContract.register(username);
+              await tx.wait();
+              const logged = await makeLog(username);
+              if (logged === 200) {
+                await router.push('/');
+              } else {
+                await router.push('/access?error=' + logged);
+              }
+            } else {
+              setusernameError('Invalid user.', setError);
+            }
+          } catch (registerError) {
+            console.error('Error registering user:', registerError);
+            await router.push('/access?error=' + registerError.message);
+          }
+        } else {
+          await router.push('/access?error=' + contractError.message);
+        }
       }
-    } catch (providerError) {
-      console.error('Error requesting accounts:', providerError);
-      await router.push('/access?error=' + providerError.message);
+    } catch (error) {
+      console.error('Validation error:', error);
+      await router.push('/access?error=' + error.message);
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
