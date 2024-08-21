@@ -47,19 +47,19 @@ const switchToAvalanche = async () => {
     }
 
     console.log(`Switching to ${avalancheChainName}...`);
-    const switchResult = await window.ethereum.request({
+    await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: avalancheChainId }],
     });
-    console.log('Switch result:', switchResult);
-    console.log(`Switched to ${avalancheChainName} successfully.`);
+
+    console.log(`Successfully switched to ${avalancheChainName}.`);
   } catch (switchError) {
     console.error(`Error switching to ${avalancheChainName}:`, switchError);
 
     if (switchError.code === 4902) { // Chain not added
       try {
         console.log(`Adding ${avalancheChainName}...`);
-        const addResult = await window.ethereum.request({
+        await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
@@ -75,13 +75,15 @@ const switchToAvalanche = async () => {
             },
           ],
         });
-        console.log('Add result:', addResult);
-        console.log(`Added ${avalancheChainName}. Attempting to switch...`);
+        console.log(`Successfully added ${avalancheChainName}. Attempting to switch...`);
+
+        // Attempt to switch again after adding
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: avalancheChainId }],
         });
-        console.log(`Switched to ${avalancheChainName} successfully.`);
+
+        console.log(`Successfully switched to ${avalancheChainName}.`);
       } catch (addError) {
         if (addError.code === -32002) { // Pending request
           console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
