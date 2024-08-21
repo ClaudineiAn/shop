@@ -25,77 +25,36 @@ const checkContractDeployment = async (provider, address) => {
 
 const switchToAvalanche = async () => {
   const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
-  const avalancheChainName = 'Avalanche Fuji C-Chain';
-  const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
-  const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
-
-  if (typeof window.ethereum === 'undefined') {
-    console.error('Ethereum provider is not available. Please install MetaMask.');
-    alert('Ethereum provider is not available. Please install MetaMask.');
-    return;
-  }
-
-  console.log(`Attempting to switch to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
   try {
-    // Check if we are already on the desired chain
-    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-    console.log(`Current chainId: ${chainId}`);
-    if (chainId === avalancheChainId) {
-      console.log(`Already on ${avalancheChainName}.`);
-      return;
-    }
+    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+    console.log(`Current chainId: ${currentChainId}`);
 
-    console.log(`Switching to ${avalancheChainName}...`);
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: avalancheChainId }],
-    });
-
-    console.log(`Successfully switched to ${avalancheChainName}.`);
-  } catch (switchError) {
-    console.error(`Error switching to ${avalancheChainName}:`, switchError);
-
-    if (switchError.code === 4902) { // Chain not added
-      try {
-        console.log(`Adding ${avalancheChainName}...`);
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: avalancheChainId,
-              chainName: avalancheChainName,
-              nativeCurrency: {
-                name: 'Avalanche',
-                symbol: 'AVAX',
-                decimals: 18,
-              },
-              rpcUrls: [avalancheRpcUrl],
-              blockExplorerUrls: [avalancheBlockExplorerUrl],
-            },
-          ],
-        });
-        console.log(`Successfully added ${avalancheChainName}. Attempting to switch...`);
-
-        // Attempt to switch again after adding
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: avalancheChainId }],
-        });
-
-        console.log(`Successfully switched to ${avalancheChainName}.`);
-      } catch (addError) {
-        if (addError.code === -32002) { // Pending request
-          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
-          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
-        } else {
-          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
-          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
-        }
-      }
+    if (currentChainId !== avalancheChainId) {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: avalancheChainId }],
+      });
+      console.log('Switched to Avalanche Fuji C-Chain.');
     } else {
-      console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
-      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
+      console.log('Already on Avalanche Fuji C-Chain.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    if (error.code === 4902) {
+      // Add the chain if it's not present
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: avalancheChainId,
+          chainName: 'Avalanche Fuji C-Chain',
+          nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
+          rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+          blockExplorerUrls: ['https://testnet.snowtrace.io'],
+        }],
+      });
+    } else {
+      console.error('Switching or adding chain error:', error);
     }
   }
 };
