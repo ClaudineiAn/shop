@@ -24,6 +24,8 @@ const checkContractDeployment = async (provider, address) => {
 };
 
 const switchToNetwork = async (chainId, chainName, rpcUrl, blockExplorerUrl) => {
+  console.log(`Switching to ${chainName} with chainId ${chainId}...`);
+  
   try {
     console.log(`Attempting to switch to ${chainName}...`);
     await window.ethereum.request({
@@ -77,6 +79,8 @@ const switchToNetwork = async (chainId, chainName, rpcUrl, blockExplorerUrl) => 
 };
 
 const switchToSepoliaThenAvalanche = async () => {
+  console.log('Starting network switch sequence...');
+
   // Chain details for Sepolia
   const sepoliaChainId = '0x5'; // 5 in hexadecimal
   const sepoliaChainName = 'Sepolia Testnet';
@@ -102,15 +106,17 @@ export const validation = async (router, username, setError) => {
     return;
   }
 
-  console.log(0)
+  console.log('Starting validation...');
+
   if (typeof window.ethereum !== 'undefined') {
+    console.log('Ethereum is defined. Starting network switch...');
     await switchToSepoliaThenAvalanche();
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
 
-    console.log(1)
+    console.log('Checking contract deployment...');
     const isContractDeployed = await checkContractDeployment(provider, contractAddress);
     if (!isContractDeployed) {
       console.error('Contract not deployed at this address.');
@@ -118,22 +124,20 @@ export const validation = async (router, username, setError) => {
       return;
     }
     
-    console.log(2)
-
+    console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
 
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
-      console.log(3)
+      console.log('Fetching accounts...');
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
       
-      console.log(4)
-
+      console.log('Accounts found. Fetching registered username...');
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
 
