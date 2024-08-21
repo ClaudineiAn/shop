@@ -115,21 +115,42 @@ export const validation = async (router, username, setError) => {
       }
 
       console.log('Accounts found. Fetching registered username...');
-      const registeredUsername = await userAuthContract.getUser();
-      console.log('Registered username:', registeredUsername);
+      try {
+        const registeredUsername = await userAuthContract.getUser();
+        console.log('Registered username:', registeredUsername);
 
-      if (!registeredUsername) {
-        if (confirm('You are about to create a new account. Is this what you would like?')) {
-          const tx = await userAuthContract.register(username);
-          await tx.wait();
-          const logged = await makeLog(username);
-          if (logged === 200) {
-            await router.push('/');
+        if (!registeredUsername) {
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + logged);
+            }
           } else {
-            await router.push('/access?error=' + logged);
+            setusernameError('Invalid user.', setError);
+          }
+        }
+      } catch (error) {
+        if (error.reason === "User not registered") {
+          console.log('User is not registered. Prompting for registration...');
+          if (confirm('User not registered. Would you like to register now?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + logged);
+            }
+          } else {
+            setusernameError('Registration canceled.', setError);
           }
         } else {
-          setusernameError('Invalid user.', setError);
+          console.error('Unexpected error:', error);
+          await router.push('/access?error=' + error.message);
         }
       }
     } catch (error) {
