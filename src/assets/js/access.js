@@ -40,16 +40,18 @@ const switchToAvalanche = async () => {
   try {
     // Check if we are already on the desired chain
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    console.log(`Current chainId: ${chainId}`);
     if (chainId === avalancheChainId) {
       console.log(`Already on ${avalancheChainName}.`);
       return;
     }
 
     console.log(`Switching to ${avalancheChainName}...`);
-    await window.ethereum.request({
+    const switchResult = await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: avalancheChainId }],
     });
+    console.log('Switch result:', switchResult);
     console.log(`Switched to ${avalancheChainName} successfully.`);
   } catch (switchError) {
     console.error(`Error switching to ${avalancheChainName}:`, switchError);
@@ -57,7 +59,7 @@ const switchToAvalanche = async () => {
     if (switchError.code === 4902) { // Chain not added
       try {
         console.log(`Adding ${avalancheChainName}...`);
-        await window.ethereum.request({
+        const addResult = await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
             {
@@ -65,7 +67,7 @@ const switchToAvalanche = async () => {
               chainName: avalancheChainName,
               nativeCurrency: {
                 name: 'Avalanche',
-                symbol: 'AVAX', // Symbol for Avalanche
+                symbol: 'AVAX',
                 decimals: 18,
               },
               rpcUrls: [avalancheRpcUrl],
@@ -73,6 +75,7 @@ const switchToAvalanche = async () => {
             },
           ],
         });
+        console.log('Add result:', addResult);
         console.log(`Added ${avalancheChainName}. Attempting to switch...`);
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
