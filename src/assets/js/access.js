@@ -24,38 +24,56 @@ const checkContractDeployment = async (provider, address) => {
 };
 
 const switchToAvalanche = async () => {
-  const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
+  const avalancheChainId = '0xa869';
+  const avalancheChainName = 'Avalanche Fuji C-Chain';
 
   try {
     const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-    console.log(`Current chainId: ${currentChainId}`);
-
     if (currentChainId !== avalancheChainId) {
+      console.log(`Attempting to switch to ${avalancheChainName}...`);
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: avalancheChainId }],
       });
-      console.log('Switched to Avalanche Fuji C-Chain.');
+      console.log(`Switched to ${avalancheChainName} successfully.`);
     } else {
-      console.log('Already on Avalanche Fuji C-Chain.');
+      console.log(`Already on ${avalancheChainName}.`);
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error(`Error switching to ${avalancheChainName}:`, error);
     if (error.code === 4902) {
-      // Add the chain if it's not present
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: avalancheChainId,
-          chainName: 'Avalanche Fuji C-Chain',
-          nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
-          rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
-          blockExplorerUrls: ['https://testnet.snowtrace.io'],
-        }],
-      });
+      console.log(`Chain not found. Adding ${avalancheChainName}...`);
+      await addAvalancheChain();
+    } else if (error.code === -32002) {
+      alert(`A request to add or switch to ${avalancheChainName} is already pending. Please open MetaMask and complete the request.`);
     } else {
-      console.error('Switching or adding chain error:', error);
+      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
     }
+  }
+};
+
+const addAvalancheChain = async () => {
+  const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
+
+  try {
+    await window.ethereum.request({
+      method: 'wallet_addEthereumChain',
+      params: [{
+        chainId: avalancheChainId,
+        chainName: 'Avalanche Fuji C-Chain',
+        nativeCurrency: {
+          name: 'Avalanche',
+          symbol: 'AVAX',
+          decimals: 18,
+        },
+        rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
+        blockExplorerUrls: ['https://testnet.snowtrace.io'],
+      }],
+    });
+    console.log('Added Avalanche Fuji C-Chain.');
+  } catch (error) {
+    console.error('Error adding chain:', error);
+    alert('Failed to add Avalanche Fuji C-Chain. Please try again.');
   }
 };
 
