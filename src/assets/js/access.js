@@ -43,25 +43,7 @@ const switchToAvalanche = async () => {
 
     if (switchError.code === 4902) {
       try {
-        console.log(`Adding ${avalancheChainName} to MetaMask...`);
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: avalancheChainId,
-              chainName: avalancheChainName,
-              nativeCurrency: {
-                name: avalancheChainName,
-                symbol: 'AVAX', // Use the AVAX symbol for Avalanche
-                decimals: 18,
-              },
-              rpcUrls: [avalancheRpcUrl],
-              blockExplorerUrls: [avalancheBlockExplorerUrl],
-            },
-          ],
-        });
-
-        console.log(`Added ${avalancheChainName}. Attempting to switch...`);
+        console.log(`Switch to ${avalancheChainId}.`);
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: avalancheChainId }],
