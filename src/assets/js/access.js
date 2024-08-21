@@ -63,16 +63,22 @@ export const validation = async (router, username, setError) => {
   if (document.querySelector("#errorAccess").innerHTML !== "") {
     return;
   }
-  
+
   console.log(0);
   if (typeof window.ethereum !== 'undefined') {
     try {
       console.log('Creating provider...');
       const provider = new ethers.BrowserProvider(window.ethereum);
-  
+
       console.log('Requesting accounts...');
-      await provider.send('eth_requestAccounts', []);
-  
+      try {
+        await provider.send('eth_requestAccounts', []);
+      } catch (error) {
+        console.error('Error requesting accounts:', error);
+        await router.push('/access?error=Error requesting accounts. ' + error.message);
+        return;
+      }
+
       console.log('Getting signer...');
       let signer;
       try {
@@ -83,7 +89,7 @@ export const validation = async (router, username, setError) => {
         await router.push('/access?error=Error getting signer. ' + err.message);
         return;
       }
-  
+
       console.log('Checking network...');
       const network = await provider.getNetwork();
       console.log('Connected to network:', network.name);
@@ -92,7 +98,7 @@ export const validation = async (router, username, setError) => {
         await switchToAvalancheFuji(); // Call the function to switch the network
         return;
       }
-  
+
       console.log('Checking contract deployment...');
       const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
       const isContractDeployed = await checkContractDeployment(provider, contractAddress);
@@ -102,10 +108,10 @@ export const validation = async (router, username, setError) => {
         await router.push('/access?error=Contract not deployed at this address.');
         return;
       }
-  
+
       console.log('Creating contract instance...');
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
-  
+
       console.log('Listing accounts...');
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
@@ -116,7 +122,7 @@ export const validation = async (router, username, setError) => {
       console.log('Getting registered username...');
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
-  
+
       if (!registeredUsername) {
         if (confirm('You are about to create a new account. Is this what you would like?')) {
           console.log('Registering new username...');
