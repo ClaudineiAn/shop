@@ -25,7 +25,6 @@ const checkContractDeployment = async (provider, address) => {
 
 const switchToAvalancheFuji = async () => {
   try {
-    // Attempt to switch to the Avalanche Fuji C-Chain network
     console.log('Attempting to switch to Avalanche Fuji C-Chain...');
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
