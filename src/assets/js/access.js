@@ -118,11 +118,10 @@ export const validation = async (router, username, setError) => {
         console.log('Registered username:', registeredUsername);
 
         if (!registeredUsername) {
-          // User is not registered; proceed to register
           console.log('User is not registered. Registering now...');
           if (confirm('You are about to create a new account. Is this what you would like?')) {
             const tx = await userAuthContract.register(username);
-            await tx.wait(); // Wait for the transaction to be mined
+            await tx.wait();
             const logged = await makeLog(username);
             if (logged === 200) {
               await router.push('/');
@@ -134,8 +133,24 @@ export const validation = async (router, username, setError) => {
           }
         }
       } catch (contractError) {
-        console.error('Error fetching registered username:', contractError);
-        await router.push('/access?error=' + contractError.message);
+		  if(contractError.code===-32603){
+			  console.log('User is not registered. Registering now...');
+			  if (confirm('You are about to create a new account. Is this what you would like?')) {
+				const tx = await userAuthContract.register(username);
+				await tx.wait();
+				const logged = await makeLog(username);
+				if (logged === 200) {
+				  await router.push('/');
+				} else {
+				  await router.push('/access?error=' + logged);
+				}
+			  } else {
+				setusernameError('Invalid user.', setError);
+			  }
+			}else{
+			  console.error('Error fetching registered username:', contractError);
+			  await router.push('/access?error=' + contractError.message);
+			}
       }
     } catch (providerError) {
       console.error('Error requesting accounts:', providerError);
