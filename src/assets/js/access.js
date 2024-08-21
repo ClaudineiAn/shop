@@ -29,9 +29,23 @@ const switchToAvalanche = async () => {
   const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
   const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
 
+  if (typeof window.ethereum === 'undefined') {
+    console.error('Ethereum provider is not available. Please install MetaMask.');
+    alert('Ethereum provider is not available. Please install MetaMask.');
+    return;
+  }
+
   console.log(`Attempting to switch to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
   try {
+    // Check if we are already on the desired chain
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (chainId === avalancheChainId) {
+      console.log(`Already on ${avalancheChainName}.`);
+      return;
+    }
+
+    console.log(`Switching to ${avalancheChainName}...`);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: avalancheChainId }],
@@ -42,6 +56,7 @@ const switchToAvalanche = async () => {
 
     if (switchError.code === 4902) { // Chain not added
       try {
+        console.log(`Adding ${avalancheChainName}...`);
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
