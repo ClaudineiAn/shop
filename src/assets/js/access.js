@@ -26,47 +26,62 @@ const checkContractDeployment = async (provider, address) => {
 const switchToAvalanche = async () => {
   const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
   const avalancheChainName = 'Avalanche Fuji C-Chain';
-  const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
+  
+  const avalancheRpcUrls = [
+    'https://api.avax-test.network/ext/bc/C/rpc',
+    'https://rpc.ankr.com/avalanche_fuji',
+    'https://avalanche-fuji-c-chain.publicnode.com',
+  ];
   const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
 
   console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
-  try {
-    console.log(`Attempting to switch to ${avalancheChainName}...`);
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: avalancheChainId }],
-    });
-    console.log(`Switched to ${avalancheChainName} successfully.`);
-  } catch (switchError) {
-    console.error(`Error switching to ${avalancheChainName}:`, switchError);
+  let rpcUrlIndex = 0;
+  let successfulSwitch = false;
 
-    if (switchError.code === 4902) {
-      try {
-        console.log(`Adding ${avalancheChainName}...`);
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [{
-            chainId: avalancheChainId,
-            chainName: avalancheChainName,
-            rpcUrls: [avalancheRpcUrl],
-            blockExplorerUrls: [avalancheBlockExplorerUrl],
-          }],
-        });
-        console.log(`Added ${avalancheChainName} successfully.`);
-      } catch (addError) {
-        if (addError.code === -32002) {
-          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
-          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
-        } else {
-          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
-          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
+  while (rpcUrlIndex < avalancheRpcUrls.length && !successfulSwitch) {
+    const avalancheRpcUrl = avalancheRpcUrls[rpcUrlIndex];
+
+    try {
+      console.log(`Attempting to switch to ${avalancheChainName} using RPC URL: ${avalancheRpcUrl}...`);
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: avalancheChainId }],
+      });
+      console.log(`Switched to ${avalancheChainName} successfully using RPC URL: ${avalancheRpcUrl}.`);
+      successfulSwitch = true;
+    } catch (switchError) {
+      console.error(`Error switching to ${avalancheChainName} using RPC URL: ${avalancheRpcUrl}:`, switchError);
+
+      if (switchError.code === 4902) {
+        try {
+          console.log(`Adding ${avalancheChainName} with RPC URL: ${avalancheRpcUrl}...`);
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: avalancheChainId,
+              chainName: avalancheChainName,
+              rpcUrls: [avalancheRpcUrl],
+              blockExplorerUrls: [avalancheBlockExplorerUrl],
+            }],
+          });
+          console.log(`Added ${avalancheChainName} successfully using RPC URL: ${avalancheRpcUrl}.`);
+          successfulSwitch = true;
+        } catch (addError) {
+          console.error(`Failed to add ${avalancheChainName} to MetaMask using RPC URL: ${avalancheRpcUrl}:`, addError);
         }
+      } else if (switchError.code === -32002) {
+        console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
+        alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
+        return;
       }
-    } else {
-      console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
-      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
     }
+
+    rpcUrlIndex++;
+  }
+
+  if (!successfulSwitch) {
+    alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
   }
 };
 
@@ -133,24 +148,24 @@ export const validation = async (router, username, setError) => {
           }
         }
       } catch (contractError) {
-		  if(contractError.code===-32603){
-			  console.log('User is not registered. Registering now...');
-			  if (confirm('You are about to create a new account. Is this what you would like?')) {
-				const tx = await userAuthContract.register(username);
-				await tx.wait();
-				const logged = await makeLog(username);
-				if (logged === 200) {
-				  await router.push('/');
-				} else {
-				  await router.push('/access?error=' + logged);
-				}
-			  } else {
-				setusernameError('Invalid user.', setError);
-			  }
-			}else{
-			  console.error('Error fetching registered username:', contractError);
-			  await router.push('/access?error=' + contractError.message);
-			}
+        if (contractError.code === -32603) {
+          console.log('User is not registered. Registering now...');
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + logged);
+            }
+          } else {
+            setusernameError('Invalid user.', setError);
+          }
+        } else {
+          console.error('Error fetching registered username:', contractError);
+          await router.push('/access?error=' + contractError.message);
+        }
       }
     } catch (providerError) {
       console.error('Error requesting accounts:', providerError);
