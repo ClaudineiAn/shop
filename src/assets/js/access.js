@@ -136,36 +136,42 @@ export const validation = async (router, username, setError) => {
         return;
       }
 
-      console.log('Accounts found. Fetching registered username...');
-      const registeredUsername = await userAuthContract.getUser();
-      console.log('Registered username:', registeredUsername);
+      // **Switch RPC before fetching the username**
+      try {
+        provider = await switchRpcProvider();
+        console.log('Switched RPC. Fetching registered username...');
+        const registeredUsername = await userAuthContract.getUser();
+        console.log('Registered username:', registeredUsername);
 
-      if (!registeredUsername) {
-        if (confirm('You are about to create a new account. Is this what you would like?')) {
-          const tx = await userAuthContract.register(username);
-          await tx.wait();
-          const logged = await makeLog(username);
-          if (logged === 200) {
-            await router.push('/');
+        if (!registeredUsername) {
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + logged);
+            }
           } else {
-            await router.push('/access?error=' + logged);
+            setusernameError('Invalid user.', setError);
           }
+        }
+      } catch (error) {
+        console.error('Validation error:', error);
+
+        if (error.message.includes('Internal JSON-RPC error')) {
+          console.log('Switching RPC due to error...');
+          provider = await switchRpcProvider();
+          // Retry fetching the registered username with the new provider
+          return validation(router, username, setError);
         } else {
-          setusernameError('Invalid user.', setError);
+          await router.push('/access?error=' + error.message);
         }
       }
     } catch (error) {
       console.error('Validation error:', error);
-
-      // Check if the error is related to the RPC and try switching
-      if (error.message.includes('Internal JSON-RPC error')) {
-        console.log('Switching RPC due to error...');
-        provider = await switchRpcProvider();
-        // Retry validation with the new provider
-        return validation(router, username, setError);
-      } else {
-        await router.push('/access?error=' + error.message);
-      }
+      await router.push('/access?error=' + error.message);
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
