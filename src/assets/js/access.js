@@ -23,58 +23,78 @@ const checkContractDeployment = async (provider, address) => {
   return code !== '0x';
 };
 
-const switchToAvalanche = async () => {
-  const avalancheChainId = '0xa869';
-  const avalancheChainName = 'Avalanche Fuji C-Chain';
+// Define available networks
+const networks = [
+  {
+    chainId: '0xa869', // Avalanche Fuji C-Chain
+    chainName: 'Avalanche Fuji C-Chain',
+    rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
+    blockExplorerUrl: 'https://testnet.snowtrace.io'
+  },
+  {
+    chainId: '0x5', // Goerli Testnet (as an example)
+    chainName: 'Goerli Testnet',
+    rpcUrl: 'https://goerli.infura.io/v3/YOUR_INFURA_PROJECT_ID',
+    blockExplorerUrl: 'https://goerli.etherscan.io'
+  },
+  // Add more networks as needed
+];
 
+// Function to switch to a network
+const switchToNetwork = async (network) => {
   try {
-    const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
-    if (currentChainId !== avalancheChainId) {
-      console.log(`Attempting to switch to ${avalancheChainName}...`);
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: avalancheChainId }],
-      });
-      console.log(`Switched to ${avalancheChainName} successfully.`);
+    console.log(`Attempting to switch to ${network.chainName}...`);
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: network.chainId }],
+    });
+    console.log(`Switched to ${network.chainName} successfully.`);
+    return true;
+  } catch (switchError) {
+    console.error(`Error switching to ${network.chainName}:`, switchError);
+
+    if (switchError.code === 4902) {
+      try {
+        console.log(`Adding ${network.chainName} to MetaMask...`);
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: network.chainId,
+              chainName: network.chainName,
+              rpcUrls: [network.rpcUrl],
+              blockExplorerUrls: [network.blockExplorerUrl],
+            },
+          ],
+        });
+        console.log(`Added and switched to ${network.chainName} successfully.`);
+        return true;
+      } catch (addError) {
+        console.error(`Failed to add ${network.chainName} to MetaMask:`, addError);
+        return false;
+      }
+    } else if (switchError.code === -32002) {
+      console.error(`A request to add or switch to ${network.chainName} is already pending. Please check MetaMask.`);
+      alert(`A request to add or switch to ${network.chainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
+      return false;
     } else {
-      console.log(`Already on ${avalancheChainName}.`);
-    }
-  } catch (error) {
-    console.error(`Error switching to ${avalancheChainName}:`, error);
-    if (error.code === 4902) {
-      console.log(`Chain not found. Adding ${avalancheChainName}...`);
-      await addAvalancheChain();
-    } else if (error.code === -32002) {
-      alert(`A request to add or switch to ${avalancheChainName} is already pending. Please open MetaMask and complete the request.`);
-    } else {
-      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
+      console.error(`Failed to switch to ${network.chainName}:`, switchError);
+      alert(`Failed to switch to ${network.chainName}. Please try again.`);
+      return false;
     }
   }
 };
 
-const addAvalancheChain = async () => {
-  const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
-
-  try {
-    await window.ethereum.request({
-      method: 'wallet_addEthereumChain',
-      params: [{
-        chainId: avalancheChainId,
-        chainName: 'Avalanche Fuji C-Chain',
-        nativeCurrency: {
-          name: 'Avalanche',
-          symbol: 'AVAX',
-          decimals: 18,
-        },
-        rpcUrls: ['https://api.avax-test.network/ext/bc/C/rpc'],
-        blockExplorerUrls: ['https://testnet.snowtrace.io'],
-      }],
-    });
-    console.log('Added Avalanche Fuji C-Chain.');
-  } catch (error) {
-    console.error('Error adding chain:', error);
-    alert('Failed to add Avalanche Fuji C-Chain. Please try again.');
+// Function to switch to an available network if the current one fails
+const switchToAvailableNetwork = async () => {
+  for (const network of networks) {
+    const success = await switchToNetwork(network);
+    if (success) {
+      return;
+    }
   }
+  console.error('No available networks could be switched to.');
+  alert('Failed to switch to any available networks. Please check your MetaMask or network settings.');
 };
 
 export const validation = async (router, username, setError) => {
@@ -87,7 +107,7 @@ export const validation = async (router, username, setError) => {
 
   if (typeof window.ethereum !== 'undefined') {
     console.log('Ethereum is defined. Starting network switch...');
-    await switchToAvalanche();
+    await switchToAvailableNetwork(); // Attempt to switch to an available network
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
@@ -115,12 +135,11 @@ export const validation = async (router, username, setError) => {
       }
 
       console.log('Accounts found. Fetching registered username...');
-      try {
-        const registeredUsername = await userAuthContract.getUser();
-        console.log('Registered username:', registeredUsername);
+      const registeredUsername = await userAuthContract.getUser();
+      console.log('Registered username:', registeredUsername);
 
-        if (!registeredUsername) {
-          console.log('User is not registered. Registering now...');
+      if (!registeredUsername) {
+        if (confirm('You are about to create a new account. Is this what you would like?')) {
           const tx = await userAuthContract.register(username);
           await tx.wait();
           const logged = await makeLog(username);
@@ -129,10 +148,9 @@ export const validation = async (router, username, setError) => {
           } else {
             await router.push('/access?error=' + logged);
           }
+        } else {
+          setusernameError('Invalid user.', setError);
         }
-      } catch (error) {
-        console.error('Registration or fetch user failed:', error);
-        await router.push('/access?error=' + error.message);
       }
     } catch (error) {
       console.error('Validation error:', error);
