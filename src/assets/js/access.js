@@ -19,9 +19,9 @@ export const validateUsername = (username, setError) => {
 };
 
 const rpcUrls = [
-  'https://api.avax-test.network/ext/bc/C/rpc',   // Primary RPC URL
-  'https://another-avax-rpc-url.ext',            // Alternative RPC URL 1
-  'https://yet-another-avax-rpc-url.ext',        // Alternative RPC URL 2
+  'https://api.avax-test.network/ext/bc/C/rpc',   // Primary RPC URL (Avalanche Fuji C-Chain)
+  'https://avax.cobo.com',                       // Cobo RPC URL (Mainnet)
+  'https://avax.network/ext/bc/C/rpc',           // Another RPC URL (Testnet)
   // Add more RPC URLs as needed
 ];
 
@@ -33,7 +33,7 @@ const switchRpcProvider = async () => {
   console.log(`Switching to new RPC: ${newRpcUrl}`);
 
   try {
-    const provider = new ethers.BrowserProvider(new ethers.providers.JsonRpcProvider(newRpcUrl));
+    const provider = new ethers.providers.JsonRpcProvider(newRpcUrl);
     return provider;
   } catch (error) {
     console.error('Failed to switch RPC:', error);
@@ -72,7 +72,7 @@ const switchToAvalanche = async () => {
           params: [{
             chainId: avalancheChainId,
             chainName: avalancheChainName,
-            rpcUrls: [rpcUrls[currentRpcIndex]],
+            rpcUrls: [rpcUrls[0]], // Use the primary RPC URL for adding the chain
             blockExplorerUrls: ['https://testnet.snowtrace.io'],
             nativeCurrency: {
               name: 'Avalanche Fuji C-Chain',
