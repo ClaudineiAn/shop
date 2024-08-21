@@ -120,37 +120,19 @@ export const validation = async (router, username, setError) => {
         console.log('Registered username:', registeredUsername);
 
         if (!registeredUsername) {
-          console.log('No username found, registering new user...');
-          const tx = await userAuthContract.register(username);
-          await tx.wait();  // Wait for the transaction to be confirmed
-
-          console.log('User registered successfully. Logging activity...');
-          const logged = await makeLog(username);
-          if (logged === 200) {
-            await router.push('/');
-          } else {
-            await router.push('/access?error=' + logged);
-          }
-        } else {
-          console.log('User already registered.');
-        }
-      } catch (error) {
-        if (error.reason === "User not registered") {
           console.log('User is not registered. Registering now...');
           const tx = await userAuthContract.register(username);
-          await tx.wait();  // Wait for the transaction to be confirmed
-
-          console.log('User registered successfully. Logging activity...');
+          await tx.wait();
           const logged = await makeLog(username);
           if (logged === 200) {
             await router.push('/');
           } else {
             await router.push('/access?error=' + logged);
           }
-        } else {
-          console.error('Unexpected error:', error);
-          await router.push('/access?error=' + error.message);
         }
+      } catch (error) {
+        console.error('Registration or fetch user failed:', error);
+        await router.push('/access?error=' + error.message);
       }
     } catch (error) {
       console.error('Validation error:', error);
