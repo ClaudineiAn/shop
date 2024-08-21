@@ -23,81 +23,64 @@ const checkContractDeployment = async (provider, address) => {
   return code !== '0x';
 };
 
-const switchToNetwork = async (chainId, chainName, rpcUrl, blockExplorerUrl) => {
-  console.log(`Switching to ${chainName} with chainId ${chainId}...`);
-  
-  try {
-    console.log(`Attempting to switch to ${chainName}...`);
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId }],
-    });
-    console.log(`Switched to ${chainName} successfully.`);
-  } catch (switchError) {
-    console.error(`Error switching to ${chainName}:`, switchError);
-
-    if (switchError.code === 4902) {
-      try {
-        console.log(`Adding ${chainName} to MetaMask...`);
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId,
-              chainName,
-              nativeCurrency: {
-                name: chainName,
-                symbol: chainName.slice(0, 4).toUpperCase(), // Use the first 4 characters of the chain name as symbol
-                decimals: 18,
-              },
-              rpcUrls: [rpcUrl],
-              blockExplorerUrls: [blockExplorerUrl],
-            },
-          ],
-        });
-
-        console.log(`Added ${chainName}. Attempting to switch...`);
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId }],
-        });
-        console.log(`Switched to ${chainName} successfully.`);
-      } catch (addError) {
-        if (addError.code === -32002) {
-          console.error(`A request to add or switch to ${chainName} is already pending. Please check MetaMask.`);
-          alert(`A request to add or switch to ${chainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
-        } else {
-          console.error(`Failed to add ${chainName} to MetaMask:`, addError);
-          alert(`Failed to add ${chainName} to MetaMask. Please try again.`);
-        }
-      }
-    } else {
-      console.error(`Failed to switch to ${chainName}:`, switchError);
-      alert(`Failed to switch to ${chainName}. Please try again.`);
-    }
-  }
-};
-
-const switchToSepoliaThenAvalanche = async () => {
-  console.log('Starting network switch sequence...');
-
-  // Chain details for Sepolia
-  const sepoliaChainId = '0x5'; // 5 in hexadecimal
-  const sepoliaChainName = 'Sepolia Testnet';
-  const sepoliaRpcUrl = 'https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID';
-  const sepoliaBlockExplorerUrl = 'https://sepolia.etherscan.io';
-
-  // Chain details for Avalanche Fuji C-Chain
+const switchToAvalanche = async () => {
   const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
   const avalancheChainName = 'Avalanche Fuji C-Chain';
   const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
   const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
 
-  // Switch to Sepolia
-  await switchToNetwork(sepoliaChainId, sepoliaChainName, sepoliaRpcUrl, sepoliaBlockExplorerUrl);
+  console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
-  // Switch to Avalanche Fuji C-Chain
-  await switchToNetwork(avalancheChainId, avalancheChainName, avalancheRpcUrl, avalancheBlockExplorerUrl);
+  try {
+    console.log(`Attempting to switch to ${avalancheChainName}...`);
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: avalancheChainId }],
+    });
+    console.log(`Switched to ${avalancheChainName} successfully.`);
+  } catch (switchError) {
+    console.error(`Error switching to ${avalancheChainName}:`, switchError);
+
+    if (switchError.code === 4902) {
+      try {
+        console.log(`Adding ${avalancheChainName} to MetaMask...`);
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: avalancheChainId,
+              chainName: avalancheChainName,
+              nativeCurrency: {
+                name: avalancheChainName,
+                symbol: 'AVAX', // Use the AVAX symbol for Avalanche
+                decimals: 18,
+              },
+              rpcUrls: [avalancheRpcUrl],
+              blockExplorerUrls: [avalancheBlockExplorerUrl],
+            },
+          ],
+        });
+
+        console.log(`Added ${avalancheChainName}. Attempting to switch...`);
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: avalancheChainId }],
+        });
+        console.log(`Switched to ${avalancheChainName} successfully.`);
+      } catch (addError) {
+        if (addError.code === -32002) {
+          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
+          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
+        } else {
+          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
+          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
+        }
+      }
+    } else {
+      console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
+      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
+    }
+  }
 };
 
 export const validation = async (router, username, setError) => {
@@ -110,7 +93,7 @@ export const validation = async (router, username, setError) => {
 
   if (typeof window.ethereum !== 'undefined') {
     console.log('Ethereum is defined. Starting network switch...');
-    await switchToSepoliaThenAvalanche();
+    await switchToAvalanche();
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
@@ -123,7 +106,7 @@ export const validation = async (router, username, setError) => {
       await router.push('/access?error=Contract not deployed at this address.');
       return;
     }
-    
+
     console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
@@ -136,7 +119,7 @@ export const validation = async (router, username, setError) => {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
-      
+
       console.log('Accounts found. Fetching registered username...');
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
