@@ -32,7 +32,7 @@ export const validation = async (router, username, setError) => {
   if (typeof window.ethereum !== 'undefined') {
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contractAddress = "0xDA0bab807633f07f013f94DD0E6A4F96F8742B53";
+    const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
 
     // Check if the contract is deployed
     const isContractDeployed = await checkContractDeployment(provider, contractAddress);
