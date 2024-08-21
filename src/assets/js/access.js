@@ -19,8 +19,14 @@ export const validateUsername = (username, setError) => {
 };
 
 const checkContractDeployment = async (provider, address) => {
-  const code = await provider.getCode(address);
-  return code !== '0x';
+  try {
+    const code = await provider.getCode(address);
+    console.log('Contract code:', code); // Log the code retrieved for debugging
+    return code !== '0x';
+  } catch (error) {
+    console.error('Error checking contract deployment:', error);
+    return false;
+  }
 };
 
 const switchToAvalancheFuji = async () => {
@@ -98,6 +104,7 @@ export const validation = async (router, username, setError) => {
       console.log('Signer obtained:', signer);
 
       const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
+      console.log('Checking contract deployment at address:', contractAddress);
       const isContractDeployed = await checkContractDeployment(provider, contractAddress);
 
       if (!isContractDeployed) {
