@@ -28,7 +28,7 @@ const switchToAvalancheFuji = async () => {
     console.log('Attempting to switch to Avalanche Fuji C-Chain...');
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xa869' }],
+      params: [{ chainId: '0xa869' }], // Correct hexadecimal chain ID for Avalanche Fuji
     });
     console.log('Switched to Avalanche Fuji C-Chain successfully.');
   } catch (switchError) {
