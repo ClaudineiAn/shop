@@ -18,83 +18,84 @@ export const validateUsername = (username, setError) => {
   }
 };
 
+const rpcUrls = [
+  'https://api.avax-test.network/ext/bc/C/rpc',   // Primary RPC URL
+  'https://another-avax-rpc-url.ext',            // Alternative RPC URL 1
+  'https://yet-another-avax-rpc-url.ext',        // Alternative RPC URL 2
+  // Add more RPC URLs as needed
+];
+
+let currentRpcIndex = 0;
+
+const switchRpcProvider = async () => {
+  currentRpcIndex = (currentRpcIndex + 1) % rpcUrls.length;
+  const newRpcUrl = rpcUrls[currentRpcIndex];
+  console.log(`Switching to new RPC: ${newRpcUrl}`);
+
+  try {
+    const provider = new ethers.BrowserProvider(new ethers.providers.JsonRpcProvider(newRpcUrl));
+    return provider;
+  } catch (error) {
+    console.error('Failed to switch RPC:', error);
+    if (currentRpcIndex < rpcUrls.length) {
+      return switchRpcProvider();  // Retry with the next RPC
+    } else {
+      throw new Error('All RPCs failed.');
+    }
+  }
+};
+
 const checkContractDeployment = async (provider, address) => {
   const code = await provider.getCode(address);
   return code !== '0x';
 };
 
-// Define available networks
-const networks = [
-  {
-    chainId: '0xa869', // Avalanche Fuji C-Chain
-    chainName: 'Avalanche Fuji C-Chain',
-    rpcUrl: 'https://api.avax-test.network/ext/bc/C/rpc',
-    blockExplorerUrl: 'https://testnet.snowtrace.io'
-  },
-  {
-    chainId: '0x5', // Goerli Testnet (as an example)
-    chainName: 'Goerli Testnet',
-    rpcUrl: 'https://goerli.infura.io/v3/YOUR_INFURA_PROJECT_ID',
-    blockExplorerUrl: 'https://goerli.etherscan.io'
-  },
-  // Add more networks as needed
-];
+const switchToAvalanche = async () => {
+  const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
+  const avalancheChainName = 'Avalanche Fuji C-Chain';
 
-// Function to switch to a network
-const switchToNetwork = async (network) => {
+  console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
+
   try {
-    console.log(`Attempting to switch to ${network.chainName}...`);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: network.chainId }],
+      params: [{ chainId: avalancheChainId }],
     });
-    console.log(`Switched to ${network.chainName} successfully.`);
-    return true;
+    console.log(`Switched to ${avalancheChainName} successfully.`);
   } catch (switchError) {
-    console.error(`Error switching to ${network.chainName}:`, switchError);
+    console.error(`Error switching to ${avalancheChainName}:`, switchError);
 
     if (switchError.code === 4902) {
       try {
-        console.log(`Adding ${network.chainName} to MetaMask...`);
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: network.chainId,
-              chainName: network.chainName,
-              rpcUrls: [network.rpcUrl],
-              blockExplorerUrls: [network.blockExplorerUrl],
-            },
-          ],
+          params: [{
+            chainId: avalancheChainId,
+            chainName: avalancheChainName,
+            rpcUrls: [rpcUrls[currentRpcIndex]],
+            blockExplorerUrls: ['https://testnet.snowtrace.io'],
+            nativeCurrency: {
+              name: 'Avalanche Fuji C-Chain',
+              symbol: 'AVAX',
+              decimals: 18,
+            }
+          }],
         });
-        console.log(`Added and switched to ${network.chainName} successfully.`);
-        return true;
+        console.log(`Added and switched to ${avalancheChainName} successfully.`);
       } catch (addError) {
-        console.error(`Failed to add ${network.chainName} to MetaMask:`, addError);
-        return false;
+        if (addError.code === -32002) {
+          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
+          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
+        } else {
+          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
+          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
+        }
       }
-    } else if (switchError.code === -32002) {
-      console.error(`A request to add or switch to ${network.chainName} is already pending. Please check MetaMask.`);
-      alert(`A request to add or switch to ${network.chainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
-      return false;
     } else {
-      console.error(`Failed to switch to ${network.chainName}:`, switchError);
-      alert(`Failed to switch to ${network.chainName}. Please try again.`);
-      return false;
+      console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
+      alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
     }
   }
-};
-
-// Function to switch to an available network if the current one fails
-const switchToAvailableNetwork = async () => {
-  for (const network of networks) {
-    const success = await switchToNetwork(network);
-    if (success) {
-      return;
-    }
-  }
-  console.error('No available networks could be switched to.');
-  alert('Failed to switch to any available networks. Please check your MetaMask or network settings.');
 };
 
 export const validation = async (router, username, setError) => {
@@ -107,22 +108,23 @@ export const validation = async (router, username, setError) => {
 
   if (typeof window.ethereum !== 'undefined') {
     console.log('Ethereum is defined. Starting network switch...');
-    await switchToAvailableNetwork(); // Attempt to switch to an available network
+    await switchToAvalanche();
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
-    const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
-
-    console.log('Checking contract deployment...');
-    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-    if (!isContractDeployed) {
-      console.error('Contract not deployed at this address.');
-      await router.push('/access?error=Contract not deployed at this address.');
-      return;
-    }
-
-    console.log('Contract is deployed. Requesting accounts...');
+    let provider;
     try {
+      provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
+
+      console.log('Checking contract deployment...');
+      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+      if (!isContractDeployed) {
+        console.error('Contract not deployed at this address.');
+        await router.push('/access?error=Contract not deployed at this address.');
+        return;
+      }
+
+      console.log('Contract is deployed. Requesting accounts...');
       await provider.send('eth_requestAccounts', []);
 
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
@@ -154,7 +156,16 @@ export const validation = async (router, username, setError) => {
       }
     } catch (error) {
       console.error('Validation error:', error);
-      await router.push('/access?error=' + error.message);
+
+      // Check if the error is related to the RPC and try switching
+      if (error.message.includes('Internal JSON-RPC error')) {
+        console.log('Switching RPC due to error...');
+        provider = await switchRpcProvider();
+        // Retry validation with the new provider
+        return validation(router, username, setError);
+      } else {
+        await router.push('/access?error=' + error.message);
+      }
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
