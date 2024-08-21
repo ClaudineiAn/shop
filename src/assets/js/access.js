@@ -53,6 +53,8 @@ const checkContractDeployment = async (provider, address) => {
 const switchToAvalanche = async () => {
   const avalancheChainId = '0xa869'; // Avalanche Fuji C-Chain
   const avalancheChainName = 'Avalanche Fuji C-Chain';
+  const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
+  const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
 
   console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
@@ -65,32 +67,30 @@ const switchToAvalanche = async () => {
   } catch (switchError) {
     console.error(`Error switching to ${avalancheChainName}:`, switchError);
 
-    if (switchError.code === 4902) {
+    if (switchError.code === 4902) { // Chain not added
       try {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
             chainId: avalancheChainId,
             chainName: avalancheChainName,
-            rpcUrls: [rpcUrls[0]], // Use the primary RPC URL for adding the chain
-            blockExplorerUrls: ['https://testnet.snowtrace.io'],
+            rpcUrls: [avalancheRpcUrl],
+            blockExplorerUrls: [avalancheBlockExplorerUrl],
             nativeCurrency: {
-              name: 'Avalanche Fuji C-Chain',
+              name: 'Avalanche',
               symbol: 'AVAX',
               decimals: 18,
-            }
+            },
           }],
         });
         console.log(`Added and switched to ${avalancheChainName} successfully.`);
       } catch (addError) {
-        if (addError.code === -32002) {
-          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
-          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
-        } else {
-          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
-          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
-        }
+        console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
+        alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
       }
+    } else if (switchError.code === -32002) { // Request pending
+      console.error(`A request to switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
+      alert(`A request to switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
     } else {
       console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
       alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
