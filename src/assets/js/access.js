@@ -19,13 +19,8 @@ export const validateUsername = (username, setError) => {
 };
 
 const checkContractDeployment = async (provider, address) => {
-  try {
-    const code = await provider.getCode(address);
-    return code !== '0x';
-  } catch (error) {
-    console.error('Error checking contract deployment:', error);
-    throw error;
-  }
+  const code = await provider.getCode(address);
+  return code !== '0x';
 };
 
 const switchToAvalanche = async () => {
@@ -37,6 +32,7 @@ const switchToAvalanche = async () => {
   console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
   try {
+    console.log(`Attempting to switch to ${avalancheChainName}...`);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: avalancheChainId }],
@@ -45,8 +41,9 @@ const switchToAvalanche = async () => {
   } catch (switchError) {
     console.error(`Error switching to ${avalancheChainName}:`, switchError);
 
-    if (switchError.code === 4902) { // Chain not added
+    if (switchError.code === 4902) {
       try {
+        console.log(`Adding ${avalancheChainName}...`);
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
@@ -54,21 +51,18 @@ const switchToAvalanche = async () => {
             chainName: avalancheChainName,
             rpcUrls: [avalancheRpcUrl],
             blockExplorerUrls: [avalancheBlockExplorerUrl],
-            nativeCurrency: {
-              name: 'Avalanche',
-              symbol: 'AVAX',
-              decimals: 18,
-            },
           }],
         });
-        console.log(`Added and switched to ${avalancheChainName} successfully.`);
+        console.log(`Added ${avalancheChainName} successfully.`);
       } catch (addError) {
-        console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
-        alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
+        if (addError.code === -32002) {
+          console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
+          alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
+        } else {
+          console.error(`Failed to add ${avalancheChainName} to MetaMask:`, addError);
+          alert(`Failed to add ${avalancheChainName} to MetaMask. Please try again.`);
+        }
       }
-    } else if (switchError.code === -32002) { // Request pending
-      console.error(`A request to switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
-      alert(`A request to switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
     } else {
       console.error(`Failed to switch to ${avalancheChainName}:`, switchError);
       alert(`Failed to switch to ${avalancheChainName}. Please try again.`);
@@ -88,22 +82,28 @@ export const validation = async (router, username, setError) => {
     console.log('Ethereum is defined. Starting network switch...');
     await switchToAvalanche();
 
-    const provider = new ethers.BrowserProvider(window.ethereum);
-    const signer = await provider.getSigner();
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
     const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
-    const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
     console.log('Checking contract deployment...');
-    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-    if (!isContractDeployed) {
-      console.error('Contract not deployed at this address.');
-      await router.push('/access?error=Contract not deployed at this address.');
+    try {
+      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+      if (!isContractDeployed) {
+        console.error('Contract not deployed at this address.');
+        await router.push('/access?error=Contract not deployed at this address.');
+        return;
+      }
+    } catch (error) {
+      console.error('Error during contract deployment check:', error);
+      await router.push('/access?error=' + error.message);
       return;
     }
 
     console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
+      const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
       console.log('Fetching accounts...');
       const accounts = await provider.listAccounts();
@@ -118,9 +118,11 @@ export const validation = async (router, username, setError) => {
         console.log('Registered username:', registeredUsername);
 
         if (!registeredUsername) {
+          // User is not registered; proceed to register
+          console.log('User is not registered. Registering now...');
           if (confirm('You are about to create a new account. Is this what you would like?')) {
             const tx = await userAuthContract.register(username);
-            await tx.wait();
+            await tx.wait(); // Wait for the transaction to be mined
             const logged = await makeLog(username);
             if (logged === 200) {
               await router.push('/');
@@ -132,35 +134,12 @@ export const validation = async (router, username, setError) => {
           }
         }
       } catch (contractError) {
-        // Handle error where user is not registered
         console.error('Error fetching registered username:', contractError);
-
-        if (contractError.message.includes('User not registered')) {
-          // Register the user if not registered
-          try {
-            if (confirm('You are about to create a new account. Is this what you would like?')) {
-              const tx = await userAuthContract.register(username);
-              await tx.wait();
-              const logged = await makeLog(username);
-              if (logged === 200) {
-                await router.push('/');
-              } else {
-                await router.push('/access?error=' + logged);
-              }
-            } else {
-              setusernameError('Invalid user.', setError);
-            }
-          } catch (registerError) {
-            console.error('Error registering user:', registerError);
-            await router.push('/access?error=' + registerError.message);
-          }
-        } else {
-          await router.push('/access?error=' + contractError.message);
-        }
+        await router.push('/access?error=' + contractError.message);
       }
-    } catch (error) {
-      console.error('Validation error:', error);
-      await router.push('/access?error=' + error.message);
+    } catch (providerError) {
+      console.error('Error requesting accounts:', providerError);
+      await router.push('/access?error=' + providerError.message);
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
