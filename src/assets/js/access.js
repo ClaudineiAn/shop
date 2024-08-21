@@ -18,33 +18,6 @@ export const validateUsername = (username, setError) => {
   }
 };
 
-const rpcUrls = [
-  'https://api.avax-test.network/ext/bc/C/rpc',   // Primary RPC URL (Avalanche Fuji C-Chain)
-  'https://avax.cobo.com',                       // Cobo RPC URL (Mainnet)
-  'https://avax.network/ext/bc/C/rpc',           // Another RPC URL (Testnet)
-  // Add more RPC URLs as needed
-];
-
-let currentRpcIndex = 0;
-
-const switchRpcProvider = async () => {
-  currentRpcIndex = (currentRpcIndex + 1) % rpcUrls.length;
-  const newRpcUrl = rpcUrls[currentRpcIndex];
-  console.log(`Switching to new RPC: ${newRpcUrl}`);
-
-  try {
-    const provider = new ethers.providers.JsonRpcProvider(newRpcUrl);
-    return provider;
-  } catch (error) {
-    console.error('Failed to switch RPC:', error);
-    if (currentRpcIndex < rpcUrls.length) {
-      return switchRpcProvider();  // Retry with the next RPC
-    } else {
-      throw new Error('All RPCs failed.');
-    }
-  }
-};
-
 const checkContractDeployment = async (provider, address) => {
   const code = await provider.getCode(address);
   return code !== '0x';
@@ -110,21 +83,20 @@ export const validation = async (router, username, setError) => {
     console.log('Ethereum is defined. Starting network switch...');
     await switchToAvalanche();
 
-    let provider;
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
+
+    console.log('Checking contract deployment...');
+    const isContractDeployed = await checkContractDeployment(provider, contractAddress);
+    if (!isContractDeployed) {
+      console.error('Contract not deployed at this address.');
+      await router.push('/access?error=Contract not deployed at this address.');
+      return;
+    }
+
+    console.log('Contract is deployed. Requesting accounts...');
     try {
-      provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
-      const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
-
-      console.log('Checking contract deployment...');
-      const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-      if (!isContractDeployed) {
-        console.error('Contract not deployed at this address.');
-        await router.push('/access?error=Contract not deployed at this address.');
-        return;
-      }
-
-      console.log('Contract is deployed. Requesting accounts...');
       await provider.send('eth_requestAccounts', []);
 
       const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
@@ -136,37 +108,22 @@ export const validation = async (router, username, setError) => {
         return;
       }
 
-      // **Switch RPC before fetching the username**
-      try {
-        provider = await switchRpcProvider();
-        console.log('Switched RPC. Fetching registered username...');
-        const registeredUsername = await userAuthContract.getUser();
-        console.log('Registered username:', registeredUsername);
+      console.log('Accounts found. Fetching registered username...');
+      const registeredUsername = await userAuthContract.getUser();
+      console.log('Registered username:', registeredUsername);
 
-        if (!registeredUsername) {
-          if (confirm('You are about to create a new account. Is this what you would like?')) {
-            const tx = await userAuthContract.register(username);
-            await tx.wait();
-            const logged = await makeLog(username);
-            if (logged === 200) {
-              await router.push('/');
-            } else {
-              await router.push('/access?error=' + logged);
-            }
+      if (!registeredUsername) {
+        if (confirm('You are about to create a new account. Is this what you would like?')) {
+          const tx = await userAuthContract.register(username);
+          await tx.wait();
+          const logged = await makeLog(username);
+          if (logged === 200) {
+            await router.push('/');
           } else {
-            setusernameError('Invalid user.', setError);
+            await router.push('/access?error=' + logged);
           }
-        }
-      } catch (error) {
-        console.error('Validation error:', error);
-
-        if (error.message.includes('Internal JSON-RPC error')) {
-          console.log('Switching RPC due to error...');
-          provider = await switchRpcProvider();
-          // Retry fetching the registered username with the new provider
-          return validation(router, username, setError);
         } else {
-          await router.push('/access?error=' + error.message);
+          setusernameError('Invalid user.', setError);
         }
       }
     } catch (error) {
