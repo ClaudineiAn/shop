@@ -28,7 +28,7 @@ const switchToAvalancheFuji = async () => {
     console.log('Attempting to switch to Avalanche Fuji C-Chain...');
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xA869' }],
+      params: [{ chainId: '0xa869' }],
     });
     console.log('Switched to Avalanche Fuji C-Chain successfully.');
   } catch (switchError) {
@@ -41,7 +41,7 @@ const switchToAvalancheFuji = async () => {
           method: 'wallet_addEthereumChain',
           params: [
             {
-              chainId: '0xA869',
+              chainId: '0xa869',
               chainName: 'Avalanche Fuji C-Chain',
               nativeCurrency: {
                 name: 'Avalanche',
@@ -57,7 +57,7 @@ const switchToAvalancheFuji = async () => {
         console.log('Added Avalanche Fuji C-Chain. Attempting to switch...');
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0xA869' }],
+          params: [{ chainId: '0xa869' }],
         });
         console.log('Switched to Avalanche Fuji C-Chain successfully.');
       } catch (addError) {
