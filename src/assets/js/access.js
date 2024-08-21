@@ -27,10 +27,9 @@ const switchToAvalancheFuji = async () => {
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xA869' }], // Chain ID 43113 in hexadecimal
+      params: [{ chainId: '0xA869' }],
     });
   } catch (switchError) {
-    // This error code indicates that the chain has not been added to MetaMask.
     if (switchError.code === 4902) {
       try {
         await window.ethereum.request({
@@ -49,11 +48,21 @@ const switchToAvalancheFuji = async () => {
             },
           ],
         });
+
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: '0xA869' }],
+        });
+
       } catch (addError) {
-        console.error('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
+        if (addError.code === -32002) {
+          console.log('Request to add or switch the network is already pending. Please check MetaMask.');
+        } else {
+          console.log('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
+        }
       }
     } else {
-      console.error('Failed to switch to Avalanche Fuji C-Chain:', switchError);
+      console.log('Failed to switch to Avalanche Fuji C-Chain:', switchError);
     }
   }
 };
