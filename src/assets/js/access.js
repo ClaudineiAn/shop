@@ -29,10 +29,9 @@ const switchToAvalanche = async () => {
   const avalancheRpcUrl = 'https://api.avax-test.network/ext/bc/C/rpc';
   const avalancheBlockExplorerUrl = 'https://testnet.snowtrace.io';
 
-  console.log(`Switching to ${avalancheChainName} with chainId ${avalancheChainId}...`);
+  console.log(`Attempting to switch to ${avalancheChainName} with chainId ${avalancheChainId}...`);
 
   try {
-    console.log(`Attempting to switch to ${avalancheChainName}...`);
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: avalancheChainId }],
@@ -41,16 +40,32 @@ const switchToAvalanche = async () => {
   } catch (switchError) {
     console.error(`Error switching to ${avalancheChainName}:`, switchError);
 
-    if (switchError.code === 4902) {
+    if (switchError.code === 4902) { // Chain not added
       try {
-        console.log(`Switch to ${avalancheChainId}.`);
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: avalancheChainId,
+              chainName: avalancheChainName,
+              nativeCurrency: {
+                name: 'Avalanche',
+                symbol: 'AVAX', // Symbol for Avalanche
+                decimals: 18,
+              },
+              rpcUrls: [avalancheRpcUrl],
+              blockExplorerUrls: [avalancheBlockExplorerUrl],
+            },
+          ],
+        });
+        console.log(`Added ${avalancheChainName}. Attempting to switch...`);
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: avalancheChainId }],
         });
         console.log(`Switched to ${avalancheChainName} successfully.`);
       } catch (addError) {
-        if (addError.code === -32002) {
+        if (addError.code === -32002) { // Pending request
           console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
           alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
         } else {
