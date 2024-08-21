@@ -25,13 +25,15 @@ const checkContractDeployment = async (provider, address) => {
 
 const switchToAvalancheFuji = async () => {
   try {
+    // Attempt to switch to the Avalanche Fuji C-Chain network
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0xA869' }],
+      params: [{ chainId: '0xA869' }], // 0xA869 is the chain ID for Avalanche Fuji C-Chain
     });
   } catch (switchError) {
     if (switchError.code === 4902) {
       try {
+        // Add the Avalanche Fuji C-Chain network to MetaMask
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [
@@ -49,6 +51,7 @@ const switchToAvalancheFuji = async () => {
           ],
         });
 
+        // After adding, switch to the newly added network
         await window.ethereum.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: '0xA869' }],
@@ -56,13 +59,16 @@ const switchToAvalancheFuji = async () => {
 
       } catch (addError) {
         if (addError.code === -32002) {
-          console.log('Request to add or switch the network is already pending. Please check MetaMask.');
+          console.error('A request to add or switch to the network is already pending. Please check MetaMask.');
+          alert('A request to add the Avalanche Fuji C-Chain is already pending in MetaMask. Please open MetaMask and complete the request.');
         } else {
-          console.log('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
+          console.error('Failed to add Avalanche Fuji C-Chain to MetaMask:', addError);
+          alert('Failed to add Avalanche Fuji C-Chain to MetaMask. Please try again.');
         }
       }
     } else {
-      console.log('Failed to switch to Avalanche Fuji C-Chain:', switchError);
+      console.error('Failed to switch to Avalanche Fuji C-Chain:', switchError);
+      alert('Failed to switch to Avalanche Fuji C-Chain. Please try again.');
     }
   }
 };
@@ -73,45 +79,24 @@ export const validation = async (router, username, setError) => {
     return;
   }
 
-  console.log(0);
-  if (typeof window.ethereum !== 'undefined') {
-    try {
-      console.log('Creating provider...');
+  console.log('Requesting accounts...');
+  try {
+    if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.BrowserProvider(window.ethereum);
 
-      console.log('Requesting accounts...');
-      try {
-        await provider.send('eth_requestAccounts', []);
-      } catch (error) {
-        console.error('Error requesting accounts:', error);
-        await router.push('/access?error=Error requesting accounts. ' + error.message);
-        return;
-      }
+      // Ensure the user is connected to the correct network
+      await switchToAvalancheFuji();
 
-      console.log('Getting signer...');
-      let signer;
-      try {
-        signer = await provider.getSigner();
-        console.log('Signer obtained:', signer);
-      } catch (err) {
-        console.error('Error getting signer:', err);
-        await router.push('/access?error=Error getting signer. ' + err.message);
-        return;
-      }
+      // Request user accounts
+      await provider.send('eth_requestAccounts', []);
+      console.log('Accounts requested successfully');
 
-      console.log('Checking network...');
-      const network = await provider.getNetwork();
-      console.log('Connected to network:', network.name);
-      if (network.chainId !== 43113) {  // Avalanche Fuji C-Chain chainId
-        console.error('Incorrect network. Switching to Avalanche Fuji C-Chain...');
-        await switchToAvalancheFuji(); // Call the function to switch the network
-        return;
-      }
+      const signer = await provider.getSigner();
+      console.log('Signer obtained:', signer);
 
-      console.log('Checking contract deployment...');
       const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
       const isContractDeployed = await checkContractDeployment(provider, contractAddress);
-      
+
       if (!isContractDeployed) {
         console.error('Contract not deployed at this address.');
         await router.push('/access?error=Contract not deployed at this address.');
@@ -127,7 +112,7 @@ export const validation = async (router, username, setError) => {
         await router.push('/access?error=No accounts found. Please login to MetaMask.');
         return;
       }
-      
+
       console.log('Getting registered username...');
       const registeredUsername = await userAuthContract.getUser();
       console.log('Registered username:', registeredUsername);
@@ -147,12 +132,12 @@ export const validation = async (router, username, setError) => {
           setusernameError('Invalid user.', setError);
         }
       }
-    } catch (error) {
-      console.error('Validation error:', error);
-      await router.push('/access?error=' + error.message);
+    } else {
+      document.querySelector(".overlay").style.display = "flex";
     }
-  } else {
-    document.querySelector(".overlay").style.display = "flex";
+  } catch (error) {
+    console.error('Error during validation:', error);
+    await router.push('/access?error=Error during validation. ' + error.message);
   }
 };
 
