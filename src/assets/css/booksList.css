@@ -1,0 +1,786 @@
+#booksList{}
+#booksList > div{
+  display: none;
+}
+#booksList > div.active {
+  display: flex;
+}
+#booksList > div > div{
+  display: flex;
+  margin: auto 5vw;
+}
+#booksList > div > div:nth-child(2) > img{
+  max-width: 300px;
+}
+#booksList > div > div:first-child{
+  display: flex;
+  flex-direction: column;
+  margin-right: 0;
+  color: #F8EB6B;
+}
+#booksList > div > div:first-child > h2{
+  font-size: 3vw;
+  position: relative;
+  opacity: 1;
+  transform: translateX(0);
+  animation: loadfadeleft 2s;
+}
+#booksList > div > div:first-child > h2.out{
+  animation: onloadfadeleft 3s;
+}
+#booksList > div > div:first-child > div:nth-child(2){
+  margin: 5vh 0;
+  font-size: 1.6vw;
+  overflow: auto;
+  height: 12vw;
+  opacity: 1;
+  transform: translateX(0);
+  animation: loadfadeleftfase2 2s;
+}
+#booksList > div > div:first-child > div.out:nth-child(2){
+  animation: onloadfadeleftfase2 2s;
+}
+@keyframes loadfadeleft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes loadfadeleftfase2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes loadfadeleftfase3 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  66% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes loadfaderight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes loadfadeup {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes loadfadeupfase2 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes loadfadeupfase3 {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  66% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes loadfadedown {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+@keyframes loadfadedownfase2 {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+@keyframes navBook1 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook2 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  50% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook3 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  66% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook4 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  75% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook5 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  80% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook6 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  83% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook7 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  85% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook8 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  87.5% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook9 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  88.8% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navBook10 {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  90% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes onloadfadeleft {
+  33% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes onloadfadeleftfase2 {
+  50% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes onloadfadeleftfase3 {
+  66% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes onloadfaderight {
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes onloadfadeup {
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes onloadfadeupfase2 {
+  50% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes onloadfadeupfase3 {
+  66% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+@keyframes onloadfadedown {
+  100% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+@keyframes onloadfadedownfase2 {
+  50% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}
+@keyframes navoutBook1 {
+  3% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook2 {
+  3% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  6% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook3 {
+  6% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  9% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook4 {
+  9% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  12% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook5 {
+  12% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  15% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook6 {
+  15% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  18% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook7 {
+  18% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  21% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook8 {
+  21% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  24% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook9 {
+  24% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  27% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+@keyframes navoutBook10 {
+  27% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  30% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+#booksList > div > div:first-child > div:last-child{
+  display: flex;
+  margin: 1vw 0;
+}
+#booksList > div > div:first-child > div:last-child > div:first-child{
+  font-size: 4vw;
+  position: relative;
+  animation: loadfadeleftfase3 3s;
+}
+#booksList > div > div:first-child > div:last-child > div:first-child:before {
+  content: attr(data-price);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: gold;
+  overflow: hidden;
+  background: linear-gradient(to right, #F8EB6B, #453100, #0F0F02, #453100, #F8EB6B), #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: categoryAnime 3s ease-in-out infinite;
+  background-size: 200% auto;
+  background-position: left;
+  cursor: pointer;
+}
+#booksList > div > div:first-child > div:last-child > div.out:first-child{
+  animation: onloadfadeleftfase3 3s;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2){
+  display: flex;
+  margin: auto 2vw auto auto;
+  border-radius: 20px;
+  width: 45px;
+  height: 45px;
+  justify-content: center;
+  background: #0000004d;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > button{
+  display: flex;
+  width: 45px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div{
+  display: none;
+  border-radius: 2vw;
+  position: absolute;
+  background: linear-gradient(to bottom left, #F8EB6B 20%, #453100e3 70%, #F8EB6B 150%), #fff;
+  padding: 1vw;
+  margin-top: -12vw;
+  z-index: 1;
+  font-size: 1.2vw;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div.show{
+  display: block;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:first-child{
+  display: flex;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:first-child > span{
+  margin-left: auto;
+  width: 3vw;
+  height: 3vw;
+  font-size: 1.9vw;
+  cursor: pointer;
+  background: black;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  opacity: 0.9;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:last-child{
+  display: flex;
+  align-items: center;
+  margin-top: 0.1vw;
+}
+
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:last-child > div:first-child{
+  background: #00000094;
+  padding: 8px 11px;
+  border-radius: 10px;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:last-child > div:last-child{
+  display: flex;
+  border-radius: 20px;
+  width: 6vw;
+  height: 5vw;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.3vw;
+  cursor: pointer;
+}
+#booksList > div > div:first-child > div:last-child > div:nth-child(2) > div > div:last-child > div:last-child{
+  width: 3.5vw;
+}
+#booksList > div > div:first-child > div:last-child > div:last-child{
+  margin: auto 2vw auto 0;
+  opacity: 1;
+  transform: translateY(0);
+  animation: loadfadedownfase2 2s;
+}
+#booksList > div > div:first-child > div:last-child > div.out:last-child{
+  animation: onloadfadedownfase2 2s;
+}
+#booksList > div > div:first-child > div:last-child > div:last-child > a{}
+#booksList > div > div:first-child > div:last-child > div:last-child > a > button{
+  display: flex;
+  align-items: center;
+  color: #F8EB6B;
+  background: transparent;
+  border: 2px solid #F8EB6B;
+  border-radius: 0;
+  padding: 0 1vw 0 0;
+  font-size: 1.4vw;
+}
+#booksList > div > div:first-child > div:last-child > div:last-child > a svg{
+  width: 40px;
+  height: 30px;
+  position: relative;
+  top: -3px;
+  left: -5px;
+}
+#booksList > div > div:first-child > div:last-child > div:last-child > a hr{
+  margin-left: -0.3vw;
+}
+#booksList > div > div:last-child{
+  width: 24vw;
+  height: 35vw;
+}
+#booksList > div > div:last-child > img{
+  height: inherit;
+}
+#booksList > div > div:last-child > div{
+  position: relative;
+  top: -509px;
+  left: -4px;
+  overflow: hidden;
+  width: calc(100% + 7px);
+  height: 100%;
+  z-index: -1;
+}
+#booksList > div > div:last-child > div:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    height: 3px;
+    margin: 0;
+    background: #F8EB6B;
+    border-image-slice: 1;
+    animation: imgBorder 10s linear infinite;
+}
+@keyframes imgBorder {
+  14.2% {
+    height: 6px;
+    margin-left: 50%;
+    width: 100%;
+    margin-top: 0px;
+  }
+  28.4% {
+    margin-top: 0;
+    margin-left: calc(100% - 6px);
+    width: calc(100% + 3px);
+    height: calc(100% + -2px);
+  }
+  42.6% {
+    margin-top: 70%;
+    margin-left: 50%;
+    width: 50%;
+    height: calc(100% + 2px);
+  }
+  56.8% {
+    margin-top: 151%;
+    margin-left: calc(0% - 3px);
+    width: calc(100% + 3px);
+  }
+  71% {
+    margin-top: 50%;
+    width: calc(50% + 3px);
+    height: 100%;
+    margin-left: 1px;
+  }
+  85.2% {
+    height: 100%;
+    margin-left: 1px;
+    width: 6px;
+    margin-top: -2px;
+  }
+  99.4% {
+    height: 3px;
+    margin-left: 1px;
+    width: 6px;
+    margin-top: 4px;
+  }
+}
+#booksList > div:last-child{
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: calc(98.3% - 24px);
+  height: 100%;
+}
+#booksList > div > ul{
+  margin: auto;
+}
+#booksList > div > ul > div{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin: 14px;
+}
+#booksList > div > ul > div > li{
+  background: #F8EB6B;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  list-style-type: none;
+  background: linear-gradient(to right, #F8EB6B, #453100, #F8EB6B), #fff;
+  background-size: 200% auto;
+  cursor: pointer;
+  transition: .7s cubic-bezier(0, 0.74, 1, 1.45);
+  opacity: 1;
+  transform: translateX(0);
+}
+#booksList > div > ul > div > li.active{
+  height: 60px;
+}
+#booksList > div > ul > div > li.active > span.show{
+  opacity: 0;
+}
+#booksList > div > ul > div > li.active > span{
+  display: block;
+  position: relative;
+  top: 17px;
+  left: -15px;
+  color: #F8EB6B;
+  width: 20px;
+}
+#booksList > div > ul > div:first-child > li{
+  animation: navBook1 .1s;
+}
+#booksList > div > ul > div:nth-child(2) > li{
+  animation: navBook2 .2s;
+}
+#booksList > div > ul > div:nth-child(3) > li{
+  animation: navBook3 .3s;
+}
+#booksList > div > ul > div:nth-child(4) > li{
+  animation: navBook4 .4s;
+}
+#booksList > div > ul > div:nth-child(5) > li{
+  animation: navBook5 .5s;
+}
+#booksList > div > ul > div:nth-child(6) > li{
+  animation: navBook6 .6s;
+}
+#booksList > div > ul > div:nth-child(7) > li{
+  animation: navBook7 .7s;
+}
+#booksList > div > ul > div:nth-child(8) > li{
+  animation: navBook8 .8s;
+}
+#booksList > div > ul > div:nth-child(9) > li{
+  animation: navBook9 .9s;
+}
+#booksList > div > ul > div:nth-child(10) > li{
+  animation: navBook10 1s;
+}
+#booksList > div > ul > div:first-child > li.out{
+  animation: navoutBook1 3s;
+}
+#booksList > div > ul > div:nth-child(2) > li.out{
+  animation: navoutBook2 3s;
+}
+#booksList > div > ul > div:nth-child(3) > li.out{
+  animation: navoutBook3 3s;
+}
+#booksList > div > ul > div:nth-child(4) > li.out{
+  animation: navoutBook4 3s;
+}
+#booksList > div > ul > div:nth-child(5) > li.out{
+  animation: navoutBook5 3s;
+}
+#booksList > div > ul > div:nth-child(6) > li.out{
+  animation: navoutBook6 3s;
+}
+#booksList > div > ul > div:nth-child(7) > li.out{
+  animation: navoutBook7 3s;
+}
+#booksList > div > ul > div:nth-child(8) > li.out{
+  animation: navoutBook8 3s;
+}
+#booksList > div > ul > div:nth-child(9) > li.out{
+  animation: navoutBook9 3s;
+}
+#booksList > div > ul > div:nth-child(10) > li.out{
+  animation: navoutBook10 3s;
+}
+#booksList > div > ul > div > svg{
+  display: none;
+  position: absolute;
+  left: -10px;
+  width: 21px;
+  cursor: pointer;
+  z-index: 1;
+}
+#booksList > div > ul > div > svg.show{
+  display: flex;
+}
+#booksList > div > ul > div > div{
+  display: flex;
+  position: absolute;
+  margin: 1px 36px 1px 0;
+  padding: 4px;
+  background: white;
+  opacity: 0;
+}
+#booksList > div > ul > div > div.show{
+  opacity: 1;
+}
+#booksList > div > ul > div > div > img{
+  width: 50px;
+}
+.fadeout{
+  transform: translateX(100px);
+  opacity: 0;
+  transition: 1s;
+}
+.fadein{
+  transform: translateX(-100px);
+  opacity: 1;
+  transition: 1s;
+}
+@media (max-width: 500px) {
+  #booksList > div > div:first-child > div:last-child > div:last-child > a > button {
+    font-size: 10px;
+  }
+}
+
+@media (orientation: portrait) {
+  #booksList > div {
+    flex-direction: column-reverse;
+  }
+  #booksList > div > div:first-child {
+    margin-right: 5vw;
+  }
+  #booksList > div > div:last-child {
+    width: auto;
+    height: 65vw;
+    margin: 3vw auto;
+    display: block;
+  }
+}
