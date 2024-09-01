@@ -99,7 +99,7 @@ export const validation = async (router, username, setError) => {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const contractAddress = "0x2f9Ce96F9A899363D061096BBA3e81B67d977aE8";
+    const contractAddress = "0xaC5c3B47aD0A30e7aeB9B90683eB3c7E1ECC08f0";
 
     console.log('Checking contract deployment...');
     try {
