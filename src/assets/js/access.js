@@ -130,7 +130,6 @@ export const validation = async (router, username, setError) => {
       }
 
       console.log('Accounts found. Fetching registered username...');
-      try {
         const registeredUsername = await userAuthContract.getUser();
         console.log('Registered username:', registeredUsername);
 
@@ -148,27 +147,7 @@ export const validation = async (router, username, setError) => {
           } else {
             setusernameError('Invalid user.', setError);
           }
-        }
-      } catch (contractError) {
-        if (contractError.code === -32603) {
-          console.log('User is not registered. Registering now...');
-          if (confirm('You are about to create a new account. Is this what you would like?')) {
-            const tx = await userAuthContract.register(username);
-            await tx.wait();
-            const logged = await makeLog(username);
-            if (logged === 200) {
-              await router.push('/');
-            } else {
-              await router.push('/access?error=' + logged);
-            }
-          } else {
-            setusernameError('Invalid user.', setError);
-          }
-        } else {
-          console.error('Error fetching registered username:', contractError);
-          await router.push('/access?error=' + contractError.message);
-        }
-      }
+        
     } catch (providerError) {
       console.error('Error requesting accounts:', providerError);
       await router.push('/access?error=' + providerError.message);
