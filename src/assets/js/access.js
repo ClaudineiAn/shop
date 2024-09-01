@@ -74,8 +74,6 @@ const switchToAvalanche = async () => {
         console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
         alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
         return;
-      } else {
-        console.error(`Unhandled error code ${switchError.code}:`, switchError);
       }
     }
 
@@ -101,7 +99,8 @@ export const validation = async (router, username, setError) => {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const contractAddress = "0xaC5c3B47aD0A30e7aeB9B90683eB3c7E1ECC08f0";
+    const contractAddress = "0x3534F7a7287709d9486Baa76F0B80fa41529E4d8";
+    const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
     console.log('Checking contract deployment...');
     try {
@@ -113,15 +112,14 @@ export const validation = async (router, username, setError) => {
       }
     } catch (error) {
       console.error('Error during contract deployment check:', error);
-      await router.push('/access?error=' + error.message);
+      await router.push('/access?error=' + encodeURIComponent(error.message));
       return;
     }
 
     console.log('Contract is deployed. Requesting accounts...');
     try {
       await provider.send('eth_requestAccounts', []);
-      const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
-
+      
       console.log('Fetching accounts...');
       const accounts = await provider.listAccounts();
       if (!accounts || accounts.length === 0) {
@@ -129,28 +127,28 @@ export const validation = async (router, username, setError) => {
         return;
       }
 
-      console.log('Accounts found. Fetching registered username...');
-		const registeredUsername = await userAuthContract.getUser();
-		console.log('Registered username:', registeredUsername);
+      console.log('Accounts found. Fetching or registering username...');
+        const registeredUsername = await userAuthContract.getUser(username);
+        console.log('Registered username:', registeredUsername);
 
-		if (!registeredUsername) {
-		  console.log('User is not registered. Registering now...');
-		  if (confirm('You are about to create a new account. Is this what you would like?')) {
-			const tx = await userAuthContract.register(username);
-			await tx.wait();
-			const logged = await makeLog(username);
-			if (logged === 200) {
-			  await router.push('/');
-			} else {
-			  await router.push('/access?error=' + logged);
-			}
-		  } else {
-			setusernameError('Invalid user.', setError);
-		  }
-		}
+        if (!registeredUsername) {
+          console.log('User is not registered. Registering now...');
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + encodeURIComponent(logged));
+            }
+          } else {
+            setusernameError('Invalid user.', setError);
+          }
+        }
     } catch (providerError) {
       console.error('Error requesting accounts:', providerError);
-      await router.push('/access?error=' + providerError.message);
+      await router.push('/access?error=' + encodeURIComponent(providerError.message));
     }
   } else {
     document.querySelector(".overlay").style.display = "flex";
