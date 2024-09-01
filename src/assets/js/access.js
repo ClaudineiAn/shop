@@ -74,6 +74,8 @@ const switchToAvalanche = async () => {
         console.error(`A request to add or switch to ${avalancheChainName} is already pending. Please check MetaMask.`);
         alert(`A request to add or switch to ${avalancheChainName} is already pending in MetaMask. Please open MetaMask and complete the request.`);
         return;
+      } else {
+        console.error(`Unhandled error code ${switchError.code}:`, switchError);
       }
     }
 
