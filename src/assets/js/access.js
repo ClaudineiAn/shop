@@ -118,38 +118,38 @@ export const validation = async (router, username, setError) => {
 
     console.log('Contract is deployed. Requesting accounts...');
     try {
-      await provider.send('eth_requestAccounts', []);
-      
-      console.log('Fetching accounts...');
-      const accounts = await provider.listAccounts();
-      if (!accounts || accounts.length === 0) {
-        await router.push('/access?error=No accounts found. Please login to MetaMask.');
-        return;
-      }
+	  await provider.send('eth_requestAccounts', []);
+	  
+	  console.log('Fetching accounts...');
+	  const accounts = await provider.listAccounts();
+	  if (!accounts || accounts.length === 0) {
+		await router.push('/access?error=No accounts found. Please login to MetaMask.');
+		return;
+	  }
 
-      console.log('Accounts found. Fetching or registering username...');
-        const registeredUsername = await userAuthContract.getUser(username);
-        console.log('Registered username:', registeredUsername);
+	  console.log('Accounts found. Fetching or registering username...');
+	  const registeredUsername = await userAuthContract.getUser();  // No argument needed
+	  console.log('Registered username:', registeredUsername);
 
-        if (!registeredUsername) {
-          console.log('User is not registered. Registering now...');
-          if (confirm('You are about to create a new account. Is this what you would like?')) {
-            const tx = await userAuthContract.register(username);
-            await tx.wait();
-            const logged = await makeLog(username);
-            if (logged === 200) {
-              await router.push('/');
-            } else {
-              await router.push('/access?error=' + encodeURIComponent(logged));
-            }
-          } else {
-            setusernameError('Invalid user.', setError);
-          }
-        }
-    } catch (providerError) {
-      console.error('Error requesting accounts:', providerError);
-      await router.push('/access?error=' + encodeURIComponent(providerError.message));
-    }
+	  if (!registeredUsername) {
+		console.log('User is not registered. Registering now...');
+		if (confirm('You are about to create a new account. Is this what you would like?')) {
+		  const tx = await userAuthContract.register(username);
+		  await tx.wait();
+		  const logged = await makeLog(username);
+		  if (logged === 200) {
+			await router.push('/');
+		  } else {
+			await router.push('/access?error=' + encodeURIComponent(logged));
+		  }
+		} else {
+		  setusernameError('Invalid user.', setError);
+		}
+	  }
+	} catch (providerError) {
+	  console.error('Error requesting accounts:', providerError);
+	  await router.push('/access?error=' + encodeURIComponent(providerError.message));
+	}
   } else {
     document.querySelector(".overlay").style.display = "flex";
   }
