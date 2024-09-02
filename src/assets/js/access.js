@@ -117,7 +117,7 @@ export const validation = async (router, username, setError) => {
     }
 
     console.log('Contract is deployed. Requesting accounts...');
-    try {
+	try {
 	  await provider.send('eth_requestAccounts', []);
 	  
 	  console.log('Fetching accounts...');
@@ -128,24 +128,31 @@ export const validation = async (router, username, setError) => {
 	  }
 
 	  console.log('Accounts found. Fetching or registering username...');
-	  const registeredUsername = await userAuthContract.getUser();  // No argument needed
-	  console.log('Registered username:', registeredUsername);
-
-	  if (!registeredUsername) {
-		console.log('User is not registered. Registering now...');
-		if (confirm('You are about to create a new account. Is this what you would like?')) {
-		  const tx = await userAuthContract.register(username);
-		  await tx.wait();
-		  const logged = await makeLog(username);
-		  if (logged === 200) {
-			await router.push('/');
+	  let registeredUsername;
+	  
+	  try {
+		registeredUsername = await userAuthContract.getUser();  // No argument needed
+		console.log('Registered username:', registeredUsername);
+	  } catch (error) {
+		if (error.code === 3) { // Error code for 'execution reverted'
+		  console.log('User is not registered. Proceeding with registration...');
+		  if (confirm('You are about to create a new account. Is this what you would like?')) {
+			const tx = await userAuthContract.register(username);
+			await tx.wait();
+			const logged = await makeLog(username);
+			if (logged === 200) {
+			  await router.push('/');
+			} else {
+			  await router.push('/access?error=' + encodeURIComponent(logged));
+			}
 		  } else {
-			await router.push('/access?error=' + encodeURIComponent(logged));
+			setusernameError('Invalid user.', setError);
 		  }
 		} else {
-		  setusernameError('Invalid user.', setError);
+		  throw error;  // Re-throw if it's a different error
 		}
 	  }
+	  
 	} catch (providerError) {
 	  console.error('Error requesting accounts:', providerError);
 	  await router.push('/access?error=' + encodeURIComponent(providerError.message));
