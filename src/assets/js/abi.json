@@ -1,4 +1,4 @@
- [
+[
 	{
 		"inputs": [
 			{
@@ -30,25 +30,6 @@
 		],
 		"name": "UserRegistered",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_username",
-				"type": "string"
-			}
-		],
-		"name": "getAddressByUsername",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
 	},
 	{
 		"inputs": [],
