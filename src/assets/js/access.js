@@ -92,72 +92,69 @@ export const validation = async (router, username, setError) => {
   }
 
   console.log('Starting validation...');
-
   if (typeof window.ethereum !== 'undefined') {
     console.log('Ethereum is defined. Starting network switch...');
     await switchToAvalanche();
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
-    const contractAddress = "0xf97d82fd7203d74Aa4a169F933992e350445D8fd";
+    const contractAddress = "0x8f7F87E3Ecf16b35Ba4dF667273771d9b414f99e";
     const userAuthContract = new ethers.Contract(contractAddress, abi, signer);
 
-    console.log('Checking contract deployment...');
     try {
+      console.log('Checking contract deployment...');
       const isContractDeployed = await checkContractDeployment(provider, contractAddress);
       if (!isContractDeployed) {
         console.error('Contract not deployed at this address.');
         await router.push('/access?error=Contract not deployed at this address.');
         return;
       }
+
+      console.log('Contract is deployed. Requesting accounts...');
+      await provider.send('eth_requestAccounts', []);
+      const accounts = await provider.listAccounts();
+      if (!accounts || accounts.length === 0) {
+        console.error('No accounts found. Please login to MetaMask.');
+        await router.push('/access?error=No accounts found. Please login to MetaMask.');
+        return;
+      }
+
+      console.log('Accounts found. Fetching or registering username...');
+      try {
+        // Assuming getUser() fetches the username for the current address
+        const registeredUsername = await userAuthContract.getUser();
+        console.log('Registered username:', registeredUsername);
+
+        if (registeredUsername === '') { // Adjust this based on your contract logic
+          console.log('User is not registered. Proceeding with registration...');
+          if (confirm('You are about to create a new account. Is this what you would like?')) {
+            const tx = await userAuthContract.register(username);
+            await tx.wait();
+            console.log('User registered successfully.');
+
+            const logged = await makeLog(username);
+            if (logged === 200) {
+              await router.push('/');
+            } else {
+              await router.push('/access?error=' + encodeURIComponent(logged));
+            }
+          } else {
+            setusernameError('Invalid user.', setError);
+          }
+        } else {
+          console.log('User is already registered.');
+          // Handle already registered user case if needed
+        }
+      } catch (providerError) {
+        console.error('Error interacting with contract:', providerError);
+        await router.push('/access?error=' + encodeURIComponent(providerError.message));
+      }
     } catch (error) {
-      console.error('Error during contract deployment check:', error);
+      console.error('Error during validation process:', error);
       await router.push('/access?error=' + encodeURIComponent(error.message));
-      return;
     }
-
-    console.log('Contract is deployed. Requesting accounts...');
-	try {
-		await provider.send('eth_requestAccounts', []);
-	  
-		console.log('Fetching accounts...');
-		const accounts = await provider.listAccounts();
-		if (!accounts || accounts.length === 0) {
-			await router.push('/access?error=No accounts found. Please login to MetaMask.');
-			return;
-		}
-
-		console.log('Accounts found. Fetching or registering username...');
-		let registeredUsername;
-	  
-		try {
-			registeredUsername = await userAuthContract.getUser(); // No argument needed
-			console.log('Registered username:', registeredUsername);
-		} catch (error) {
-			if (error.data && error.data.message.includes('User not registered')) {
-				console.log('User is not registered. Proceeding with registration...');
-				if (confirm('You are about to create a new account. Is this what you would like?')) {
-					const tx = await userAuthContract.register(username);
-					await tx.wait();
-					const logged = await makeLog(username);
-					if (logged === 200) {
-						await router.push('/');
-					} else {
-						await router.push('/access?error=' + encodeURIComponent(logged));
-					}
-				} else {
-					setusernameError('Invalid user.', setError);
-				}
-			} else {
-				throw error; // Re-throw if it's a different error
-			}
-		}
-	  
-	} catch (providerError) {
-		console.error('Error requesting accounts:', providerError);
-		await router.push('/access?error=' + encodeURIComponent(providerError.message));
-	}
   } else {
+    console.log('Ethereum provider not found. Displaying overlay...');
     document.querySelector(".overlay").style.display = "flex";
   }
 };
