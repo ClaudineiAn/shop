@@ -58,27 +58,40 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'; // Import js-cookie library
+
 export default {
   data() {
     return {
       showPopup: false,
-      originalColor: 'hsl(0, 100%, 50%)',
-      selectedColor: 'hsl(0, 100%, 50%)',
-      hue: 0,
+      originalColor: 'hsl(0, 100%, 50%)', // Initial color
+      selectedColor: 'hsl(0, 100%, 50%)', // Initial selected color
+      hue: 0, // Initial hue value (0 corresponds to red)
       dropdownItems: ['Option 1', 'Option 2', 'Option 3'],
     };
   },
   methods: {
     resetColor() {
-      this.selectedColor = this.originalColor;
+      this.hue = 0; // Reset the hue slider to the starting point
+      this.selectedColor = this.originalColor; // Reset the SVG color to the original color
+      Cookies.set('hue', this.hue, { expires: 7 }); // Update the cookie when resetting
     },
     updateColor() {
-      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`;
+      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update the color based on the hue
+      Cookies.set('hue', this.hue, { expires: 7 }); // Store the hue in cookies for 7 days
     },
     saveColor() {
-      this.originalColor = this.selectedColor;
-      this.showPopup = false;
+      this.originalColor = this.selectedColor; // Save the selected color
+      this.showPopup = false; // Close the popup
     },
+  },
+  created() {
+    // Load the hue from cookies when the page is loaded
+    const savedHue = Cookies.get('hue');
+    if (savedHue) {
+      this.hue = parseInt(savedHue); // Set the hue from cookies
+      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update the SVG color
+    }
   },
 };
 </script>
