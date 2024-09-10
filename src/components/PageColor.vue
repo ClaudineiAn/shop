@@ -31,6 +31,7 @@
 				  v-model="dropdownOpen"
 				  :close-on-content-click="false"
 				  offset-y
+				  activator="parent"
 				>
 				  <!-- Activator: Three-dots vertical icon button -->
 				  <template v-slot:activator="{ on, attrs }">
