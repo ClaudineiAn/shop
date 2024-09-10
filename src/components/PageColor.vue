@@ -1,10 +1,23 @@
 <template>
-  <div>
-    <!-- Icon to open popup -->
-    <v-icon @click="showPopup = true">mdi-star</v-icon>
+  <v-container>
+    <!-- Icon to toggle the popup below it -->
+    <v-menu
+      v-model="showPopup"
+      :close-on-content-click="false"
+      offset-y
+    >
+      <!-- Activator (icon button) -->
+      <template v-slot:activator="{ on, attrs }">
+        <v-icon
+          v-bind="attrs"
+          v-on="on"
+          @click="showPopup = !showPopup"
+        >
+          mdi-star
+        </v-icon>
+      </template>
 
-    <!-- Popup -->
-    <div v-model="showPopup" class="popupColor" max-width="200" max-height="200">
+      <!-- Popup content -->
       <v-card>
         <v-card-title>
           <!-- Reset button -->
@@ -56,8 +69,8 @@
           </div>
         </v-card-text>
       </v-card>
-    </div>
-  </div>
+    </v-menu>
+  </v-container>
 </template>
 
 <script>
@@ -66,7 +79,7 @@ import Cookies from 'js-cookie';
 export default {
   data() {
     return {
-      showPopup: false,
+      showPopup: false, // Controls visibility of the popup
       originalColor: 'hsl(0, 100%, 50%)', // Reset color
       selectedColor: 'hsl(0, 100%, 50%)', // Initial selected color
       storedColor: null, // Stored color from cookies (initially null)
@@ -98,7 +111,6 @@ export default {
       this.originalColor = this.selectedColor; // Save the selected color as original
       this.storedColor = this.selectedColor; // Update storedColor with the new selected color
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
-      this.showPopup = false; // Close the popup
     },
   },
   created() {
@@ -114,12 +126,11 @@ export default {
 </script>
 
 <style scoped>
-.popupColor{
-  
-}
-.v-dialog {
-  width: 200px;
-  height: 200px;
+/* Use this if you want to apply custom styles to the popup content */
+.custom-popup-content {
+  background-color: lightblue;
+  border: 2px solid black;
+  border-radius: 10px;
 }
 
 .color-bar {
