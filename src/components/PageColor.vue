@@ -25,21 +25,29 @@
           <!-- Reset button -->
           <v-btn @click="resetColor" small>Reset</v-btn>
 
-          <!-- Down arrow with dropdown -->
-          <v-menu
-            activator="parent"
-            :close-on-content-click="false"
-            v-slot:activator="{ on, attrs }"
-          >
-            <v-btn small icon v-bind="attrs" v-on="on">
-              <v-icon>mdi-menu-down</v-icon>
-            </v-btn>
-            <v-list>
-              <v-list-item v-for="(item, index) in dropdownItems" :key="index">
-                <v-list-item-title>{{ item }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+            <v-container>
+				<!-- Dropdown Menu with vertical three-dots icon and animation -->
+				<v-menu
+				  v-model="dropdownOpen"
+				  :close-on-content-click="false"
+				  offset-y
+				  transition="scale-transition" <!-- Add the animation here -->
+				>
+				  <!-- Activator: Three-dots vertical icon button -->
+				  <template v-slot:activator="{ on, attrs }">
+					<v-btn small icon v-bind="attrs" v-on="on" @click="dropdownOpen = !dropdownOpen">
+					  <v-icon>mdi-dots-vertical</v-icon> <!-- Vertical three-dots icon -->
+					</v-btn>
+				  </template>
+
+				  <!-- Dropdown content with animation when opening and closing -->
+				  <v-list>
+					<v-list-item v-for="(item, index) in dropdownItems" :key="index">
+					  <v-list-item-title>{{ item }}</v-list-item-title>
+					</v-list-item>
+				  </v-list>
+				</v-menu>
+			</v-container>
         </v-card-title>
 
         <v-card-text>
@@ -87,6 +95,7 @@ export default {
       storedColor: null, // Stored color from cookies (initially null)
       hue: 0, // Initial hue value (corresponds to red)
       dropdownItems: ['Option 1', 'Option 2', 'Option 3'],
+	  dropdownOpen: false,
     };
   },
   computed: {
