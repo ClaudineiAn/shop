@@ -34,7 +34,7 @@
 				>
 				  <!-- Activator: Three-dots vertical icon button -->
 				  <template v-slot:activator="{ on, attrs }">
-					<v-btn small icon v-bind="attrs" v-on="on" @click="dropdownOpen = !dropdownOpen">
+					<v-btn small icon v-bind="attrs" v-on="on" @click="dropdownOpen">
 					  <v-icon>mdi-dots-vertical</v-icon> <!-- Vertical three-dots icon -->
 					</v-btn>
 				  </template>
