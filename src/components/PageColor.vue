@@ -29,6 +29,7 @@
 				<!-- Dropdown Menu with vertical three-dots icon and animation -->
 				<v-menu
 				  v-model="dropdownOpen"
+				  :close-on-content-click="false"
 				  offset-y
 				  activator="parent"
 				>
