@@ -45,7 +45,7 @@
 				  <v-card>
 					<v-list>
 					  <v-list-item v-for="(item, index) in dropdownItems" :key="index">
-						<v-list-item-title>{{ item }}</v-list-item-title>
+						<v-list-item-title @click="fixedColors(index)">{{ item }}</v-list-item-title>
 					  </v-list-item>
 					</v-list>
 				  </v-card>
@@ -93,11 +93,11 @@ export default {
   data() {
     return {
       showPopup: false, // Controls visibility of the popup
-      originalColor: 'hsl(0, 100%, 50%)', // Reset color
+      originalColor: 'hsl(70, 100%, 50%)', // Reset color
       selectedColor: 'hsl(0, 100%, 50%)', // Initial selected color
       storedColor: null, // Stored color from cookies (initially null)
       hue: 0, // Initial hue value (corresponds to red)
-      dropdownItems: ['Option 1', 'Option 2', 'Option 3'],
+      dropdownItems: ['Personalized', 'Gold', 'Dark'],
 	  dropdownOpen: false,
     };
   },
@@ -113,9 +113,7 @@ export default {
   },
   methods: {
     resetColor() {
-      this.hue = 0; // Reset hue slider
       this.selectedColor = this.originalColor; // Reset the SVG color
-      Cookies.set('hue', this.hue, { expires: 7 }); // Update cookie
     },
     updateColor() {
       this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
@@ -126,6 +124,18 @@ export default {
       this.storedColor = this.selectedColor; // Update storedColor with the new selected color
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
     },
+	fixedColors(index) {
+	  if(index===0){
+        this.selectedColor = this.storedColor; // Set the selected color
+	  }
+	  if(index===1){
+	    resetColor()
+	  }
+	  if(index===2){
+		this.hue=20;
+		this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
+	  }
+	}
   },
   created() {
     // Load hue from cookies on page load
