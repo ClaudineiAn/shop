@@ -139,7 +139,7 @@ export default {
           this.selectedColor = this.originalColor;
 	  }
 	  if(index===1){
-	    resetColor()
+	    this.resetColor()
 	  }
 	  if(index===2){
 		this.hue=20;
