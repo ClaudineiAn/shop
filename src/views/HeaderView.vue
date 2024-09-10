@@ -6,6 +6,7 @@ import Language from '../components/Language.vue'
 import SearchBar from '../components/SearchBar.vue'
 import LoginRegisterButton from '../components/LoginRegisterButton.vue'
 import Account from '../components/Account.vue'
+import PageColor from '../components/PageColor.vue'
 </script>
 
 <template>
@@ -14,6 +15,7 @@ import Account from '../components/Account.vue'
       <Logo />
       <Language />
       <SearchBar />
+	  <PageColor />
       <LoginRegisterButton v-if="!Cookies.get('name') || Cookies.get('name') === 'undefined'" />
       <Account v-else />
     </nav>
