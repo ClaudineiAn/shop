@@ -40,14 +40,16 @@
 					</v-btn>
 				  </template>
 
-				  <!-- Dropdown content with animation when opening and closing -->
-				  <v-list>
-					<v-list-item v-for="(item, index) in dropdownItems" :key="index">
-					  <v-list-item-title>{{ item }}</v-list-item-title>
-					</v-list-item>
-				  </v-list>
+				  <!-- Dropdown content -->
+				  <v-card>
+					<v-list>
+					  <v-list-item v-for="(item, index) in dropdownItems" :key="index">
+						<v-list-item-title>{{ item }}</v-list-item-title>
+					  </v-list-item>
+					</v-list>
+				  </v-card>
 				</v-menu>
-			</v-container>
+			  </v-container>
         </v-card-title>
 
         <v-card-text>
