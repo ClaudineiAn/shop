@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <div>
     <!-- Icon to toggle the popup below it -->
     <v-menu
       v-model="showPopup"
@@ -70,7 +70,7 @@
         </v-card-text>
       </v-card>
     </v-menu>
-  </v-container>
+  </div>
 </template>
 
 <script>
