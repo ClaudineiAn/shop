@@ -5,6 +5,7 @@
       v-model="showPopup"
       :close-on-content-click="false"
       offset-y
+      activator="parent"
     >
       <!-- Activator (icon button) -->
       <template v-slot:activator="{ on, attrs }">
@@ -12,12 +13,13 @@
           v-bind="attrs"
           v-on="on"
           @click="showPopup = !showPopup"
+          class="popup-icon"
         >
           mdi-star
         </v-icon>
       </template>
 
-      <!-- Popup content -->
+      <!-- Popup content that opens directly below the icon -->
       <v-card>
         <v-card-title>
           <!-- Reset button -->
@@ -126,6 +128,10 @@ export default {
 </script>
 
 <style scoped>
+.popup-icon {
+  cursor: pointer;
+}
+
 /* Use this if you want to apply custom styles to the popup content */
 .custom-popup-content {
   background-color: lightblue;
