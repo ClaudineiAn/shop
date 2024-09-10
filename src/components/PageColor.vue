@@ -116,7 +116,7 @@ export default {
   methods: {
     resetColor() {
 	  this.hue=originalHue;
-      this.selectedColor = this.originalColor; // Reset the SVG color
+      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Reset the SVG color
     },
     updateColor() {
       this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
@@ -129,7 +129,7 @@ export default {
 	fixedColors(index) {
 	  if(index===0){
 	    this.hue=storedHue;
-        this.selectedColor = this.storedColor; // Set the selected color
+        this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Set the selected color
 	  }
 	  if(index===1){
 	    resetColor()
