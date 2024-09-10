@@ -94,8 +94,10 @@ export default {
     return {
       showPopup: false, // Controls visibility of the popup
       originalColor: 'hsl(70, 100%, 50%)', // Reset color
+      originalHue: 70,
       selectedColor: 'hsl(0, 100%, 50%)', // Initial selected color
       storedColor: null, // Stored color from cookies (initially null)
+      storedHue: null,
       hue: 0, // Initial hue value (corresponds to red)
       dropdownItems: ['Personalized', 'Gold', 'Dark'],
 	  dropdownOpen: false,
@@ -113,6 +115,7 @@ export default {
   },
   methods: {
     resetColor() {
+	  this.hue=originalHue;
       this.selectedColor = this.originalColor; // Reset the SVG color
     },
     updateColor() {
@@ -126,6 +129,7 @@ export default {
     },
 	fixedColors(index) {
 	  if(index===0){
+	    this.hue=storedHue;
         this.selectedColor = this.storedColor; // Set the selected color
 	  }
 	  if(index===1){
@@ -143,6 +147,7 @@ export default {
     if (savedHue) {
       this.hue = parseInt(savedHue); // Set the hue from cookies
       this.storedColor = `hsl(${this.hue}, 100%, 50%)`; // Set the stored color
+	  this.storedHue = this.hue
       this.selectedColor = this.storedColor; // Set the selected color
     }
   },
