@@ -122,19 +122,21 @@ export default {
       this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
     },
     saveColor() {
-      this.originalColor = this.selectedColor; // Save the selected color as original
       this.storedColor = this.selectedColor; // Update storedColor with the new selected color
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
     },
 	fixedColors(index) {
 	  if(index===0){
+	  console.log(0)
 	    this.hue=storedHue;
         this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Set the selected color
 	  }
 	  if(index===1){
+	  console.log(1)
 	    resetColor()
 	  }
 	  if(index===2){
+	  console.log(2)
 		this.hue=20;
 		this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
 	  }
