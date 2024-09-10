@@ -4,7 +4,7 @@
     <v-icon @click="showPopup = true">mdi-star</v-icon>
 
     <!-- Popup -->
-    <div v-model="showPopup" max-width="200" max-height="200">
+    <div v-model="showPopup" class="popupColor" max-width="200" max-height="200">
       <v-card>
         <v-card-title>
           <!-- Reset button -->
@@ -114,6 +114,9 @@ export default {
 </script>
 
 <style scoped>
+.popupColor{
+  
+}
 .v-dialog {
   width: 200px;
   height: 200px;
