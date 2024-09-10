@@ -4,7 +4,7 @@
     <v-icon @click="showPopup = true">mdi-star</v-icon>
 
     <!-- Popup -->
-    <v-dialog v-model="showPopup" persistent max-width="200" max-height="200">
+    <div v-model="showPopup" max-width="200" max-height="200">
       <v-card>
         <v-card-title>
           <!-- Reset button -->
@@ -56,7 +56,7 @@
           </div>
         </v-card-text>
       </v-card>
-    </v-dialog>
+    </div>
   </div>
 </template>
 
