@@ -29,8 +29,8 @@
 				<!-- Dropdown Menu with vertical three-dots icon and animation -->
 				<v-menu
 				  v-model="dropdownOpen"
-				  :close-on-content-click="false"
 				  offset-y
+				  activator="parent"
 				>
 				  <!-- Activator: Three-dots vertical icon button -->
 				  <template v-slot:activator="{ on, attrs }">
