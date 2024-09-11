@@ -20,12 +20,12 @@
       </template>
 
       <!-- Popup content that opens directly below the icon -->
-      <v-card>
+      <v-card class="boxCard">
         <v-card-title class="btnBox">
           <!-- Reset button -->
           <v-btn class="reset" @click="resetColor" small>Reset</v-btn>
 
-            <v-container>
+            <v-container class="moreColorsBox">
 				<!-- Dropdown Menu with vertical three-dots icon and animation -->
 				<v-menu
 				  v-model="dropdownOpen"
@@ -51,10 +51,10 @@
 				  </template>
 
 				  <!-- Dropdown content -->
-				  <v-card>
+				  <v-card class="moreColorsCard">
 					<v-list>
 					  <v-list-item v-for="(item, index) in dropdownItems" :key="index">
-						<v-list-item-title @click="fixedColors(index)">{{ item }}</v-list-item-title>
+						<v-list-item-title class="moreColorsCardIten" @click="fixedColors(index)">{{ item }}</v-list-item-title>
 					  </v-list-item>
 					</v-list>
 				  </v-card>
@@ -193,13 +193,65 @@ export default {
 </script>
 
 <style scoped>
-.colorPopUp .reset{}
+.colorPopUp .boxCard{
+	background: #000000e8;
+    border: 1px solid var(--color1);
+}
 
-.colorPopUp .btnBox{}
+.colorPopUp .btnBox{
+	display: flex;
+    align-items: center;
+    padding: 6px 0;
+}
 
-.colorPopUp .moreColorsBtn{}
+.colorPopUp .reset{
+	box-shadow: 0 0;
+    padding: 0;
+    margin-left: 10px;
+    color: var(--color1);
+    background: transparent;
+}
 
-.colorPopUp .save{}
+.colorPopUp .reset:hover{
+	box-shadow: 0 0;
+    background: var(--color2) !important;
+}
+
+.colorPopUp .moreColorsBox{
+	padding: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.colorPopUp .moreColorsBtn{
+	box-shadow: 0 0;
+    width: 0 !important;
+    margin-right: 22px;
+}
+
+.moreColorsCard{
+	background: black;
+    color: var(--color1);
+    border: 1px solid;
+}
+
+.moreColorsCardIten{
+	cursor: pointer;
+}
+
+.moreColorsCardIten:hover{
+	background: var(--color2);
+}
+
+.colorPopUp .save {
+    background: transparent !important;
+    color: var(--color1) !important;
+    border: 1px solid;
+}
+
+.colorPopUp .save:hover {
+    background: var(--color2) !important;
+}
 
 .popup-icon {
   cursor: pointer;
