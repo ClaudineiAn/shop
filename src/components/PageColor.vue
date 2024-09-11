@@ -133,7 +133,7 @@ export default {
     },
     updateColor() {
       this.selectedColor = `hsl(${this.hue}, 100%, 50%)`;
-      this.selectedColor2 = `hsl(${this.hue-hueTo2}, 100%, 50%)`;
+      this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 50%)`;
       Cookies.set('hue', this.hue, { expires: 7 }); // Store the hue in cookies
     },
     saveColor() {
@@ -158,7 +158,7 @@ export default {
 	  if(index===2){
 		this.hue=20;
         this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-        this.selectedColor2 = `hsl(${this.hue-hueTo2}, 100%, 13.53%)`;
+        this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
 	  }
 	}
   },
