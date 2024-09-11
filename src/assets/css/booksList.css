@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   margin-right: 0;
-  color: #F8EB6B;
+  color: var(--color1);
 }
 #booksList > div > div:first-child > h2{
   font-size: 3vw;
@@ -442,7 +442,7 @@
   height: 100%;
   color: gold;
   overflow: hidden;
-  background: linear-gradient(to right, #F8EB6B, #453100, #0F0F02, #453100, #F8EB6B), #fff;
+  background: linear-gradient(to right, var(--color1), var(--color2), var(--color3), var(--color2), var(--color1)), #fff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: categoryAnime 3s ease-in-out infinite;
@@ -474,7 +474,7 @@
   display: none;
   border-radius: 2vw;
   position: absolute;
-  background: linear-gradient(to bottom left, #F8EB6B 20%, #453100e3 70%, #F8EB6B 150%), #fff;
+  background: linear-gradient(to bottom left, var(--color1) 20%, var(--color2)e3 70%, var(--color1) 150%), #fff;
   padding: 1vw;
   margin-top: -12vw;
   z-index: 1;
@@ -536,9 +536,9 @@
 #booksList > div > div:first-child > div:last-child > div:last-child > a > button{
   display: flex;
   align-items: center;
-  color: #F8EB6B;
+  color: var(--color1);
   background: transparent;
-  border: 2px solid #F8EB6B;
+  border: 2px solid var(--color1);
   border-radius: 0;
   padding: 0 1vw 0 0;
   font-size: 1.4vw;
@@ -579,7 +579,7 @@
     width: 0;
     height: 3px;
     margin: 0;
-    background: #F8EB6B;
+    background: var(--color1);
     border-image-slice: 1;
     animation: imgBorder 10s linear infinite;
 }
@@ -643,12 +643,12 @@
   margin: 14px;
 }
 #booksList > div > ul > div > li{
-  background: #F8EB6B;
+  background: var(--color1);
   width: 20px;
   height: 20px;
   border-radius: 20px;
   list-style-type: none;
-  background: linear-gradient(to right, #F8EB6B, #453100, #F8EB6B), #fff;
+  background: linear-gradient(to right, var(--color1), var(--color2), var(--color1)), #fff;
   background-size: 200% auto;
   cursor: pointer;
   transition: .7s cubic-bezier(0, 0.74, 1, 1.45);
@@ -666,7 +666,7 @@
   position: relative;
   top: 17px;
   left: -15px;
-  color: #F8EB6B;
+  color: var(--color1);
   width: 20px;
 }
 #booksList > div > ul > div:first-child > li{

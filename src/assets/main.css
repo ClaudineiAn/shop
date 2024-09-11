@@ -1,3 +1,8 @@
+:root {
+  --color1: hsl(54.47deg 90.97% 69.61%);
+  --color2: hsl(42.61deg 100% 13.53%);
+  --color3: hsl(60deg 76.47% 3.33%);
+}
 @import './base.css';
 @font-face {
     font-family: OpenSans;
@@ -30,7 +35,7 @@ input[type="text"], input[type="password"]{
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  color: #F8EB6B;
+  color: var(--color1);
 }
 input[type="text"] ~ div, input[type="password"] ~ div{
   position: relative;
@@ -39,7 +44,7 @@ input[type="text"] ~ div, input[type="password"] ~ div{
   height: 0;
   font-size: 15px;
   animation: .3s inputsAni;
-  color: #F8EB6B;
+  color: var(--color1);
 }
 @keyframes inputsAni {
   0% {
@@ -86,9 +91,9 @@ input ~ hr.out {
 h1:before, h2:before {
   content: attr(data-title);
   position: absolute;
-  color: #F8EB6B;
+  color: var(--color1);
   overflow: hidden;
-  background: linear-gradient(to right, #F8EB6B, #453100, #0F0F02, #453100, #F8EB6B), #fff;
+  background: linear-gradient(to right, var(--color1), var(--color2), var(--color3), var(--color2), var(--color1)), #fff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: h2Anime 3s ease-in-out infinite;
@@ -106,10 +111,10 @@ h1:before, h2:before {
 }
 #app > .error {
   position: fixed;
-  color: #F8EB6B;
+  color: var(--color1);
   top: calc(100% - 70px);
   left: calc(0.5% + 5px);
-  background: #453100b8;
+  background: var(--color2)b8;
   padding: 18px;
   border: 1px solid;
   box-shadow: 0 0 4px 1px;

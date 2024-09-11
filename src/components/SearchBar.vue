@@ -93,7 +93,7 @@ const generateSearchList = (searched) => {
 .i-search{
   font-size: 15px;
   margin: 2px;
-  color: #F8EB6B;
+  color: var(--color1);
 }
 #search-bar ~ div.popup{
   display: flex;
@@ -102,7 +102,7 @@ const generateSearchList = (searched) => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #4531005c;
+  background: var(--color2)5c;
   z-index: 3;
   justify-content: center;
   align-items: center;
@@ -120,7 +120,7 @@ const generateSearchList = (searched) => {
 #search-bar ~ div.popup > div > input{
   height: 50px;
   background: white;
-  color: #453100;
+  color: var(--color2);
   font-size: 21px;
 }
 #search-bar ~ .popup > div > ul{
@@ -139,10 +139,10 @@ const generateSearchList = (searched) => {
   background: #00000000;
 }
 #search-bar ~ div.popup > div > ul::-webkit-scrollbar-thumb {
-  background: #f8eb6b8f;
+  background: var(--color1)8f;
 }
 #search-bar ~ div.popup > div > ul::-webkit-scrollbar-thumb:hover {
-  background: #f8eb6bb5;
+  background: var(--color1)b5;
 }
 #search-bar ~ div.popup > div > ul > li{
   display: flex;

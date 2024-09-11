@@ -14,19 +14,19 @@
 <style>
 header > nav > a:nth-child(8) > button {
     background: transparent;
-    color: #F8EB6B;
+    color: var(--color1);
 }
 header > nav > a:nth-child(8) > button:hover {
-    background: #453100;
+    background: var(--color2);
 }
 header > nav > a:last-child > button {
     background: transparent !important;
-    color: #F8EB6B !important;
+    color: var(--color1) !important;
     border: 1px solid;
     margin-right: 10px;
 }
 header > nav > a:last-child > button:hover {
-    background: #453100 !important;
+    background: var(--color2) !important;
 }
 </style>
 <script>

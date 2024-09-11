@@ -42,7 +42,7 @@
     color: gold;
     border-right: 2px solid #a59337;
     overflow: hidden;
-    background: linear-gradient(to right, #F8EB6B, #453100, #0F0F02, #453100, #F8EB6B), #fff;
+    background: linear-gradient( 90deg, var(--color1), var(--color2), var(--color3), var(--color2), var(--color1)), #fff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: logoAnime 6s cubic-bezier(0.73, 0.01, 0.31, 0.97) infinite;
@@ -72,7 +72,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #f8eb6b;
+    color: var(--color1);
     background: #0000008c;
   }
   .banner div.box > div.titles{
@@ -91,7 +91,7 @@
   }
   .banner div.box > div.titles > h2:before{
     overflow: hidden;
-    background: linear-gradient(transparent, #f8eb6b);
+    background: linear-gradient(transparent, var(--color1));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: none;
@@ -103,7 +103,7 @@
     position: absolute;
     box-shadow: 0px 15px 10px;
     color: transparent;
-    background: #f8eb6bb8;
+    background: var(--color1)b8;
     transform: rotateX(-85deg) translateY(calc(90px + 30vw));
     filter: blur(20px);
   }
@@ -132,7 +132,7 @@
   .banner div.box>div.titles>h2>div:nth-child(4) {
     position: absolute;
     top: 1.2vw;
-    background: linear-gradient(1deg, #f8eb6b -140%, transparent 50%);
+    background: linear-gradient(1deg, var(--color1) -140%, transparent 50%);
     filter: blur(5px);
   }
   .banner div.box > div.titles > h2 > div:last-child {
@@ -183,7 +183,7 @@
   }
   .banner div.box>div.data>div>div:hover:before {
       content: "";
-      background: #4531005c;
+      background: var(--color2)5c;
       display: block;
       width: 100%;
       height: 100%;
@@ -222,8 +222,8 @@
       position: absolute;
       z-index: 2;
       transform: rotate(45deg);
-      box-shadow: 0 0 21px 10px #f8eb6b;
-      background: #f8eb6b;
+      box-shadow: 0 0 21px 10px var(--color1);
+      background: var(--color1);
   }
   
   .banner div.box>div.data>div>div>div>div,.banner div.box>div.data>div>div>div>div>div {
@@ -281,7 +281,7 @@
   
   .banner div.box>div.data>div>div>div:nth-child(4) {
       z-index: 0;
-      background: #4531009e;
+      background: var(--color2)9e;
       transform: rotate(45deg)
   }
   
@@ -292,7 +292,7 @@
     flex-direction: column;
     margin: 0 auto;
     z-index: 10;
-    color: #F8EB6B;
+    color: var(--color1);
   }
   .banner > a > svg{
     margin: 0 auto;

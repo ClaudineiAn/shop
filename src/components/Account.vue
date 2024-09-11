@@ -46,7 +46,7 @@
   position: absolute;
   top: 68px;
   left: calc(96.6vw - 352px);
-  background: linear-gradient(to bottom right, #F8EB6B 20%, #453100 50%, #F8EB6B), #fff;
+  background: linear-gradient(to bottom right, var(--color1) 20%, var(--color2) 50%, var(--color1)), #fff;
   padding: 12px;
   border-radius: 10px;
   width: 340px;
@@ -69,7 +69,7 @@
   background: rgb(0 0 0 / 20%);
   display: flex;
   padding: 10px;
-  color: #F8EB6B;
+  color: var(--color1);
 }
 .accountPopUp > .accountData > img{
   width: 80px;
@@ -85,7 +85,7 @@
 .optionsBox{
   display: flex;
   text-decoration: none;
-  color: #F8EB6B;
+  color: var(--color1);
   margin: 10px;
 }
 .options{

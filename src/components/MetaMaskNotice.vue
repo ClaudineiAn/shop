@@ -85,12 +85,12 @@ export default {
 .popup p {
   margin-bottom: 20px;
   font-size: 18px;
-  color: #f8eb6b;
+  color: var(--color1);
 }
 
 .popup button {
     background: transparent !important;
-    color: #F8EB6B !important;
+    color: var(--color1) !important;
     border: 1px solid;
     margin-right: 10px;
 }
@@ -100,6 +100,6 @@ export default {
 }
 
 button:hover {
-    background: #453100 !important;
+    background: var(--color2) !important;
 }
 </style>

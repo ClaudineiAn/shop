@@ -28,7 +28,7 @@ import UkIcon from '../components/icons/IconUk.vue'
     width: 0;
     height: 3px;
     margin: 0;
-    background: #F8EB6B;
+    background: var(--color1);
     border-image-slice: 1;
     animation: rotateBorder 3s linear infinite;
 }
