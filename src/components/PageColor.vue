@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="colorPopUp">
     <!-- Icon to toggle the popup below it -->
     <v-menu
       v-model="showPopup"
@@ -36,13 +36,13 @@
 				>
 				  <!-- Activator: Three-dots vertical icon button -->
 				  <template v-slot:activator="{ on, attrs }">
-					<v-btn class="doneBtn" small icon v-bind="attrs" v-on="on" @click="dropdownOpen">
-					  <svg width="800px" height="800px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<v-btn class="moreColorsBtn" small icon v-bind="attrs" v-on="on" @click="dropdownOpen">
+					  <svg width="20px" height="20px" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<linearGradient id="gradientUp">
-						  <stop offset="0%" :stop-color="selectedColor">
-							<animate attributeName="stop-color" :values="selectedColor + ';' + selectedColor2 + ';' + selectedColor" dur="5s" repeatCount="indefinite" />
-						  </stop>
-						</linearGradient>
+							<stop offset="0%" stop-color="#F8EB6B">
+							  <animate attributeName="stop-color" :values="`${color1}; ${color2}; ${color1}`" dur="5s" repeatCount="indefinite" />
+							</stop>
+						  </linearGradient>
 						<path fill="url(#gradientUp)" d="M8 12C9.10457 12 10 12.8954 10 14C10 15.1046 9.10457 16 8 16C6.89543 16 6 15.1046 6 14C6 12.8954 6.89543 12 8 12Z"/>
 						<path fill="url(#gradientUp)" d="M8 6C9.10457 6 10 6.89543 10 8C10 9.10457 9.10457 10 8 10C6.89543 10 6 9.10457 6 8C6 6.89543 6.89543 6 8 6Z"/>
 						<path fill="url(#gradientUp)" d="M10 2C10 0.89543 9.10457 -4.82823e-08 8 0C6.89543 4.82823e-08 6 0.895431 6 2C6 3.10457 6.89543 4 8 4C9.10457 4 10 3.10457 10 2Z"/>
@@ -122,7 +122,13 @@ export default {
       hueTo2: 10,
       dropdownItems: ['Personalized', 'Gold', 'Dark'],
 	  dropdownOpen: false,
+	  color1: '',
+      color2: '',
     };
+  },
+  mounted() {
+    this.color1 = getComputedStyle(document.documentElement).getPropertyValue('--color1').trim();
+    this.color2 = getComputedStyle(document.documentElement).getPropertyValue('--color2').trim();
   },
   computed: {
     showSaveButton() {
@@ -187,6 +193,12 @@ export default {
 </script>
 
 <style scoped>
+.colorPopUp .reset{}
+
+.colorPopUp .moreColorsBtn{}
+
+.colorPopUp .save{}
+
 .popup-icon {
   cursor: pointer;
 }
