@@ -104,7 +104,7 @@ export default {
       originalColor: 'hsl(54.47, 90.97%, 69.61%)', // Reset color
       originalColor2: 'hsl(42.61, 100%, 13.53%)', // Reset color
       originalHue: 54.47,
-      originalHue2: originalHue-10,
+      originalHue2: this.originalHue-10,
       selectedColor: 'hsl(0, 90.97%, 69.61%)',
       selectedColor2: 'hsl(0, 100%, 13.53%)',
       storedColor: false,
