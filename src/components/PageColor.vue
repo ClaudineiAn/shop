@@ -59,7 +59,7 @@
 			<svg width="150px" height="150px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
 					<linearGradient id="gradient">
 					<stop offset="0%" stop-color="var(--color1)">
-					  <animate attributeName="stop-color" values="var(--color1); var(--color2); var(--color1)" dur="5s" repeatCount="indefinite" />
+					  <animate attributeName="stop-color" :values="selectedColor"; :values="selectedColor2"; :values="selectedColor"" dur="5s" repeatCount="indefinite" />
 					</stop>
 				  </linearGradient>
 				<path fill="url(#gradient)" d="M0 5.04V4l4-4h8l4 4v1.04L8 16 0 5.04zM2 5l6 8.5L4 5H2zm12 0h-2l-4 8.5L14 5zM6 5l2 6 2-6H6zM4 2L2 4h2l2-2H4zm8 0h-2l2 2h2l-2-2zM7 2L6 4h4L9 2H7z" fill-rule="evenodd"/>
@@ -98,12 +98,17 @@ export default {
   data() {
     return {
       showPopup: false, // Controls visibility of the popup
-      originalColor: 'hsl(70, 100%, 50%)', // Reset color
-      originalHue: 70,
-      selectedColor: 'hsl(0, 100%, 50%)', // Initial selected color
-      storedColor: false, // Stored color from cookies (initially null)
+      originalColor: 'hsl(54.47, 90.97%, 69.61%)', // Reset color
+      originalColor2: 'hsl(42.61, 100%, 13.53%)', // Reset color
+      originalHue: 54.47,
+      originalHue2: originalHue-10,
+      selectedColor: 'hsl(0, 90.97%, 69.61%)',
+      selectedColor2: 'hsl(0, 100%, 13.53%)',
+      storedColor: false,
+      storedColor2: false,
       storedHue: false,
-      hue: 0, // Initial hue value (corresponds to red)
+      hue: 54.47,
+      hueTo2: 10,
       dropdownItems: ['Personalized', 'Gold', 'Dark'],
 	  dropdownOpen: false,
     };
@@ -121,10 +126,12 @@ export default {
   methods: {
     resetColor() {
 	  this.hue=this.originalHue;
-      this.selectedColor = this.originalColor; // Reset the SVG color
+      this.selectedColor = this.originalColor;
+      this.selectedColor2 = this.originalColor2;
     },
     updateColor() {
-      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
+      this.selectedColor = `hsl(${this.hue}, 100%, 50%)`;
+      this.selectedColor2 = `hsl(${this.hue-hueTo2}, 100%, 50%)`;
       Cookies.set('hue', this.hue, { expires: 7 }); // Store the hue in cookies
     },
     saveColor() {
@@ -148,7 +155,8 @@ export default {
 	  }
 	  if(index===2){
 		this.hue=20;
-		this.selectedColor = `hsl(${this.hue}, 100%, 50%)`; // Update selected color based on hue
+        this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
+        this.selectedColor2 = `hsl(${this.hue-hueTo2}, 100%, 13.53%)`;
 	  }
 	}
   },
@@ -157,9 +165,11 @@ export default {
     const savedHue = Cookies.get('hue');
     if (savedHue) {
       this.hue = parseInt(savedHue); // Set the hue from cookies
-      this.storedColor = `hsl(${this.hue}, 100%, 50%)`; // Set the stored color
+      this.storedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
+      this.storedColor2 = `hsl(${this.hue2}, 100%, 13.53%)`;
 	  this.storedHue = this.hue
-      this.selectedColor = this.storedColor; // Set the selected color
+      this.selectedColor = this.storedColor;
+      this.selectedColor2 = this.storedColor2;
     }
   },
 };
