@@ -195,6 +195,8 @@ export default {
 <style scoped>
 .colorPopUp .reset{}
 
+.colorPopUp .btnBox{}
+
 .colorPopUp .moreColorsBtn{}
 
 .colorPopUp .save{}
