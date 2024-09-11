@@ -193,18 +193,18 @@ export default {
 </script>
 
 <style scoped>
-.colorPopUp .boxCard{
+.boxCard{
 	background: #000000e8;
     border: 1px solid var(--color1);
 }
 
-.colorPopUp .btnBox{
+.boxCard .btnBox{
 	display: flex;
     align-items: center;
     padding: 6px 0;
 }
 
-.colorPopUp .reset{
+.boxCard .reset{
 	box-shadow: 0 0;
     padding: 0;
     margin-left: 10px;
@@ -212,44 +212,44 @@ export default {
     background: transparent;
 }
 
-.colorPopUp .reset:hover{
+.boxCard .reset:hover{
 	box-shadow: 0 0;
     background: var(--color2) !important;
 }
 
-.colorPopUp .moreColorsBox{
+.boxCard .moreColorsBox{
 	padding: 0;
     display: flex;
     justify-content: flex-end;
 }
 
-.colorPopUp .moreColorsBtn{
+.boxCard .moreColorsBtn{
 	box-shadow: 0 0;
     width: 0 !important;
     margin-right: 22px;
 }
 
-.moreColorsCard{
+.boxCard .moreColorsCard{
 	background: black;
     color: var(--color1);
     border: 1px solid;
 }
 
-.moreColorsCardIten{
+.boxCard .moreColorsCardIten{
 	cursor: pointer;
 }
 
-.moreColorsCardIten:hover{
+.boxCard .moreColorsCardIten:hover{
 	background: var(--color2);
 }
 
-.colorPopUp .save {
+.boxCard .save {
     background: transparent !important;
     color: var(--color1) !important;
     border: 1px solid;
 }
 
-.colorPopUp .save:hover {
+.boxCard .save:hover {
     background: var(--color2) !important;
 }
 
