@@ -78,8 +78,9 @@ const generateSearchList = (searched) => {
 </script>
 
 <template>
-    <div id="search-bar" class="d-flex ml-auto mr-auto align-center">
+    <div id="search-bar" class="d-flex ml-auto align-center bar-icon">
       <i class="i-search"></i>
+	  <span class="bar-icon-text">Search</span>
     </div>
     <div class="popup" style='display:none'>
       <div>
@@ -94,6 +95,10 @@ const generateSearchList = (searched) => {
   font-size: 15px;
   margin: 2px;
   color: var(--color1);
+}
+#search-bar{
+	cursor: pointer;
+	margin-right: 6px !important;
 }
 #search-bar ~ div.popup{
   display: flex;
