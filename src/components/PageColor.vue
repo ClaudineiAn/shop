@@ -164,13 +164,13 @@ export default {
         this.selectedColor2 = `hsl(${this.hue - this.hueTo2}, 100%, 13.53%)`;
       }
       Cookies.set('hue', this.hue, { expires: 7 });
-      document.documentElement.style.setProperty('--color1', this.selectedColor);
-      document.documentElement.style.setProperty('--color2', this.selectedColor2);
     },
     saveColor() {
       this.originalColor = this.selectedColor; // Save the selected color as original
       this.storedColor = this.selectedColor; // Update storedColor with the new selected color
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
+      document.documentElement.style.setProperty('--color1', this.selectedColor);
+      document.documentElement.style.setProperty('--color2', this.selectedColor2);
     },
     fixedColors(index) {
       if (index === 0) {
