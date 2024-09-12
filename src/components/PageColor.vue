@@ -128,7 +128,7 @@ export default {
       storedColor2: false,
       storedHue: false,
       hue: 54.47,
-      hueTo2: 10,
+      hueTo2: 11.86,
       dropdownItems: ['Personalized', 'Gold', 'Dark'],
 	  dropdownOpen: false,
 	  color1: '',
@@ -156,9 +156,15 @@ export default {
       this.selectedColor2 = this.originalColor2;
     },
     updateColor() {
-      this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-      this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
-      Cookies.set('hue', this.hue, { expires: 7 }); // Store the hue in cookies
+	  if(this.hue===54.47)
+        this.selectedColor = this.originalColor;
+        this.selectedColor2 = this.originalColor2;
+	  else
+        this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
+        this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
+      Cookies.set('hue', this.hue, { expires: 7 });
+	  document.documentElement.style.setProperty('--color1', this.selectedColor);
+	  document.documentElement.style.setProperty('--color2', this.selectedColor2);
     },
     saveColor() {
       this.originalColor = this.selectedColor; // Save the selected color as original
@@ -192,10 +198,12 @@ export default {
     if (savedHue) {
       this.hue = parseInt(savedHue); // Set the hue from cookies
       this.storedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-      this.storedColor2 = `hsl(${this.hue2}, 100%, 13.53%)`;
+      this.storedColor2 = `hsl(${this.hue-hueTo2}, 100%, 13.53%)`;
 	  this.storedHue = this.hue
       this.selectedColor = this.storedColor;
       this.selectedColor2 = this.storedColor2;
+	  document.documentElement.style.setProperty('--color1', this.selectedColor);
+	  document.documentElement.style.setProperty('--color2', this.selectedColor2);
     }
   },
 };
