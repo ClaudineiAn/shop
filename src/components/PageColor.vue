@@ -52,9 +52,9 @@
 
 				  <!-- Dropdown content -->
 				  <v-card>
-					<v-list>
-					  <v-list-item class="moreColorsList" v-for="(item, index) in dropdownItems" :key="index">
-						<v-list-item-title class="moreColorsIten" @click="fixedColors(index)">{{ item }}</v-list-item-title>
+					<v-list class="moreColorsList">
+					  <v-list-item class="moreColorsIten" v-for="(item, index) in dropdownItems" :key="index">
+						<v-list-item-title @click="fixedColors(index)">{{ item }}</v-list-item-title>
 					  </v-list-item>
 					</v-list>
 				  </v-card>
