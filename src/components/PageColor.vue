@@ -181,7 +181,7 @@ export default {
         }
         if (this.storedColor) {
           this.selectedColor = this.storedColor;
-          this.selectedColor2 = this.storedColor;
+          this.selectedColor2 = this.storedColor2;
         } else {
           this.selectedColor = this.originalColor;
           this.selectedColor2 = this.originalColor2;
