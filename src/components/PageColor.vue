@@ -154,6 +154,8 @@ export default {
       this.hue = this.originalHue;
       this.selectedColor = this.originalColor;
       this.selectedColor2 = this.originalColor2;
+	  this.color1= this.originalColor
+	  this.color2= this.originalColor2
     },
     updateColor() {
       if (this.hue === 54.47) {
@@ -171,6 +173,8 @@ export default {
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
       document.documentElement.style.setProperty('--color1', this.selectedColor);
       document.documentElement.style.setProperty('--color2', this.selectedColor2);
+	  this.color1= this.selectedColor
+	  this.color2= this.selectedColor2
     },
     fixedColors(index) {
       if (index === 0) {
