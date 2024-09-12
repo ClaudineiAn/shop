@@ -130,8 +130,8 @@ export default {
       hue: 54.47,
       hueTo2: 11.86,
       dropdownItems: ['Personalized', 'Gold', 'Dark'],
-	  dropdownOpen: false,
-	  color1: '',
+      dropdownOpen: false,
+      color1: '',
       color2: '',
     };
   },
@@ -151,46 +151,47 @@ export default {
   },
   methods: {
     resetColor() {
-	  this.hue=this.originalHue;
+      this.hue = this.originalHue;
       this.selectedColor = this.originalColor;
       this.selectedColor2 = this.originalColor2;
     },
     updateColor() {
-	  if(this.hue===54.47)
+      if (this.hue === 54.47) {
         this.selectedColor = this.originalColor;
         this.selectedColor2 = this.originalColor2;
-	  else
+      } else {
         this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-        this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
+        this.selectedColor2 = `hsl(${this.hue - this.hueTo2}, 100%, 13.53%)`;
+      }
       Cookies.set('hue', this.hue, { expires: 7 });
-	  document.documentElement.style.setProperty('--color1', this.selectedColor);
-	  document.documentElement.style.setProperty('--color2', this.selectedColor2);
+      document.documentElement.style.setProperty('--color1', this.selectedColor);
+      document.documentElement.style.setProperty('--color2', this.selectedColor2);
     },
     saveColor() {
       this.originalColor = this.selectedColor; // Save the selected color as original
       this.storedColor = this.selectedColor; // Update storedColor with the new selected color
       Cookies.set('hue', this.hue, { expires: 7 }); // Save the hue in cookies
     },
-	fixedColors(index) {
-	  if(index===0){
-	    if(this.storedHue)
-  	      this.hue=this.storedHue;
-		else
-  	      this.hue=this.originalHue;
-		if(this.storedColor)
+    fixedColors(index) {
+      if (index === 0) {
+        if (this.storedHue) {
+          this.hue = this.storedHue;
+        } else {
+          this.hue = this.originalHue;
+        }
+        if (this.storedColor) {
           this.selectedColor = this.storedColor;
-		else
+        } else {
           this.selectedColor = this.originalColor;
-	  }
-	  if(index===1){
-	    this.resetColor()
-	  }
-	  if(index===2){
-		this.hue=20;
+        }
+      } else if (index === 1) {
+        this.resetColor();
+      } else if (index === 2) {
+        this.hue = 20;
         this.selectedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-        this.selectedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
-	  }
-	}
+        this.selectedColor2 = `hsl(${this.hue - this.hueTo2}, 100%, 13.53%)`;
+      }
+    }
   },
   created() {
     // Load hue from cookies on page load
@@ -198,12 +199,12 @@ export default {
     if (savedHue) {
       this.hue = parseInt(savedHue); // Set the hue from cookies
       this.storedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-      this.storedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
-	  this.storedHue = this.hue
+      this.storedColor2 = `hsl(${this.hue - this.hueTo2}, 100%, 13.53%)`;
+      this.storedHue = this.hue;
       this.selectedColor = this.storedColor;
       this.selectedColor2 = this.storedColor2;
-	  document.documentElement.style.setProperty('--color1', this.selectedColor);
-	  document.documentElement.style.setProperty('--color2', this.selectedColor2);
+      document.documentElement.style.setProperty('--color1', this.selectedColor);
+      document.documentElement.style.setProperty('--color2', this.selectedColor2);
     }
   },
 };
