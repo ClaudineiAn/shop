@@ -92,6 +92,9 @@ const generateSearchList = (searched) => {
 </template>
 <style>
 .i-search{
+  height: 24px;
+  display: flex;
+  align-items: center;
   font-size: 15px;
   margin: 2px;
   color: var(--color1);
