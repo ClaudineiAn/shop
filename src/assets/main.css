@@ -142,7 +142,7 @@ h1:before, h2:before {
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
 }
 
-.bar-icon-container:hover .bar-icon-text {
+.bar-icon:hover .bar-icon-text {
   opacity: 1;
   visibility: visible;
 }
