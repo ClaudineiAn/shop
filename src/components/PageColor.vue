@@ -194,7 +194,7 @@ export default {
 
 <style scoped>
 .boxCard{
-	background: #000000e8;
+	background: #000000e8 !important;
     border: 1px solid var(--color1);
 }
 
@@ -229,17 +229,17 @@ export default {
     margin-right: 22px;
 }
 
-.boxCard .moreColorsCard{
+.moreColorsCard{
 	background: black;
     color: var(--color1);
     border: 1px solid;
 }
 
-.boxCard .moreColorsCardIten{
+.moreColorsCardIten{
 	cursor: pointer;
 }
 
-.boxCard .moreColorsCardIten:hover{
+.moreColorsCardIten:hover{
 	background: var(--color2);
 }
 
