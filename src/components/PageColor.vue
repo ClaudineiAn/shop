@@ -198,7 +198,7 @@ export default {
     if (savedHue) {
       this.hue = parseInt(savedHue); // Set the hue from cookies
       this.storedColor = `hsl(${this.hue}, 90.97%, 69.61%)`;
-      this.storedColor2 = `hsl(${this.hue-hueTo2}, 100%, 13.53%)`;
+      this.storedColor2 = `hsl(${this.hue-this.hueTo2}, 100%, 13.53%)`;
 	  this.storedHue = this.hue
       this.selectedColor = this.storedColor;
       this.selectedColor2 = this.storedColor2;
