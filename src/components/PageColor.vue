@@ -154,8 +154,6 @@ export default {
       this.hue = this.originalHue;
       this.selectedColor = this.originalColor;
       this.selectedColor2 = this.originalColor2;
-	  this.color1= this.originalColor
-	  this.color2= this.originalColor2
     },
     updateColor() {
       if (this.hue === 54.47) {
