@@ -181,8 +181,10 @@ export default {
         }
         if (this.storedColor) {
           this.selectedColor = this.storedColor;
+          this.selectedColor2 = this.storedColor;
         } else {
           this.selectedColor = this.originalColor;
+          this.selectedColor2 = this.originalColor2;
         }
       } else if (index === 1) {
         this.resetColor();
