@@ -51,10 +51,10 @@
 				  </template>
 
 				  <!-- Dropdown content -->
-				  <v-card class="moreColorsCard">
+				  <v-card>
 					<v-list>
-					  <v-list-item v-for="(item, index) in dropdownItems" :key="index">
-						<v-list-item-title class="moreColorsCardIten" @click="fixedColors(index)">{{ item }}</v-list-item-title>
+					  <v-list-item class="moreColorsList v-for="(item, index) in dropdownItems" :key="index">
+						<v-list-item-title class="moreColorsIten" @click="fixedColors(index)">{{ item }}</v-list-item-title>
 					  </v-list-item>
 					</v-list>
 				  </v-card>
@@ -229,17 +229,17 @@ export default {
     margin-right: 22px;
 }
 
-.moreColorsCard{
-	background: black;
+.moreColorsList{
+	background: black !important;
     color: var(--color1);
     border: 1px solid;
 }
 
-.moreColorsCardIten{
+.moreColorsIten{
 	cursor: pointer;
 }
 
-.moreColorsCardIten:hover{
+.moreColorsIten:hover{
 	background: var(--color2);
 }
 
