@@ -94,7 +94,9 @@ export default {
         <div class="fixed-bg" :style="{ backgroundImage: `url(${currentBackground})` }"></div>
 			<section class="section" v-for="(section, index) in sections" :key="index">
 				<div class="product-grid">
-					<img v-for="(product, i) in products" :key="i" :src="product.image" :alt="`Product ${i}`" />
+					<div v-for="(product, i) in products" :key="i">
+						<img :src="product.image" :alt="`Product ${i}`" />
+					</div>
 				</div>
 			</section>
         </div>

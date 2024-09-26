@@ -3,7 +3,8 @@
     --main-title-ani-to: 0px;
 }
 .data{overflow: auto;
-width: 100%;}
+width: 100%;
+align-items: center;}
 html, body {
             margin: 0;
             padding: 0;
@@ -15,18 +16,26 @@ html, body {
             height: 100%;
         }
         .section {
-            min-height: 310vh;
             padding: 20px;
         }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-        }
-        .product-grid img {
-            max-width: 100%;
-            height: auto;
-        }
+		.product-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+			gap: 15px;
+		}
+
+		.product-grid div {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.product-grid img {
+			max-width: 100%;
+			height: auto;
+			max-height: 200px;
+		}
+
         .fixed-bg {
             position: fixed;
             top: 0;
