@@ -3,17 +3,55 @@ import { onMounted } from 'vue'
 import ArrowIcon from '../components/icons/IconArrow.vue'
 import {setProperMetrics,assemble} from '../assets/js/mainPageAssemble.js'
 export default {
- data() {
-    return {
-      sections: [
-        { name: 'Home', bgClass: 'bg-home' },
-        { name: 'Categories', bgClass: 'bg-categories' },
-        { name: 'Products', bgClass: 'bg-products' },
-        { name: 'About Us', bgClass: 'bg-about' },
-        { name: 'Contact', bgClass: 'bg-contact' }
-      ]
-    };
-  },
+	data() {
+		return {
+			sections: [
+				{ bg: 'bg1.jpg' },
+				{ bg: 'bg2.jpg' },
+				{ bg: 'bg3.jpg' },
+				{ bg: 'bg4.jpg' },
+				{ bg: 'bg5.jpg' }
+			],
+			products: Array.from({ length: 25 }, (_, i) => ({
+				image: `https://via.placeholder.com/200x200?text=Product+${i+1}`
+			})),
+			currentBackground: 'bg1.jpg'
+		};
+	},
+	methods: {
+		updateBackground() {
+			const sections = document.querySelectorAll('.section');
+			const windowHeight = window.innerHeight;
+			let newBackground = this.currentBackground;
+			sections.forEach((section, index) => {
+				const rect = section.getBoundingClientRect();
+				if (rect.top <= windowHeight * 0.2 && rect.bottom >= windowHeight * 0.8) {
+					newBackground = this.sections[index].bg;
+				}
+			});
+			if (newBackground !== this.currentBackground) {
+				this.currentBackground = newBackground;
+			}
+		},
+		resizeImages() {
+			const images = document.querySelectorAll('.product-grid img');
+			images.forEach(img => {
+				if (img.offsetWidth > 200) {
+					img.style.width = '200px';
+					img.style.height = 'auto';
+				}
+			});
+		}
+	},
+	mounted() {
+		window.addEventListener('scroll', this.updateBackground);
+		window.addEventListener('resize', this.resizeImages);
+		this.resizeImages(); // Run on load
+	},
+	beforeUnmount() {
+		window.removeEventListener('scroll', this.updateBackground);
+		window.removeEventListener('resize', this.resizeImages);
+	},
   components: {
     ArrowIcon
   },
@@ -27,34 +65,6 @@ export default {
       ArrowIcon,
     };
   },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.2 && rect.bottom >= window.innerHeight * 0.2) {
-          this.changeBackground(section);
-        }
-      });
-    },
-    changeBackground(section) {
-      document.querySelector('.data').style.backgroundColor = section.classList.contains('bg-home')
-        ? 'red'
-        : section.classList.contains('bg-categories')
-        ? 'blue'
-        : section.classList.contains('bg-products')
-        ? 'black'
-        : section.classList.contains('bg-about')
-        ? 'orange'
-        : 'yellow';
-    }
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
 }
 </script>
 <template>
@@ -80,23 +90,12 @@ export default {
           <h2>Favorite</h2>
         </div>
         <div class="data">
-			<v-app>
-				<v-main>
-				  <v-container>
-					<section v-for="(section, index) in sections" 
-							 :key="index" 
-							 :id="'section-' + index" 
-							 class="section" 
-							 :class="section.bgClass">
-					  <v-row>
-						<v-col v-for="(product, i) in 25" :key="i" cols="2">
-						  <v-img :src="`/path/to/image-${i+1}.jpg`" class="product-image"></v-img>
-						</v-col>
-					  </v-row>
-					</section>
-				  </v-container>
-				</v-main>
-			  </v-app>
+        <div class="fixed-bg" :style="{ backgroundImage: `url(${currentBackground})` }"></div>
+			<section class="section" v-for="(section, index) in sections" :key="index">
+				<div class="product-grid">
+					<img v-for="(product, i) in products" :key="i" :src="product.image" :alt="`Product ${i}`" />
+				</div>
+			</section>
         </div>
         <div class="popup">
         </div>

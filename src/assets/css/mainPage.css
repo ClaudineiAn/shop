@@ -2,34 +2,40 @@
     --main-title-ani-from: 0px;
     --main-title-ani-to: 0px;
 }
-.data {
-  background-size: cover;
-  background-position: center;
-  transition: background-image 0.5s ease-in-out;
-}
-.section {
-  min-height: 100vh;
-  padding: 20px;
-}
-.product-image {
-  width: 100%;
-  height: auto;
-}
-.bg-home {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-.bg-categories {
-  background-color: rgba(230, 230, 255, 0.8);
-}
-.bg-products {
-  background-color: rgba(255, 230, 230, 0.8);
-}
-.bg-about {
-  background-color: rgba(230, 255, 230, 0.8);
-}
-.bg-contact {
-  background-color: rgba(255, 255, 230, 0.8);
-}
+html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: Roboto, sans-serif;
+        }
+        #app {
+            height: 100%;
+        }
+        .section {
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .product-grid img {
+            max-width: 100%;
+            height: auto;
+        }
+        .fixed-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease;
+        }
   .fadeout{
     opacity:0;
   }
