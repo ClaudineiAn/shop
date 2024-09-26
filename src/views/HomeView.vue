@@ -30,6 +30,7 @@ export default {
 				}
 			});
 			if (newBackground !== this.currentBackground) {
+			console.log(newBackground)
 				this.currentBackground = newBackground;
 			}
 		},

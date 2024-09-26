@@ -13,7 +13,7 @@ html, body {
             height: 100%;
         }
         .section {
-            min-height: 100vh;
+            min-height: 310vh;
             padding: 20px;
         }
         .product-grid {
