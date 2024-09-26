@@ -283,7 +283,7 @@ export const setProperMetrics = async () => {
             }
             template+="</div>"
         }
-        document.querySelector(".banner div.box>div.data").innerHTML=template
+        /*document.querySelector(".banner div.box>div.data").innerHTML=template
         document.querySelector(".banner div.box>div.popup").innerHTML=templatePopup
         document.querySelectorAll(".banner div.box>div.data>div>div>div:nth-child(2)>div:last-child>div:last-child").forEach((element, index) => {
             element.addEventListener("click", function(event) {
@@ -303,7 +303,7 @@ export const setProperMetrics = async () => {
         });
         hoverStar.addEventListener('mouseleave', function() {
             hoverRect.style.background = '';
-        });*/
+        });
 
         document.querySelectorAll(".popup > .view > div:last-child > div:nth-child(3) > div:first-child > div > div:first-child > div:last-child > div:first-child").forEach(element => element.addEventListener("mouseenter", function(event) {
             event.target.parentNode.parentNode.firstElementChild.setAttribute("data-val","5")
@@ -347,7 +347,7 @@ export const setProperMetrics = async () => {
             else if(score===0)
             starGradient=100
             startsAni(event.target.lastElementChild.lastElementChild, starGradient)
-        }));
+        }));*/
         }
     } catch (error) {
         console.log(error)

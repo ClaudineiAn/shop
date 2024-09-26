@@ -1,7 +1,35 @@
 :root {
     --main-title-ani-from: 0px;
     --main-title-ani-to: 0px;
-  }
+}
+body {
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.5s ease-in-out;
+}
+.section {
+  min-height: 100vh;
+  padding: 20px;
+}
+.product-image {
+  width: 100%;
+  height: auto;
+}
+.bg-home {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.bg-categories {
+  background-color: rgba(230, 230, 255, 0.8);
+}
+.bg-products {
+  background-color: rgba(255, 230, 230, 0.8);
+}
+.bg-about {
+  background-color: rgba(230, 255, 230, 0.8);
+}
+.bg-contact {
+  background-color: rgba(255, 255, 230, 0.8);
+}
   .fadeout{
     opacity:0;
   }
