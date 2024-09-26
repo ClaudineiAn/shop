@@ -45,13 +45,13 @@ export default {
 		}
 	},
 	mounted() {
-		document.querySelector(`data`).addEventListener('scroll', this.updateBackground);
-		document.querySelector(`data`).addEventListener('resize', this.resizeImages);
+		document.querySelector(`.data`).addEventListener('scroll', this.updateBackground);
+		document.querySelector(`.data`).addEventListener('resize', this.resizeImages);
 		this.resizeImages(); // Run on load
 	},
 	beforeUnmount() {
-		document.querySelector(`data`).removeEventListener('scroll', this.updateBackground);
-		document.querySelector(`data`).removeEventListener('resize', this.resizeImages);
+		document.querySelector(`.data`).removeEventListener('scroll', this.updateBackground);
+		document.querySelector(`.data`).removeEventListener('resize', this.resizeImages);
 	},
   components: {
     ArrowIcon
