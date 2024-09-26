@@ -41,7 +41,7 @@ export default {
       });
     },
     changeBackground(section) {
-      document.body.style.backgroundImage = section.classList.contains('bg-home')
+      document.querySelector('.data').style.backgroundImage = section.classList.contains('bg-home')
         ? 'url("/path/to/home-bg.jpg")'
         : section.classList.contains('bg-categories')
         ? 'url("/path/to/categories-bg.jpg")'
