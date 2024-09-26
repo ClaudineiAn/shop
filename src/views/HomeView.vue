@@ -44,13 +44,13 @@ export default {
 		}
 	},
 	mounted() {
-		window.addEventListener('scroll', this.updateBackground);
-		window.addEventListener('resize', this.resizeImages);
+		document.querySelector(`data`).addEventListener('scroll', this.updateBackground);
+		document.querySelector(`data`).addEventListener('resize', this.resizeImages);
 		this.resizeImages(); // Run on load
 	},
 	beforeUnmount() {
-		window.removeEventListener('scroll', this.updateBackground);
-		window.removeEventListener('resize', this.resizeImages);
+		document.querySelector(`data`).removeEventListener('scroll', this.updateBackground);
+		document.querySelector(`data`).removeEventListener('resize', this.resizeImages);
 	},
   components: {
     ArrowIcon
