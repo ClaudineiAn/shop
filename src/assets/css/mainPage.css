@@ -39,6 +39,15 @@ html, body {
             background-position: center;
             transition: background-image 0.5s ease;
         }
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .icon-btn {
+            cursor: pointer;
+        }
   .fadeout{
     opacity:0;
   }
