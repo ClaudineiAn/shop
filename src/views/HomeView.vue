@@ -41,15 +41,15 @@ export default {
       });
     },
     changeBackground(section) {
-      document.querySelector('.data').style.backgroundImage = section.classList.contains('bg-home')
-        ? 'url("/path/to/home-bg.jpg")'
+      document.querySelector('.data').style.backgroundColor = section.classList.contains('bg-home')
+        ? 'red'
         : section.classList.contains('bg-categories')
-        ? 'url("/path/to/categories-bg.jpg")'
+        ? 'blue'
         : section.classList.contains('bg-products')
-        ? 'url("/path/to/products-bg.jpg")'
+        ? 'black'
         : section.classList.contains('bg-about')
-        ? 'url("/path/to/about-bg.jpg")'
-        : 'url("/path/to/contact-bg.jpg")';
+        ? 'orange'
+        : 'yellow';
     }
   },
   beforeDestroy() {
